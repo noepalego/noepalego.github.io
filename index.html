@@ -113,9 +113,6 @@ button{font:inherit;color:inherit}
 .toy[aria-pressed="true"] .shackle{transform:none}
 .toy:not(.used)::before{content:"";position:absolute;inset:-1px;border-radius:inherit;border:1px solid var(--fire);pointer-events:none;animation:invite 2.4s ease-out infinite}
 @keyframes invite{0%{opacity:.85;transform:scale(1)}70%,100%{opacity:0;transform:scale(1.12,1.55)}}
-.toy-hint{margin:20px 0 0;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;font-stretch:90%;color:var(--paper-2)}
-.toy-hint i{flex:none;width:11px;height:11px;border-radius:50%;background:var(--fire);box-shadow:0 0 0 4px rgba(255,107,44,.25)}
-.toy-hint b{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--paper)}
 
 /* the flight */
 .flight{overflow:hidden;background:radial-gradient(120% 90% at 50% 40%,#123a68 0%,#0d2c52 60%,#0a2343 100%)}
@@ -139,40 +136,70 @@ button{font:inherit;color:inherit}
 .pass-bar{height:4px;margin:14px 0 8px;border-radius:4px;background:rgba(237,240,234,.15);overflow:hidden}
 .pass-bar i{display:block;height:100%;background:var(--fire);transform-origin:left center;transform:scaleX(0)}
 #passKm{font-variant-numeric:tabular-nums;color:var(--paper)}
-.flight-hint{position:absolute;right:var(--gutter);bottom:max(34px,6.5vh);margin:0;font-size:14px;font-weight:600;font-stretch:88%;color:var(--paper-3)}
+.flight-hint{position:absolute;left:0;right:0;bottom:max(34px,6.5vh);margin:0;text-align:center;font-size:14px;font-weight:600;font-stretch:88%;color:var(--paper-3);pointer-events:none}
 
-/* stop 4: dots on the photo */
-.spots{position:absolute;inset:0;z-index:3}
-.spot{position:absolute;left:var(--x);top:var(--y);width:26px;height:26px;margin:-13px 0 0 -13px;padding:0;border-radius:50%;border:2px solid var(--paper);background:var(--fire);cursor:pointer;opacity:0;transform:scale(.3);transition:opacity .4s ease calc(1s + var(--i) * .15s),transform .6s var(--out) calc(1s + var(--i) * .15s),background .2s}
-.spot::before{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid rgba(255,107,44,.85);pointer-events:none;animation:ping2 1.9s ease-out infinite;animation-delay:calc(var(--i) * .35s)}
-@keyframes ping2{0%{opacity:.9;transform:scale(.6)}80%,100%{opacity:0;transform:scale(1.7)}}
-.scanned .spot{opacity:1;transform:none}
-.spot.seen{background:var(--paper);border-color:var(--fire)}
-.spot.seen::before{animation:none;opacity:0}
-.spot[aria-expanded="true"]{background:var(--ember);border-color:var(--paper)}
-.radar{position:absolute;left:50%;top:50%;z-index:2;width:170%;aspect-ratio:1;margin:-85% 0 0 -85%;border-radius:50%;pointer-events:none;opacity:0;background:conic-gradient(from 0deg,rgba(255,107,44,0) 0deg,rgba(255,107,44,0) 285deg,rgba(255,140,60,.38) 354deg,rgba(255,225,180,.75) 360deg)}
-.scanned .radar{animation:sweep 1.5s cubic-bezier(.45,0,.2,1) both}
-@keyframes sweep{0%{opacity:0;transform:rotate(0)}12%,85%{opacity:1}100%{opacity:0;transform:rotate(360deg)}}
-.spot-card{position:absolute;z-index:4;width:min(290px,82%);padding:14px 16px 15px;border-radius:14px;background:var(--paper);color:var(--night);box-shadow:0 20px 50px rgba(3,9,22,.5);font-size:14.5px;line-height:1.45}
-.spot-card b{display:block;margin-bottom:4px;font-size:15.5px;font-weight:760;font-stretch:104%}
-.spot-card p{margin:0}
-.spot-card[hidden]{display:none}
+/* stop 2: one card, two diplomas, spun by hand */
+.dip-zone{position:absolute;right:clamp(14px,1.8vw,24px);bottom:clamp(14px,1.8vw,24px);z-index:3;width:clamp(200px,21vw,290px);perspective:900px}
+.dip-hint{display:flex;align-items:center;justify-content:center;gap:7px;margin:0 0 10px;font-size:13px;font-weight:650;font-stretch:90%;color:var(--paper);text-shadow:0 1px 8px rgba(3,9,22,.8);transition:opacity .5s}
+.dip-hint svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(4px)}}
+.dip-zone.used .dip-hint{opacity:0}
+.diploma{position:relative;width:100%;aspect-ratio:1.45;transform-style:preserve-3d;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.diploma.grab{cursor:grabbing}
+.diploma:focus-visible{outline:2px solid var(--ember);outline-offset:6px;border-radius:12px}
+.dip-face{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 13%;border-radius:12px;background:#f4f1e8;color:#0d1c38;overflow:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden;box-shadow:0 22px 46px rgba(3,9,22,.5)}
+.dip-face::before{content:"";position:absolute;inset:8px;border:1.5px solid rgba(13,28,56,.5);border-radius:7px;box-shadow:inset 0 0 0 3px #f4f1e8,inset 0 0 0 4px rgba(13,28,56,.22);pointer-events:none}
+.dip-face::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-radial-gradient(circle at 115% 120%,rgba(23,62,110,.07) 0 2px,transparent 2px 9px)}
+.dip-back{transform:rotateY(180deg);background:#eaf0f7}
+.dip-back::before{box-shadow:inset 0 0 0 3px #eaf0f7,inset 0 0 0 4px rgba(13,28,56,.22)}
+.dip-kicker{font-size:11px;font-weight:700;font-stretch:90%;letter-spacing:.14em;text-transform:uppercase;color:#3b5a85}
+.dip-title{font-size:clamp(19px,1.75vw,26px);font-weight:820;font-stretch:108%;letter-spacing:-.02em;line-height:1.02;max-width:72%}
+.dip-sub{font-size:13px;font-weight:650;font-stretch:94%;color:#3b5a85}
+.dip-seal{position:absolute;right:10%;bottom:14%;width:19%;height:auto}
 
-/* stop 5: six hours on the clock */
-.clock{width:100%;max-width:380px;margin-top:24px;--v:0}
-.clock-top{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;font-weight:600;font-stretch:90%;color:var(--paper-2)}
-.clock-top b{font-size:22px;font-weight:780;font-stretch:110%;color:var(--paper);font-variant-numeric:tabular-nums}
-.clock-track{position:relative;height:38px;margin-top:4px;cursor:pointer;touch-action:none}
-.clock-track::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:4px;background:rgba(237,240,234,.18)}
-.clock-fill{position:absolute;left:0;top:50%;width:calc(var(--v) * 100%);height:4px;margin-top:-2px;border-radius:4px;background:var(--fire)}
-.clock-ticks{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
-.clock-ticks i{width:2px;height:12px;border-radius:2px;background:rgba(237,240,234,.35)}
-.clock-knob{position:absolute;top:50%;left:calc(var(--v) * 100%);width:26px;height:26px;margin:-13px 0 0 -13px;padding:0;border-radius:50%;border:3px solid var(--fire);background:var(--paper);cursor:grab;touch-action:none}
-.clock-knob::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid rgba(255,107,44,.75);pointer-events:none;animation:ping2 1.9s ease-out infinite}
-.clock.used .clock-knob::after{display:none}
-.clock-say{margin:6px 0 0;min-height:2.9em;font-size:15px;line-height:1.45;color:var(--paper-2)}
-#stop5.clocked .sketch .anim{stroke-dashoffset:calc(500px * (1 - var(--h,0)))}
-#stop5.clocked .sketch .rise rect{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(calc(.12 + .88 * var(--h,0)));transition:transform .2s}
+/* stop 4: a scanner you move over the photo */
+.scan-lens{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+#stop4 .photo{cursor:crosshair}
+.scan-chips{position:absolute;inset:0;z-index:3;pointer-events:none}
+.scan-chip{position:absolute;display:inline-flex;align-items:center;gap:7px;padding:5px 10px 5px 7px;border-radius:999px;background:rgba(8,18,38,.82);border:1px solid rgba(255,107,44,.7);color:var(--paper);font-size:12.5px;font-weight:680;font-stretch:92%;white-space:nowrap;translate:-12px -50%;transform-origin:12px 50%;animation:chip .55s var(--out) both}
+.scan-chip.to-left{flex-direction:row-reverse;padding:5px 7px 5px 10px;translate:calc(12px - 100%) -50%;transform-origin:calc(100% - 12px) 50%}
+.scan-chip::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:var(--fire);box-shadow:0 0 0 3px rgba(255,107,44,.3)}
+@keyframes chip{from{opacity:0;scale:.5}}
+.scan-read{margin-top:22px;max-width:420px;padding:14px 16px 15px;border-radius:14px;background:rgba(8,18,38,.45);border:1px solid rgba(237,240,234,.16)}
+.scan-top{display:flex;align-items:center;gap:9px;font-size:14px;font-stretch:92%}
+.scan-top b{font-weight:720;color:var(--paper)}
+.scan-top span{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums;color:var(--paper-3)}
+.scan-led{flex:none;width:9px;height:9px;border-radius:50%;background:var(--fire);box-shadow:0 0 0 3px rgba(255,107,44,.25);animation:led 1.2s ease-in-out infinite}
+@keyframes led{50%{opacity:.35}}
+.scan-read p{margin:7px 0 0;font-size:14.5px;line-height:1.5;color:var(--paper-2)}
+.scan-read.hit{animation:hit .6s var(--out)}
+@keyframes hit{0%{border-color:var(--fire);box-shadow:0 0 0 4px rgba(255,107,44,.25)}100%{border-color:rgba(237,240,234,.16);box-shadow:0 0 0 0 rgba(255,107,44,0)}}
+
+/* stop 5: a merger, the photo arrives in two halves */
+.photo.split{overflow:visible;background:none;box-shadow:none}
+.photo.split::after{display:none}
+.photo.split::before{content:"";position:absolute;inset:0;border-radius:28px;box-shadow:0 50px 120px -30px rgba(3,9,22,.7);opacity:var(--m,1);pointer-events:none}
+.half{position:absolute;inset:0;overflow:hidden;background:#12396b;will-change:transform}
+.half::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,18,38,0) 55%,rgba(8,18,38,.62))}
+.half.l{clip-path:inset(0 calc(50% - 1px) 0 0 round 28px 0 0 28px);transform:translate3d(calc(var(--split,0) * -62%),calc(var(--split,0) * -9%),0) rotate(calc(var(--split,0) * -5deg))}
+.half.r{clip-path:inset(0 0 0 calc(50% - 1px) round 0 28px 28px 0);transform:translate3d(calc(var(--split,0) * 62%),calc(var(--split,0) * 9%),0) rotate(calc(var(--split,0) * 5deg))}
+.seam{position:absolute;top:0;bottom:0;left:50%;z-index:2;width:3px;margin-left:-1.5px;border-radius:3px;background:linear-gradient(rgba(255,193,94,0),#ffc15e 18%,#ff6b2c 50%,#ffc15e 82%,rgba(255,193,94,0));box-shadow:0 0 26px 6px rgba(255,107,44,.55);opacity:0;pointer-events:none}
+.merged .seam{animation:seam 1s var(--out)}
+@keyframes seam{0%{opacity:1;transform:scaleX(1)}100%{opacity:0;transform:scaleX(14)}}
+.photo.split .sketch,.photo.split .credit{opacity:var(--m,1)}
+.mw{display:inline-block}
+#stop5 .mw.l{transform:translateX(calc(var(--split,0) * -70px));opacity:calc(1 - var(--split,0) * .8)}
+#stop5 .mw.r{transform:translateX(calc(var(--split,0) * 70px));opacity:calc(1 - var(--split,0) * .8)}
+
+/* previous and next */
+.stepper{position:fixed;right:var(--gutter);bottom:max(20px,env(safe-area-inset-bottom));z-index:38;display:flex;align-items:center;gap:4px;padding:5px;border-radius:999px;background:rgba(8,18,38,.6);border:1px solid rgba(237,240,234,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;visibility:hidden;translate:0 12px;transition:opacity .4s,visibility .4s,translate .5s var(--out)}
+.stepper.show{opacity:1;visibility:visible;translate:0 0}
+.step-btn{width:44px;height:44px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:transparent;color:var(--paper);cursor:pointer;transition:background .2s,color .2s,transform .3s var(--out)}
+.step-btn:hover:not(:disabled){background:var(--fire);color:var(--night)}
+.step-btn:active:not(:disabled){transform:scale(.92)}
+.step-btn:disabled{opacity:.3;cursor:default}
+.step-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.step-count{min-width:54px;text-align:center;font-size:14px;font-weight:650;font-stretch:90%;font-variant-numeric:tabular-nums;color:var(--paper-2)}
 
 /* stop 6: the stamp */
 .stamp{position:absolute;left:clamp(16px,4%,40px);top:clamp(16px,6%,44px);z-index:3;display:grid;justify-items:center;padding:10px 18px 9px;border:3px solid var(--fire);border-radius:10px;background:rgba(8,18,38,.45);color:var(--fire);line-height:1;text-transform:uppercase;opacity:0;transform:rotate(-9deg);pointer-events:none}
@@ -289,7 +316,7 @@ button{font:inherit;color:inherit}
   .nav{padding:12px 16px}
   .wordmark{font-size:17px}
   .pill{padding:8px 12px;font-size:13px}
-  .stop,.stop.flip{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;align-content:center;row-gap:24px;padding:72px 18px 28px}
+  .stop,.stop.flip{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;align-content:center;row-gap:24px;padding:66px 18px 84px}
   .stop .photo,.stop.flip .photo{grid-column:1;grid-row:1;height:40vh;height:40svh;border-radius:22px}
   .stop .story,.stop.flip .story{grid-column:1;grid-row:2;justify-self:start;max-width:none}
   .story h3{font-size:clamp(32px,9.5vw,44px)}
@@ -303,15 +330,30 @@ button{font:inherit;color:inherit}
   .dots{display:none}
   .stop.has-toy .photo{height:31vh;height:31svh}
   .toy{margin-top:14px;padding:8px 14px 8px 10px;font-size:13.5px}
-  .toy-hint{margin-top:12px;font-size:13px}
-  .clock{margin-top:12px}
-  .clock-say{min-height:0;font-size:14px}
-  .pass{left:16px;right:16px;width:auto;bottom:max(22px,4vh)}
+  .pass{left:16px;right:16px;width:auto;bottom:max(84px,11vh)}
   .flight-hint{display:none}
   .stamp b{font-size:26px}
-  .spot-card{font-size:13.5px;padding:11px 13px}
+  .hint{bottom:max(96px,13vh)}
+  .stepper{left:50%;right:auto;bottom:max(14px,env(safe-area-inset-bottom));translate:-50% 12px}
+  .stepper.show{translate:-50% 0}
+  .step-btn{width:42px;height:42px}
+  .dip-zone{width:min(168px,44%)}
+  .dip-hint{margin-bottom:6px;font-size:12px}
+  .dip-face{padding:0 11%;gap:3px;border-radius:9px}
+  .dip-face::before{inset:6px;border-radius:5px}
+  .dip-kicker{font-size:9.5px}
+  .dip-title{font-size:16px}
+  .dip-sub{font-size:11px}
+  .scan-read{margin-top:14px;padding:11px 13px 12px}
+  .scan-read p{font-size:13.5px;margin-top:5px}
+  .scan-chip{font-size:11.5px;padding:4px 8px 4px 6px}
+  .photo.split::before{border-radius:22px}
+  .half.l{clip-path:inset(0 calc(50% - 1px) 0 0 round 22px 0 0 22px)}
+  .half.r{clip-path:inset(0 0 0 calc(50% - 1px) round 0 22px 22px 0)}
+  #stop5 .mw.l{transform:translateX(calc(var(--split,0) * -36px))}
+  #stop5 .mw.r{transform:translateX(calc(var(--split,0) * 36px))}
 }
-@media (max-width:760px) and (max-height:700px){.stop .photo,.stop.flip .photo{height:34vh}.stop.has-toy .photo{height:26vh}.story .body{font-size:15.5px}}
+@media (max-width:760px) and (max-height:700px){.stop,.stop.flip{row-gap:16px;padding-top:60px;padding-bottom:76px}.stop .photo,.stop.flip .photo{height:34vh}.stop.has-toy .photo{height:26vh}.story .body{font-size:15.5px}.scan-read p{display:none}}
 
 /* ---------- Reduced motion and no JavaScript: a plain page ---------- */
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
@@ -326,7 +368,8 @@ button{font:inherit;color:inherit}
 .reduced .lens,.no-js .lens{position:relative;inset:auto;min-height:100vh;min-height:100svh;visibility:visible!important;transform:none!important;background:var(--night);pointer-events:auto}
 .reduced .lens .finale-copy,.reduced .lens .act,.no-js .lens .finale-copy,.no-js .lens .act{opacity:1;translate:none;pointer-events:auto}
 .reduced .name .o,.no-js .name .o{border:.13em solid var(--fire);border-radius:50%}
-.reduced .spot,.no-js .spot{opacity:1;transform:none}
+.no-js .stepper,.no-js .dip-hint,.no-js .scan-top,.no-js #scanText{display:none}
+.no-js .scan-read .sr{position:static!important;width:auto;height:auto;margin:0;overflow:visible;clip:auto;clip-path:none;white-space:normal;padding-left:18px;font-size:14.5px;line-height:1.5;color:var(--paper-2)}
 .reduced .stamp,.no-js .stamp{opacity:1}
 .reduced .flight,.no-js .flight{min-height:80vh}
 </style>
@@ -368,11 +411,27 @@ button{font:inherit;color:inherit}
       </div>
     </article>
 
-    <article class="scene stop flip has-toy" id="stop2" aria-labelledby="t2">
+    <article class="scene stop flip" id="stop2" aria-labelledby="t2">
       <figure class="photo">
         <img alt="The Tour aux Puces, a medieval tower in the centre of Thionville" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/960px-Thionville_-_Tour_aux_Puces_%285%29.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1920px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
         <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/960px-Thionville_-_Tour_aux_Puces_%285%29.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1920px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
-        <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><g transform="rotate(-12 139 140)"><rect class="shade" x="72" y="54" width="130" height="169" rx="4"/><path class="fine" d="M88 73h98v133H88zM105 99h62m-65 16h66m-48 16h35"/><circle class="accent" cx="137" cy="168" r="16"/><path class="accent" d="m126 180-4 24 15-9 14 9-3-24"/><text x="105" y="87">FRANCE</text></g><g class="rise"><g transform="rotate(12 221 140)"><rect class="plate" x="157" y="56" width="130" height="169" rx="4"/><path class="fine" d="M173 73h98v135h-98zM190 99h62m-65 16h66m-48 16h35"/><circle class="accent" cx="222" cy="168" r="16"/><path class="accent" d="m211 180-4 24 15-9 14 9-3-24"/><text x="193" y="87">U.S.A.</text></g></g></svg></div>
+        <div class="dip-zone" id="dipZone">
+          <p class="dip-hint" id="dipHint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 7 4 11l4 4M16 7l4 4-4 4M4 11h16"/></svg>Drag to flip</p>
+          <div class="diploma" id="diploma" tabindex="0" role="button" aria-label="Flip the card: the French Baccalauréat on the front, the U.S. High School Diploma with Honor Roll on the back">
+            <div class="dip-face dip-front" aria-hidden="true">
+              <span class="dip-kicker">France</span>
+              <b class="dip-title">Baccalauréat</b>
+              <span class="dip-sub">Thionville, 2025</span>
+              <svg class="dip-seal" viewBox="0 0 40 52"><path d="M12 28 8 50l12-7 12 7-4-22" fill="#ff6b2c" opacity=".8"/><circle cx="20" cy="18" r="16" fill="#ff6b2c"/><circle cx="20" cy="18" r="11" fill="none" stroke="#fff4e6" stroke-width="1.5"/></svg>
+            </div>
+            <div class="dip-face dip-back" aria-hidden="true">
+              <span class="dip-kicker">United States</span>
+              <b class="dip-title">High School Diploma</b>
+              <span class="dip-sub">Honor Roll, 2025</span>
+              <svg class="dip-seal" viewBox="0 0 40 52"><path d="M12 28 8 50l12-7 12 7-4-22" fill="#ff6b2c" opacity=".8"/><circle cx="20" cy="18" r="16" fill="#ff6b2c"/><path d="m20 9 2.6 5.4 5.9.8-4.3 4.1 1 5.9L20 22.4l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z" fill="#fff4e6"/></svg>
+            </div>
+          </div>
+        </div>
         <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:Thionville_-_Tour_aux_Puces_(5).JPG" target="_blank" rel="noopener noreferrer">Fab5669</a>, CC BY-SA 3.0</figcaption>
       </figure>
       <div class="story">
@@ -380,7 +439,6 @@ button{font:inherit;color:inherit}
         <h3 id="t2" data-part>Two diplomas. New horizons.</h3>
         <p class="body" data-part>I completed the French Baccalauréat and a U.S. High School Diploma, graduating on the Honor Roll in the dual-diploma program.</p>
         <p class="place" data-part><b>Thionville, France</b><span class="label">49.36° N, 6.17° E</span></p>
-        <button class="toy" type="button" id="capsBtn" data-part><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5 12 5l10 4.5L12 14z"/><path d="M6.5 11.6V15c0 1.4 2.5 2.8 5.5 2.8s5.5-1.4 5.5-2.8v-3.4M21 10v5.5"/></svg><span>Throw the caps</span></button>
       </div>
     </article>
 
@@ -426,14 +484,8 @@ button{font:inherit;color:inherit}
         <img alt="The blast furnaces of Belval in Esch-sur-Alzette, lit in blue at night" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1280px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/960px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1280px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1920px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
         <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1280px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/960px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1280px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1920px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
         <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><path class="plate" d="M180 32 300 95 180 158 60 95z"/><path class="shade" d="m60 95 120 63v31L60 126z"/><path class="plate" d="m300 95-120 63v31l120-63z"/><path class="fine" d="m80 105 100 52 100-52M180 189v26M80 137v30l100 53 100-53v-30"/><path class="accent anim" d="m100 94 80-42 80 42-80 42z"/><g class="rise"><path class="shade" d="M180 74 207 85v24q-3 22-27 32-24-10-27-32V85z"/><path class="heavy" d="m168 106 9 9 16-19"/></g><text x="180" y="270" text-anchor="middle">CLOUD / SECURITY / AI</text></svg></div>
-        <div class="radar" aria-hidden="true"></div>
-        <div class="spots" id="spots">
-          <button class="spot" type="button" style="--x:18%;--y:28%;--i:0" aria-expanded="false" data-t="Cloud audit" data-d="A full Microsoft Azure and Entra ID security audit. I found gaps in multi-factor authentication and over-privileged roles, and recommended fixes to raise the Secure Score."><span class="sr">Cloud audit</span></button>
-          <button class="spot" type="button" style="--x:55%;--y:20%;--i:1" aria-expanded="false" data-t="Web pentest" data-d="An end-to-end penetration test of a production Odoo 19 app: 15 confirmed vulnerabilities, including a broken object level authorization (BOLA) flaw and an exposed database interface."><span class="sr">Web pentest</span></button>
-          <button class="spot" type="button" style="--x:36%;--y:58%;--i:2" aria-expanded="false" data-t="AI agents" data-d="I deployed PentAGI, an autonomous AI pentesting framework, on Kali Linux with Azure AI Foundry, fixed what blocked it, and it found a Cloudflare origin-server bypass."><span class="sr">AI agents</span></button>
-          <button class="spot" type="button" style="--x:73%;--y:42%;--i:3" aria-expanded="false" data-t="Executive report" data-d="I brought three parallel security workstreams together in a 14-slide presentation for internal stakeholders."><span class="sr">Executive report</span></button>
-          <div class="spot-card" id="spotCard" hidden><b id="spotTitle"></b><p id="spotText"></p></div>
-        </div>
+        <canvas class="scan-lens" id="scanLens" aria-hidden="true"></canvas>
+        <div class="scan-chips" id="scanChips" aria-hidden="true"></div>
         <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG" target="_blank" rel="noopener noreferrer">Zinneke</a>, CC BY-SA 3.0 LU</figcaption>
       </figure>
       <div class="story">
@@ -441,27 +493,34 @@ button{font:inherit;color:inherit}
         <h3 id="t4" data-part>Security in the real world.</h3>
         <p class="body" data-part>As a Security Analyst at Digital Learning Hub, I audited cloud infrastructure, assessed web application security and worked with autonomous AI security agents.</p>
         <p class="place" data-part><b>Esch-sur-Alzette, Luxembourg</b><span class="label">49.50° N, 5.98° E</span></p>
-        <p class="toy-hint" id="spotHint" data-part><i aria-hidden="true"></i><span>Tap the dots on the photo to see the work</span><b id="spotCount">0 of 4</b></p>
+        <div class="scan-read" data-part>
+          <div class="scan-top"><i class="scan-led" aria-hidden="true"></i><b id="scanTitle">Scan the photo</b><span id="scanCount">0 of 4 found</span></div>
+          <p id="scanText">Move over the photo to find what I worked on during the audit.</p>
+          <ul class="sr">
+            <li>Cloud audit: a full Microsoft Azure and Entra ID security audit, with gaps in multi-factor authentication and over-privileged roles, and fixes to raise the Secure Score.</li>
+            <li>Web pentest: an end-to-end penetration test of a production Odoo 19 app, with 15 confirmed vulnerabilities including a broken object level authorization flaw.</li>
+            <li>AI agents: PentAGI, an autonomous AI pentesting framework, on Kali Linux with Azure AI Foundry. It found a Cloudflare origin-server bypass.</li>
+            <li>Executive report: three parallel security workstreams brought together in a 14-slide presentation for internal stakeholders.</li>
+          </ul>
+        </div>
       </div>
     </article>
 
-    <article class="scene stop has-toy" id="stop5" aria-labelledby="t5">
-      <figure class="photo">
-        <img alt="The glass Tour Deloitte in downtown Montréal against a blue sky" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/960px-Tour_Deloitte_22.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1920px-Tour_Deloitte_22.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
-        <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/960px-Tour_Deloitte_22.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1920px-Tour_Deloitte_22.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
+    <article class="scene stop" id="stop5" aria-labelledby="t5">
+      <figure class="photo split">
+        <div class="half l"><img alt="The glass Tour Deloitte in downtown Montréal against a blue sky" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/960px-Tour_Deloitte_22.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1920px-Tour_Deloitte_22.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
+        <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/960px-Tour_Deloitte_22.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1920px-Tour_Deloitte_22.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div></div>
+        <div class="half r" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/960px-Tour_Deloitte_22.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1920px-Tour_Deloitte_22.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
+        <div class="ph-cyano"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/960px-Tour_Deloitte_22.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1920px-Tour_Deloitte_22.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div></div>
+        <i class="seam" aria-hidden="true"></i>
         <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><rect class="plate" x="58" y="47" width="244" height="175" rx="8"/><path class="fine" d="M80 75h200M80 195h200M92 90v105M92 165h176M92 135h176M92 105h176" stroke-dasharray="3 5"/><g class="rise"><rect class="shade" x="110" y="157" width="29" height="38"/><rect class="shade" x="151" y="137" width="29" height="58"/><rect class="shade" x="192" y="115" width="29" height="80"/><rect class="shade" x="233" y="89" width="29" height="106"/></g><path class="accent anim" d="m110 143 53-21 46-18 48-36m-13 1 13-1-2 13"/><text x="74" y="66">CASE STUDY / M&amp;A</text><text x="180" y="262" text-anchor="middle">STRUCTURE / HYPOTHESIS / STRATEGY</text></svg></div>
         <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:Tour_Deloitte_22.jpg" target="_blank" rel="noopener noreferrer">Jeangagnon</a>, CC BY-SA 4.0</figcaption>
       </figure>
       <div class="story">
         <p class="label when" data-part>September 2026</p>
-        <h3 id="t5" data-part>Beyond the code.</h3>
+        <h3 id="t5" data-part><span class="mw l">Beyond</span> <span class="mw r">the code.</span></h3>
         <p class="body" data-part>At Deloitte’s Crack the Case, I explored mergers and acquisitions through a six-hour case study, combining structured thinking with business strategy.</p>
         <p class="place" data-part><b>Montréal, Canada</b><span class="label">45.50° N, 73.57° W</span></p>
-        <div class="clock" data-part>
-          <div class="clock-top"><span>Six hours on the clock</span><b id="clockTime">0h00</b></div>
-          <div class="clock-track" id="clockTrack"><span class="clock-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="clock-fill" id="clockFill"></span><button class="clock-knob" id="clockKnob" type="button" role="slider" aria-label="Hours into the case" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" aria-valuetext="0 hours"></button></div>
-          <p class="clock-say" id="clockSay">Drag the clock to replay the case.</p>
-        </div>
       </div>
     </article>
 
@@ -515,6 +574,12 @@ button{font:inherit;color:inherit}
   <a href="#stop4" data-k="5" data-label="Security" aria-label="Stop 4, Security in the real world"></a>
   <a href="#stop5" data-k="6" data-label="Beyond the code" aria-label="Stop 5, Beyond the code"></a>
   <a href="#stop6" data-k="7" data-label="Building with AI" aria-label="Stop 6, Building with AI"></a>
+</nav>
+
+<nav class="stepper" id="stepper" aria-label="Previous and next stop">
+  <button class="step-btn" id="prevStop" type="button" aria-label="Previous stop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg></button>
+  <span class="step-count" id="stepCount">Start</span>
+  <button class="step-btn" id="nextStop" type="button" aria-label="Next stop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg></button>
 </nav>
 
 <div class="robot" id="robot" hidden aria-hidden="true">
@@ -773,7 +838,7 @@ const stage = $('stage'), world = $('world'), lens = $('lens'), nameEl = $('name
 const mapEl = $('map'), scroller = $('scroller'), dotsEl = $('dots'), dots = Array.from(dotsEl.querySelectorAll('a'));
 const scenes = Array.from(document.querySelectorAll('.scene')).map((el, k) => {
   const ex = (el.dataset.exit || '.3,.45').split(',').map(Number);
-  return { el, k, photo: el.querySelector('.photo'), parts: Array.from(el.querySelectorAll('[data-part]')), vis: true, arrived: false, exA: ex[0], exL: ex[1] };
+  return { el, k, photo: el.querySelector('.photo'), split: !!el.querySelector('.photo.split'), parts: Array.from(el.querySelectorAll('[data-part]')), vis: true, arrived: false, exA: ex[0], exL: ex[1] };
 });
 const LAST = scenes.length - 1;
 const Lay = { W: 1, H: 1, L: 1.6, LAST, P_END: LAST + 1.25, FIN: LAST + .15 };
@@ -801,8 +866,10 @@ function renderScenes(P) {
     sc.el.style.transform = 'scale(' + (lerp(.84, 1, e) * (1 + xs * .55)).toFixed(4) + ')';
     sc.el.classList.toggle('on', e > .6 && xs < .4);
     if (sc.photo) {
-      const R = lerp(0, 78, smooth(clamp(e * 1.12)));
-      sc.photo.style.clipPath = R >= 77.5 ? 'none' : 'circle(' + R.toFixed(2) + '% at 50% 50%)';
+      if (!sc.split) {
+        const R = lerp(0, 78, smooth(clamp(e * 1.12)));
+        sc.photo.style.clipPath = R >= 77.5 ? 'none' : 'circle(' + R.toFixed(2) + '% at 50% 50%)';
+      }
       sc.photo.style.setProperty('--zoom', (1.3 - .2 * e + .06 * xs).toFixed(4));
       sc.photo.style.setProperty('--cy', (1 - smooth(clamp((d + .32) / .3))).toFixed(3));
       sc.el.style.setProperty('--draw', clamp((e - .25) / .75).toFixed(3));
@@ -1102,7 +1169,7 @@ const Sound = (() => {
     }
   }
   function whoosh(delay, dur, from, to, peak) {
-    if (!live()) return; const t = ac.currentTime + delay, s = src(t, dur + .15), bp = ac.createBiquadFilter();
+    if (!live()) return; const t = Math.max(0, ac.currentTime + delay), s = src(t, dur + .15), bp = ac.createBiquadFilter();
     bp.type = 'bandpass'; bp.Q.value = 1.3; bp.frequency.setValueAtTime(from, t); bp.frequency.exponentialRampToValueAtTime(to, t + dur);
     const g = ac.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + dur * .85); g.gain.exponentialRampToValueAtTime(.0001, t + dur + .1);
     s.connect(bp); bp.connect(g); g.connect(out);
@@ -1138,7 +1205,14 @@ const Sound = (() => {
     o.type = 'sine'; o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(55, t + .09);
     env(g, t, .22, .003, .1); o.connect(g); g.connect(out); o.start(t); o.stop(t + .14);
   }
-  return { init, boom, whoosh, blip, rewind, laser, stamp, get on() { return on; }, set on(v) { on = v; if (out) out.gain.value = v ? .85 : 0; } };
+  /* a metal click plus a thump: two halves locking together */
+  function latch() {
+    if (!live()) return; const t = ac.currentTime, c = src(t, .07), hp = ac.createBiquadFilter();
+    hp.type = 'highpass'; hp.frequency.value = 2600;
+    const cg = ac.createGain(); env(cg, t, .2, .001, .05); c.connect(hp); hp.connect(cg); cg.connect(out); cg.connect(verb);
+    stamp();
+  }
+  return { init, boom, whoosh, blip, rewind, laser, stamp, latch, get on() { return on; }, set on(v) { on = v; if (out) out.gain.value = v ? .85 : 0; } };
 })();
 
 /* ==========================================================================
@@ -1342,6 +1416,7 @@ function renderAll() {
   dots.forEach((d, i) => { d.classList.toggle('on', i === cur); d.classList.toggle('done', i < cur); });
   dotsEl.classList.toggle('show', P > .55 && q < .02);
   $('hint').style.opacity = String(1 - clamp(P / .18));
+  Stepper.update(P, q);
 }
 function cameo(on) {
   if (on === Finale.cameo) return;
@@ -1667,51 +1742,31 @@ const Flight = (() => {
 })();
 
 /* ==========================================================================
-   Little things to play with: caps, dust, scrambled text, dots, a clock
+   Little things to play with: stamp dust, scrambled text, a diploma card,
+   a scanner lens, and the arrows
    ========================================================================== */
 const Toys = (() => {
   const c = $('toys'), g = c.getContext('2d');
   let W = 1, H = 1, parts = [], running = false;
   function resize() { W = innerWidth; H = innerHeight; c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); }
   const run = () => { if (!running) { running = true; Ticker.add(tick); } };
-  function caps(x, y) {
-    for (let i = 0; i < 16; i++) parts.push({ k: 'cap', x, y, vx: rnd(-520, 520), vy: rnd(-1250, -700), r: rnd(0, TAU), vr: rnd(-9, 9), s: rnd(.75, 1.25), ph: rnd(0, TAU), fl: rnd(5, 11), age: 0, life: 3.6 });
-    for (let i = 0; i < 70; i++) parts.push({ k: 'bit', x, y, vx: rnd(-650, 650), vy: rnd(-1300, -500), r: rnd(0, TAU), vr: rnd(-14, 14), s: rnd(4, 9), ph: rnd(0, TAU), c: ['#ff6b2c', '#ffc15e', '#edf0ea', '#8fb4df'][i % 4], age: 0, life: rnd(2.2, 3.6) });
-    run();
-  }
   function dust(x, y) {
-    for (let i = 0; i < 28; i++) { const a = rnd(0, TAU), sp = rnd(60, 340); parts.push({ k: 'dust', x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * .6, s: rnd(6, 16), age: 0, life: rnd(.5, 1.1) }); }
+    for (let i = 0; i < 28; i++) { const a = rnd(0, TAU), sp = rnd(60, 340); parts.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * .6, s: rnd(6, 16), age: 0, life: rnd(.5, 1.1) }); }
     run();
   }
   function tick(dt) {
     g.setTransform(DPR, 0, 0, DPR, 0, 0); g.clearRect(0, 0, W, H);
     for (let i = parts.length - 1; i >= 0; i--) {
       const p = parts[i]; p.age += dt;
-      if (p.age > p.life || p.y > H + 120) { parts.splice(i, 1); continue; }
-      if (p.k === 'dust') {
-        p.vx *= Math.exp(-3 * dt); p.vy *= Math.exp(-3 * dt); p.x += p.vx * dt; p.y += p.vy * dt;
-        const k = p.age / p.life; g.globalAlpha = .35 * (1 - k); g.fillStyle = '#c3d0e1';
-        g.beginPath(); g.arc(p.x, p.y, p.s * (1 + k * 1.5), 0, TAU); g.fill(); continue;
-      }
-      const bit = p.k === 'bit', drag = bit ? 1.6 : .55;
-      p.vx *= Math.exp(-drag * dt); p.vy = p.vy * Math.exp(-drag * dt) + (bit ? 900 : 1500) * dt;
-      p.x += p.vx * dt + (bit ? Math.sin(p.age * 7 + p.ph) * 40 * dt : 0); p.y += p.vy * dt; p.r += p.vr * dt;
-      g.globalAlpha = Math.min(1, (p.life - p.age) * 2);
-      g.save(); g.translate(p.x, p.y); g.rotate(p.r);
-      if (bit) { g.scale(1, Math.cos(p.age * 9 + p.ph)); g.fillStyle = p.c; g.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); }
-      else {
-        g.scale(p.s, p.s * (.3 + .7 * Math.abs(Math.cos(p.age * p.fl + p.ph))));
-        g.fillStyle = '#0d1c38'; g.strokeStyle = '#edf0ea'; g.lineWidth = 1.6 / p.s;
-        g.beginPath(); g.moveTo(0, -12); g.lineTo(21, 0); g.lineTo(0, 12); g.lineTo(-21, 0); g.closePath(); g.fill(); g.stroke();
-        g.fillStyle = '#ff6b2c'; g.beginPath(); g.arc(0, 0, 2.6, 0, TAU); g.fill();
-        g.strokeStyle = '#ffc15e'; g.lineWidth = 2 / p.s; g.beginPath(); g.moveTo(0, 0); g.quadraticCurveTo(10, 4, 15, 10); g.lineTo(15, 19); g.stroke();
-      }
-      g.restore();
+      if (p.age > p.life) { parts.splice(i, 1); continue; }
+      p.vx *= Math.exp(-3 * dt); p.vy *= Math.exp(-3 * dt); p.x += p.vx * dt; p.y += p.vy * dt;
+      const k = p.age / p.life; g.globalAlpha = .35 * (1 - k); g.fillStyle = '#c3d0e1';
+      g.beginPath(); g.arc(p.x, p.y, p.s * (1 + k * 1.5), 0, TAU); g.fill();
     }
     g.globalAlpha = 1;
     if (!parts.length) { running = false; g.clearRect(0, 0, W, H); return false; }
   }
-  return { resize, caps, dust };
+  return { resize, dust };
 })();
 
 const GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0123456789+/#%&';
@@ -1740,69 +1795,201 @@ function scramble(el, to, dur, from) {
   });
 })();
 
-/* stop 2: throw the caps */
-$('capsBtn').addEventListener('click', e => {
-  const b = e.currentTarget, r = b.getBoundingClientRect();
-  b.classList.add('used');
-  if (Sound.on) Sound.init();
-  Toys.caps(r.left + r.width / 2, r.top + 6);
-  Sound.whoosh(0, .4, 500, 2600, .12);
-  for (let i = 0; i < 6; i++) setTimeout(() => Sound.blip(), 120 + i * 70);
-});
-
-/* stop 4: dots on the photo */
-const Spots = (() => {
-  const wrap = $('spots'), card = $('spotCard'), title = $('spotTitle'), text = $('spotText'), count = $('spotCount');
-  const all = Array.from(wrap.querySelectorAll('.spot')), seen = new Set();
-  let open = null;
-  function close() { if (!open) return; open.setAttribute('aria-expanded', 'false'); open = null; card.hidden = true; }
-  function show(sp) {
-    if (open === sp) { close(); return; }
-    close(); open = sp; sp.setAttribute('aria-expanded', 'true'); sp.classList.add('seen'); seen.add(sp);
-    title.textContent = sp.dataset.t; text.textContent = sp.dataset.d; card.hidden = false;
-    const fw = wrap.clientWidth, fh = wrap.clientHeight, cw = card.offsetWidth, ch = card.offsetHeight, x = sp.offsetLeft + 13, y = sp.offsetTop + 13;
-    let left = x + 24; if (left + cw > fw - 12) left = x - 24 - cw;
-    card.style.left = clamp(left, 12, Math.max(12, fw - cw - 12)) + 'px';
-    card.style.top = clamp(y - ch / 2, 12, Math.max(12, fh - ch - 12)) + 'px';
-    count.textContent = seen.size + ' of ' + all.length;
-    if (Sound.on) { Sound.init(); Sound.blip(); }
+/* stop 2: one card, two diplomas. Drag it, tap it or press Enter and it flips,
+   with a bit of momentum, then settles on a face. */
+const Diploma = (() => {
+  const zone = $('dipZone'), card = $('diploma');
+  const fine = !!(window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches);
+  let rot = 0, vel = 0, snap = null, spin = null, drag = null, used = false, shown = false, running = false, face = 0;
+  let tx = 0, ty = 0, gx = 0, gy = 0;
+  const run = () => { if (!running) { running = true; Ticker.add(tick); } };
+  const faceOf = r => ((Math.round(r / 180) % 2) + 2) % 2;
+  function use() { if (!used) { used = true; zone.classList.add('used'); } }
+  function tick(dt) {
+    if (spin) { spin.t += dt; const k = clamp(spin.t / spin.dur); rot = lerp(spin.from, spin.to, easeInOut3(k)); if (k >= 1) spin = null; }
+    else if (!drag) {
+      if (snap === null && Math.abs(vel) < 90) { vel = 0; snap = Math.round(rot / 180) * 180; }
+      if (snap !== null) { rot += (snap - rot) * (1 - Math.exp(-dt * 10)); if (Math.abs(snap - rot) < .05) { rot = snap; snap = null; } }
+      else { rot += vel * dt; vel *= Math.exp(-dt * 2.4); }
+    }
+    tx += (gx - tx) * (1 - Math.exp(-dt * 9)); ty += (gy - ty) * (1 - Math.exp(-dt * 9));
+    card.style.transform = 'rotateX(' + tx.toFixed(2) + 'deg) rotateY(' + (rot + ty).toFixed(2) + 'deg)';
+    const f = faceOf(rot);
+    if (f !== face) { face = f; Sound.whoosh(0, .2, 800, 2600, .035); }
+    if (!drag && !spin && snap === null && vel === 0 && Math.abs(gx - tx) < .02 && Math.abs(gy - ty) < .02) { running = false; return false; }
   }
-  all.forEach(sp => sp.addEventListener('click', e => { e.stopPropagation(); show(sp); }));
-  card.addEventListener('click', e => e.stopPropagation());
-  document.addEventListener('click', close);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  return { close };
+  function flip(dir) { use(); spin = null; vel = 0; snap = (Math.round(rot / 180) + dir) * 180; if (Sound.on) Sound.init(); run(); }
+  card.addEventListener('pointerdown', e => {
+    if (e.button > 0) return;
+    const now = performance.now();
+    drag = { id: e.pointerId, x: e.clientX, t: now, t0: now, moved: 0 };
+    spin = null; snap = null; vel = 0; gx = gy = 0;
+    try { card.setPointerCapture(e.pointerId); } catch (_) {}
+    card.classList.add('grab');
+    if (Sound.on) Sound.init();
+    run();
+  });
+  card.addEventListener('pointermove', e => {
+    if (drag && e.pointerId === drag.id) {
+      const now = performance.now(), dx = e.clientX - drag.x, dts = Math.max(8, now - drag.t) / 1000;
+      rot += dx * .6; vel = clamp(lerp(vel, dx * .6 / dts, .6), -2400, 2400);
+      drag.x = e.clientX; drag.t = now; drag.moved += Math.abs(dx);
+      if (drag.moved > 6) use();
+      run();
+    } else if (fine && !drag) {
+      const r = card.getBoundingClientRect(); if (!r.width) return;
+      gx = -((e.clientY - r.top) / r.height - .5) * 14; gy = ((e.clientX - r.left) / r.width - .5) * 18; run();
+    }
+  });
+  const end = e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const now = performance.now(), tap = e.type === 'pointerup' && drag.moved < 6 && now - drag.t0 < 450;
+    if (now - drag.t > 90) vel = 0;
+    drag = null; card.classList.remove('grab');
+    if (tap) flip(1); else run();
+  };
+  card.addEventListener('pointerup', end);
+  card.addEventListener('pointercancel', end);
+  card.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && !drag) { gx = gy = 0; run(); } });
+  card.addEventListener('dragstart', e => e.preventDefault());
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(1); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); flip(e.key === 'ArrowRight' ? 1 : -1); }
+  });
+  /* the first time the stop arrives, the card does one turn on its own */
+  function showcase() {
+    if (used || shown || reduced) return;
+    shown = true;
+    setTimeout(() => { if (used || drag) return; spin = { from: rot, to: rot + 360, t: 0, dur: 1.7 }; run(); }, 280);
+  }
+  return { showcase, flip };
 })();
 
-/* stop 5: six hours on the clock */
-const Clock = (() => {
-  const box = document.querySelector('.clock'), track = $('clockTrack'), knob = $('clockKnob'), time = $('clockTime'), say = $('clockSay'), stop = $('stop5');
-  const LINES = [[.75, 'The brief: an M&A question and six hours to answer it.'], [2, 'Structure the case into the few questions that decide it.'], [4, 'Form hypotheses, then test each one against the numbers.'], [5.6, 'Pull the findings together into one recommendation.'], [7, 'Time is up. The recommendation is in.']];
-  let v = 0, drag = false, hinted = false;
-  function set(nv, user) {
-    v = clamp(nv, 0, 6);
-    box.style.setProperty('--v', (v / 6).toFixed(4)); stop.style.setProperty('--h', (v / 6).toFixed(4));
-    let h = Math.floor(v), m = Math.round((v - h) * 12) * 5; if (m === 60) { h++; m = 0; }
-    time.textContent = h + 'h' + String(m).padStart(2, '0');
-    knob.setAttribute('aria-valuenow', v.toFixed(1)); knob.setAttribute('aria-valuetext', time.textContent);
-    say.textContent = LINES.find(l => v < l[0])[1];
-    if (user) { box.classList.add('used'); stop.classList.add('clocked'); }
+/* stop 4: a scanner lens over the photo. Move it (or tap) to find the work. */
+const Scanner = (() => {
+  const sec = $('stop4'), frame = sec.querySelector('.photo'), img = frame.querySelector('img');
+  const c = $('scanLens'), g = c.getContext('2d'), chips = $('scanChips'), read = sec.querySelector('.scan-read');
+  const title = $('scanTitle'), text = $('scanText'), count = $('scanCount');
+  const FIND = [
+    { x: .2, y: .3, t: 'Cloud audit', d: 'A full Microsoft Azure and Entra ID security audit: gaps in multi-factor authentication and over-privileged roles, with fixes to raise the Secure Score.' },
+    { x: .55, y: .2, t: 'Web pentest', d: 'An end-to-end penetration test of a production Odoo 19 app: 15 confirmed vulnerabilities, including a broken object level authorization (BOLA) flaw.' },
+    { x: .3, y: .6, t: 'AI agents', d: 'PentAGI, an autonomous AI pentesting framework, running on Kali Linux with Azure AI Foundry. It found a Cloudflare origin-server bypass.' },
+    { x: .76, y: .42, t: 'Executive report', d: 'Three parallel security workstreams brought together in a 14-slide presentation for internal stakeholders.' }
+  ];
+  const touch = !!(window.matchMedia && matchMedia('(hover: none)').matches);
+  if (touch) text.textContent = 'Tap around the photo to find what I worked on during the audit.';
+  let W = 1, H = 1, thermal = null, active = false, running = false, inside = false, hot = false;
+  let t = 0, idle = 99, lx = 0, ly = 0, tx = 0, ty = 0, pulse = 0, seen = 0, cur = null;
+  const radius = () => Math.max(46, Math.min(108, Math.min(W, H) * .17));
+  const run = () => { if (!running) { running = true; Ticker.add(tick); } };
+  function resize() {
+    W = frame.clientWidth || 1; H = frame.clientHeight || 1;
+    c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); thermal = null;
   }
-  const at = x => { const r = track.getBoundingClientRect(); return (x - r.left) / r.width * 6; };
-  track.addEventListener('pointerdown', e => { drag = true; track.setPointerCapture(e.pointerId); set(at(e.clientX), true); e.preventDefault(); if (Sound.on) { Sound.init(); Sound.blip(); } });
-  track.addEventListener('pointermove', e => { if (drag) set(at(e.clientX), true); });
-  track.addEventListener('pointerup', () => { drag = false; });
-  track.addEventListener('pointercancel', () => { drag = false; });
-  knob.addEventListener('keydown', e => {
-    const step = { ArrowRight: .5, ArrowUp: .5, ArrowLeft: -.5, ArrowDown: -.5 }[e.key];
-    if (step !== undefined) { e.preventDefault(); set(v + step, true); }
-    else if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); set(e.key === 'Home' ? 0 : 6, true); }
-  });
-  set(0);
-  return { hint() { if (hinted || box.classList.contains('used')) return; hinted = true; stop.classList.add('clocked'); tween(1.1, k => set(1.2 * k), easeInOut3); } };
+  /* a heat-camera copy of the photo, made once: grey, then orange, shadows lifted to violet */
+  function build() {
+    if (!img.complete || !img.naturalWidth) return null;
+    try {
+      const o = document.createElement('canvas'); o.width = c.width; o.height = c.height;
+      const q = o.getContext('2d'); q.setTransform(DPR, 0, 0, DPR, 0, 0);
+      const s = Math.max(W / img.naturalWidth, H / img.naturalHeight), dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+      q.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
+      q.globalCompositeOperation = 'saturation'; q.fillStyle = '#808080'; q.fillRect(0, 0, W, H);
+      q.globalCompositeOperation = 'color'; q.fillStyle = '#ff6b2c'; q.fillRect(0, 0, W, H);
+      q.globalCompositeOperation = 'screen'; q.fillStyle = '#2b1655'; q.fillRect(0, 0, W, H);
+      q.globalCompositeOperation = 'source-over'; q.fillStyle = 'rgba(8,18,38,.2)';
+      for (let y = 0; y < H; y += 3) q.fillRect(0, y, W, 1);
+      return o;
+    } catch (e) { return false; }
+  }
+  img.addEventListener('load', () => { thermal = null; });
+  function draw() {
+    g.setTransform(DPR, 0, 0, DPR, 0, 0); g.clearRect(0, 0, W, H);
+    if (!active) return;
+    if (thermal === null) thermal = build();
+    const R = radius();
+    g.save(); g.beginPath(); g.arc(lx, ly, R, 0, TAU); g.clip();
+    if (thermal) { const z = parseFloat(frame.style.getPropertyValue('--zoom')) || 1.12; g.drawImage(thermal, W / 2 * (1 - z), H / 2 * (1 - z), W * z, H * z); }
+    else { g.fillStyle = 'rgba(43,22,85,.78)'; g.fillRect(lx - R, ly - R, R * 2, R * 2); }
+    g.lineWidth = 1.6;
+    for (const f of FIND) {
+      if (f.seen) continue;
+      const x = f.x * W, y = f.y * H, s = 12 + 2.5 * Math.sin(t * 5);
+      if (Math.hypot(x - lx, y - ly) > R + s + 8) continue;
+      g.strokeStyle = '#fff4e6'; g.beginPath(); g.arc(x, y, s, 0, TAU); g.stroke();
+      g.beginPath(); g.moveTo(x - s - 7, y); g.lineTo(x - s + 4, y); g.moveTo(x + s - 4, y); g.lineTo(x + s + 7, y); g.moveTo(x, y - s - 7); g.lineTo(x, y - s + 4); g.moveTo(x, y + s - 4); g.lineTo(x, y + s + 7); g.stroke();
+      g.fillStyle = '#ffc15e'; g.beginPath(); g.arc(x, y, 3.2, 0, TAU); g.fill();
+    }
+    g.restore();
+    g.lineWidth = 2; g.strokeStyle = C_FIRE; g.beginPath(); g.arc(lx, ly, R, 0, TAU); g.stroke();
+    g.lineWidth = 5; g.strokeStyle = 'rgba(255,107,44,.16)'; g.beginPath(); g.arc(lx, ly, R + 5, 0, TAU); g.stroke();
+    if (pulse > 0) { g.lineWidth = 3; g.strokeStyle = 'rgba(255,193,94,' + (.8 * pulse).toFixed(3) + ')'; g.beginPath(); g.arc(lx, ly, R + 5 + 26 * (1 - pulse), 0, TAU); g.stroke(); }
+    g.lineWidth = 2; g.strokeStyle = '#edf0ea';
+    for (let i = 0; i < 4; i++) {
+      const a = i * TAU / 4 + t * .35, ca = Math.cos(a), sa = Math.sin(a);
+      g.beginPath(); g.moveTo(lx + ca * (R - 10), ly + sa * (R - 10)); g.lineTo(lx + ca * (R + 1), ly + sa * (R + 1)); g.stroke();
+    }
+    g.lineWidth = 1.4; g.beginPath(); g.moveTo(lx - 6, ly); g.lineTo(lx + 6, ly); g.moveTo(lx, ly - 6); g.lineTo(lx, ly + 6); g.stroke();
+  }
+  function chip(f) {
+    const s = document.createElement('span');
+    s.className = 'scan-chip' + (f.x > .6 ? ' to-left' : ''); s.textContent = f.t;
+    s.style.left = (f.x * 100).toFixed(1) + '%'; s.style.top = (f.y * 100).toFixed(1) + '%';
+    chips.appendChild(s);
+  }
+  function found(f) {
+    const fresh = !f.seen;
+    if (fresh) { f.seen = true; seen++; chip(f); }
+    title.textContent = f.t; text.textContent = f.d;
+    count.textContent = seen === FIND.length ? 'All ' + seen + ' found' : seen + ' of ' + FIND.length + ' found';
+    read.classList.remove('hit'); void read.offsetWidth; read.classList.add('hit');
+    pulse = 1;
+    if (Sound.on) { Sound.init(); Sound.blip(); }
+  }
+  function check() {
+    const R = radius();
+    let near = null, best = 1e9;
+    for (const f of FIND) { const dd = Math.hypot(f.x * W - lx, f.y * H - ly); if (dd < best) { best = dd; near = f; } }
+    if (near && best < R * .5) { if (cur !== near) { cur = near; found(near); } }
+    else if (best > R * .85) cur = null;
+  }
+  function tick(dt) {
+    t += dt; idle += dt; pulse = Math.max(0, pulse - dt * 1.5);
+    if (!reduced && !inside && idle > (touch ? 6 : 1.6)) {
+      hot = false;
+      tx = W * (.5 + .3 * Math.sin(t * .55)); ty = H * (.46 + .24 * Math.sin(t * .9 + 1.3));
+    }
+    const k = 1 - Math.exp(-dt * (hot ? 14 : 2.6));
+    lx += (tx - lx) * k; ly += (ty - ly) * k;
+    if (hot) check();
+    draw();
+    if (!active) { running = false; return false; }
+    if (reduced && Math.abs(tx - lx) < .3 && Math.abs(ty - ly) < .3 && pulse <= 0) { running = false; return false; }
+  }
+  function point(e) {
+    const r = frame.getBoundingClientRect(); if (!r.width) return;
+    tx = (e.clientX - r.left) / r.width * W; ty = (e.clientY - r.top) / r.height * H;
+    hot = true; idle = 0;
+    if (!active && reduced) start(true);
+    run();
+  }
+  frame.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; inside = true; point(e); });
+  frame.addEventListener('pointerdown', e => point(e));
+  frame.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') { inside = false; idle = 0; } });
+  function start(keep) {
+    if (active) return;
+    active = true;
+    if (W < 2) resize();
+    if (!keep) { lx = tx = W * .5; ly = ty = H * .46; idle = 99; hot = false; }
+    else { lx = tx; ly = ty; }
+    run();
+  }
+  function stop() { active = false; inside = false; run(); }
+  return { start, stop, resize };
 })();
 
 Hooks.flight = { frame(sc, d, e) { Flight.render(clamp((d + .2) / .78), e); } };
+Hooks.stop2 = { arrive() { Diploma.showcase(); } };
 Hooks.stop1 = {
   frame(sc, d, e) {
     if (!Intro.done) return;
@@ -1811,10 +1998,24 @@ Hooks.stop1 = {
   }
 };
 Hooks.stop4 = {
-  arrive(sc) { sc.el.classList.add('scanned'); Sound.whoosh(0, 1.2, 300, 1800, .05); },
-  leave(sc) { sc.el.classList.remove('scanned'); Spots.close(); }
+  arrive() { Scanner.start(); },
+  leave() { Scanner.stop(); }
 };
-Hooks.stop5 = { arrive() { Clock.hint(); } };
+/* stop 5: a merger. The photo comes in as two halves that lock together. */
+Hooks.stop5 = {
+  frame(sc, d, e, xs) {
+    const m = smooth(clamp((e - .15) / .67)) * (1 - smooth(clamp(xs / .8)));
+    sc.el.style.setProperty('--split', (1 - m).toFixed(4));
+    sc.el.style.setProperty('--m', m.toFixed(3));
+    if (m > .985) {
+      if (!sc.merged) {
+        sc.merged = true;
+        sc.photo.classList.remove('merged'); void sc.photo.offsetWidth; sc.photo.classList.add('merged');
+        if (Intro.done) Sound.latch();
+      }
+    } else if (m < .9 && sc.merged) { sc.merged = false; sc.photo.classList.remove('merged'); }
+  }
+};
 Hooks.stop6 = {
   arrive(sc) {
     sc.el.classList.add('slammed');
@@ -1836,7 +2037,7 @@ function layout() {
   Lay.W = root.clientWidth || innerWidth; Lay.H = innerHeight;
   sizeScroller();
   Portal.layout();
-  FX.resize(); Sparks.resize(); Toys.resize(); Flight.layout();
+  FX.resize(); Sparks.resize(); Toys.resize(); Flight.layout(); Scanner.resize();
 }
 addEventListener('scroll', onScroll, { passive: true });
 let resizeT = 0;
@@ -1850,7 +2051,61 @@ addEventListener('resize', () => {
 const onReduce = () => { reduced = !!reduceMQ.matches; root.classList.toggle('reduced', reduced); if (reduced) Intro.finalize(); layout(); renderAll(); };
 if (reduceMQ.addEventListener) reduceMQ.addEventListener('change', onReduce); else if (reduceMQ.addListener) reduceMQ.addListener(onReduce);
 
-const goTo = P => window.scrollTo({ top: scrollFromP(P), behavior: reduced ? 'auto' : 'smooth' });
+/* previous / next: glide from stop to stop. The flight counts as part of the
+   way to Montréal, so crossing it takes a little longer and plays it whole. */
+const Stepper = (() => {
+  const nav = $('stepper'), prev = $('prevStop'), next = $('nextStop'), count = $('stepCount');
+  const stops = scenes.filter(sc => sc.el.id !== 'flight').map(sc => sc.k).concat([Lay.P_END]);
+  const fk = scenes.findIndex(sc => sc.el.id === 'flight');
+  let cur = null, label = '', shown = false;
+  function cancel() { if (cur) { cur.dead = true; cur = null; } }
+  function glide(P) {
+    P = clamp(P, 0, Lay.P_END);
+    if (reduced || !Intro.done) { window.scrollTo(0, scrollFromP(P)); return; }
+    cancel();
+    const y0 = scrollY, y1 = scrollFromP(P), from = Scroll.Pt;
+    if (Math.abs(y1 - y0) < 2) return;
+    const fly = fk >= 0 && Math.min(from, P) < fk && Math.max(from, P) > fk;
+    const me = cur = { to: P, t: 0, dur: fly ? 2.8 : clamp(.85 + .3 * Math.abs(P - from), .85, 2.4), dead: false };
+    Ticker.add(dt => {
+      if (me.dead) return false;
+      me.t += dt; const k = clamp(me.t / me.dur);
+      window.scrollTo(0, Math.round(lerp(y0, y1, easeInOut3(k))));
+      if (k >= 1) { if (cur === me) cur = null; return false; }
+    });
+    if (Sound.on) { Sound.init(); Sound.whoosh(0, Math.min(.8, me.dur * .45), 350, 1500, .025); }
+  }
+  function step(dir) {
+    if (!Intro.done) return;
+    const at = cur ? cur.to : Scroll.Pt;
+    const to = dir > 0 ? stops.find(s => s > at + .04) : stops.slice().reverse().find(s => s < at - .04);
+    if (to !== undefined) glide(to);
+  }
+  prev.addEventListener('click', () => step(-1));
+  next.addEventListener('click', () => step(1));
+  addEventListener('wheel', cancel, { passive: true });
+  addEventListener('touchstart', cancel, { passive: true });
+  addEventListener('keydown', e => {
+    if (!Intro.done || reduced || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    const dlg = $('cvDialog'); if (dlg && dlg.open) return;
+    const t = e.target, typing = t && t.closest && t.closest('input,textarea,select,[contenteditable]');
+    if (!typing && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) { e.preventDefault(); step(e.key === 'ArrowRight' ? 1 : -1); }
+    else if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].indexOf(e.key) >= 0) cancel();
+  });
+  function update(P, q) {
+    const on = q < .02;
+    if (on !== shown) { shown = on; nav.classList.toggle('show', on); }
+    let n = 0;
+    if (P >= .5) dots.forEach((d, i) => { if (P >= +d.dataset.k - .5) n = i + 1; });
+    const l = n ? n + ' / ' + dots.length : 'Start';
+    if (l !== label) { label = l; count.textContent = l; }
+    const at = cur ? cur.to : P;
+    prev.disabled = at < .04;
+    next.disabled = at > Lay.P_END - .04;
+  }
+  return { glide, step, update, cancel };
+})();
+const goTo = P => Stepper.glide(P);
 $('backToStart').addEventListener('click', () => goTo(0));
 $('wordmark').addEventListener('click', e => { e.preventDefault(); goTo(0); });
 dots.forEach(d => d.addEventListener('click', e => { if (reduced) return; e.preventDefault(); goTo(+d.dataset.k); }));
