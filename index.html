@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://thumb.wikimedia.org">
 <link rel="preconnect" href="https://upload.wikimedia.org">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Noé Palego","url":"https://noepalego.github.io/","jobTitle":"Computer engineering student","affiliation":{"@type":"CollegeOrUniversity","name":"Polytechnique Montréal"},"address":{"@type":"PostalAddress","addressLocality":"Montréal","addressRegion":"QC","addressCountry":"CA"},"sameAs":["https://github.com/noepalego","https://www.linkedin.com/in/noepaleg"],"knowsLanguage":["fr","en","es"],"knowsAbout":["Cybersecurity","Penetration testing","Microsoft Azure","Applied cryptography","Artificial intelligence","Python"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Noé Palego","url":"https://noepalego.github.io/","image":"https://noepalego.github.io/assets/noe.jpg","jobTitle":"Computer engineering student","affiliation":{"@type":"CollegeOrUniversity","name":"Polytechnique Montréal"},"address":{"@type":"PostalAddress","addressLocality":"Montréal","addressRegion":"QC","addressCountry":"CA"},"sameAs":["https://github.com/noepalego","https://www.linkedin.com/in/noepaleg"],"knowsLanguage":["fr","en","es"],"knowsAbout":["Cybersecurity","Penetration testing","Microsoft Azure","Applied cryptography","Artificial intelligence","Python"]}</script>
 <script>(function(){var d=document.documentElement;d.classList.remove('no-js');d.classList.add('js','locked');try{if(matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('reduced');d.classList.remove('locked')}}catch(e){}if('scrollRestoration' in history)history.scrollRestoration='manual';})();</script>
 <style>@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:block;src:url(assets/archivo-variable.woff2) format("woff2")}</style>
 <style>
@@ -219,7 +219,7 @@ button{font:inherit;color:inherit}
 .step-count{min-width:54px;text-align:center;font-size:14px;font-weight:650;font-stretch:90%;font-variant-numeric:tabular-nums;color:var(--paper-2)}
 
 /* stop 6: the stamp */
-.stamp{position:absolute;left:clamp(16px,4%,40px);top:clamp(16px,6%,44px);z-index:3;display:grid;justify-items:center;padding:10px 18px 9px;border:3px solid var(--fire);border-radius:10px;background:rgba(8,18,38,.45);color:var(--fire);line-height:1;text-transform:uppercase;opacity:0;transform:rotate(var(--rot,-9deg));translate:var(--px,0px) var(--py,0px);pointer-events:none}
+.stamp{position:absolute;left:clamp(16px,4%,40px);bottom:clamp(62px,14%,96px);z-index:3;display:grid;justify-items:center;padding:10px 18px 9px;border:3px solid var(--fire);border-radius:10px;background:rgba(8,18,38,.45);color:var(--fire);line-height:1;text-transform:uppercase;opacity:0;transform:rotate(var(--rot,-9deg));translate:var(--px,0px) var(--py,0px);pointer-events:none}
 .stamp b{font-size:clamp(28px,3.2vw,46px);font-weight:860;font-stretch:118%;letter-spacing:.02em}
 .stamp span{margin-top:6px;font-size:11px;font-weight:700;font-stretch:90%;letter-spacing:.16em}
 .slammed .stamp{animation:slam .6s cubic-bezier(.2,1.5,.45,1) both}
@@ -491,6 +491,32 @@ mark.hl{color:var(--paper);background:linear-gradient(transparent 58%,rgba(255,1
 .replay[hidden]{display:none}
 .replay svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
+/* ---------- Real pictures: the face, the team, the app, the certificate ---------- */
+.kicker{padding-left:6px}
+.face{position:relative;flex:none;width:28px;height:28px}
+.face img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1.5px rgba(237,240,234,.85)}
+.face .live{position:absolute;right:-3px;bottom:-2px;width:9px;height:9px;box-shadow:0 0 0 2px #10294f}
+.sheet-top{display:flex;align-items:center;gap:18px}
+.sheet-top h2{margin:6px 0 0}
+.sheet-top + .sheet-copy{margin-top:18px}
+.avatar{flex:none;width:78px;height:78px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #0f2347,0 0 0 4.5px rgba(255,107,44,.9),0 14px 34px -12px rgba(3,9,22,.9)}
+/* the app, as a card on the team photo; it opens larger */
+.shot{position:absolute;right:clamp(12px,1.6vw,22px);bottom:clamp(12px,1.6vw,22px);z-index:2;width:clamp(150px,15vw,226px);padding:6px 6px 8px;border-radius:16px;border:1px solid rgba(237,240,234,.24);background:rgba(14,42,82,.88);color:var(--paper);font:inherit;text-align:left;cursor:zoom-in;translate:var(--px,0px) var(--py,0px);rotate:-2.5deg;box-shadow:0 20px 44px -18px rgba(3,9,22,.85);transition:transform .45s var(--out),rotate .45s var(--out),border-color .3s,background .3s}
+.shot:hover,.shot:focus-visible{transform:translateY(-4px) scale(1.04);rotate:0deg;border-color:var(--fire)}
+.photo .shot img{position:static;inset:auto;display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;object-position:62% 30%;border-radius:10px;background:#f4f2ec;transform:none;animation:none}
+.shot span{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:7px 4px 0;font-size:12.5px;font-weight:700;font-stretch:92%;letter-spacing:.02em}
+.shot svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.shot:not(.used)::after{content:"";position:absolute;inset:-1px;border-radius:inherit;border:1px solid var(--fire);pointer-events:none;animation:invite 2.4s ease-out infinite}
+/* a picture, larger: the app, the certificate */
+.viewer{width:min(1120px,94vw);max-width:none;max-height:none;margin:auto;padding:0;border:1px solid rgba(237,240,234,.14);border-radius:18px;background:var(--night);color:var(--paper);overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.55)}
+.viewer::backdrop{background:rgba(5,11,24,.76);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.viewer[open]{animation:cvIn .55s var(--out)}
+.viewer-fig{margin:0;max-height:calc(92vh - 64px);overflow:auto;overscroll-behavior:contain;padding:clamp(12px,2.4vw,26px);background:#0d1c38}
+.viewer-fig img{display:block;width:100%;height:auto;margin:0 auto;border-radius:8px;background:#fff;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.viewer-fig figcaption{margin:16px 4px 2px;max-width:72ch;font-size:15px;line-height:1.55;color:var(--paper-2)}
+.viewer-fig figcaption:empty{display:none}
+.cv-tools [hidden]{display:none}
+
 /* ---------- Small screens ---------- */
 @media (max-width:760px){
   :root{--name-size:min(23vw,124px)}
@@ -561,6 +587,12 @@ mark.hl{color:var(--paper);background:linear-gradient(transparent 58%,rgba(255,1
   .replay svg{width:19px;height:19px}
   .sheet{border-radius:22px}
   .sheet-links .act{flex:1}
+  .avatar{width:62px;height:62px}
+  .sheet-top{gap:14px}
+  .shot{width:118px;padding:4px 4px 6px;border-radius:12px}
+  .photo .shot img{border-radius:8px}
+  .shot span{margin-top:5px;font-size:11px}
+  .viewer-fig{max-height:calc(88vh - 64px)}
 }
 @media (max-width:520px){.wide-only{display:none}}
 @media (min-width:761px) and (max-width:1020px){.chapter i,.chapter span{display:none}}
@@ -595,6 +627,7 @@ mark.hl{color:var(--paper);background:linear-gradient(transparent 58%,rgba(255,1
 .reduced .ticker,.no-js .ticker{position:static;margin-top:28px;-webkit-mask-image:none;mask-image:none}
 .reduced .ticker-track,.no-js .ticker-track{animation:none;width:auto;flex-wrap:wrap;justify-content:center;row-gap:8px}
 .reduced .cursor,.no-js .cursor,.no-js .replay{display:none}
+.no-js #honorBtn{display:none}
 </style>
 </head>
 <body>
@@ -618,7 +651,7 @@ mark.hl{color:var(--paper);background:linear-gradient(transparent 58%,rgba(255,1
     <canvas class="embers" id="embers" aria-hidden="true"></canvas>
 
     <section class="scene title-scene" id="s0" aria-labelledby="journeyTitle">
-      <p class="kicker" data-part><i class="live" aria-hidden="true"></i><span>Montréal · <time id="mtlTime">now</time> local time</span></p>
+      <p class="kicker" data-part><span class="face" aria-hidden="true"><img src="assets/noe.jpg" alt="" width="28" height="28" decoding="async"><i class="live"></i></span><span>Montréal · <time id="mtlTime">now</time> local time</span></p>
       <h2 id="journeyTitle" data-part>Six stops since 2022.</h2>
       <p class="lede" data-part>Computer engineering student at Polytechnique Montréal, working on security and AI.</p>
       <nav class="route" id="route" data-part aria-label="Jump to a stop">
@@ -657,7 +690,7 @@ mark.hl{color:var(--paper);background:linear-gradient(transparent 58%,rgba(255,1
       </div>
     </article>
 
-    <article class="scene stop flip" id="stop2" aria-labelledby="t2">
+    <article class="scene stop flip has-toy" id="stop2" aria-labelledby="t2">
       <figure class="photo">
         <img alt="The Tour aux Puces, a medieval tower in the centre of Thionville" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/960px-Thionville_-_Tour_aux_Puces_%285%29.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1920px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
         <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/960px-Thionville_-_Tour_aux_Puces_%285%29.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1920px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
@@ -686,6 +719,7 @@ mark.hl{color:var(--paper);background:linear-gradient(transparent 58%,rgba(255,1
         <h3 id="t2" data-part>Two diplomas. New horizons.</h3>
         <p class="body" data-part>I completed the French Baccalauréat and a U.S. High School Diploma, graduating on the <mark class="hl">Honor Roll</mark> in the dual-diploma program.</p>
         <p class="place" data-part><b>Thionville, France</b><span class="label">49.36° N, 6.17° E</span></p>
+        <button class="toy" type="button" id="honorBtn" data-part data-src="assets/honor-roll.jpg" data-pdf="assets/Noe_Palego_Honor_Roll.pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.4 7.2 21l4.8-2.5 4.8 2.5-1.4-7.6"/></svg><span>See the Honor Roll certificate</span></button>
       </div>
     </article>
 
@@ -787,11 +821,11 @@ mark.hl{color:var(--paper);background:linear-gradient(transparent 58%,rgba(255,1
 
     <article class="scene stop flip has-toy" id="stop6" aria-labelledby="t6">
       <figure class="photo">
-        <img alt="The Montréal skyline at night, towers lit in warm light" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1280px-Montreal_skyline_by_night.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/960px-Montreal_skyline_by_night.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1280px-Montreal_skyline_by_night.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1920px-Montreal_skyline_by_night.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
-        <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1280px-Montreal_skyline_by_night.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/960px-Montreal_skyline_by_night.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1280px-Montreal_skyline_by_night.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1920px-Montreal_skyline_by_night.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
-        <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><circle class="plate" cx="180" cy="141" r="111"/><circle class="fine" cx="180" cy="141" r="84" stroke-dasharray="3 5"/><path class="accent anim" d="M180 141 100 95m80 46 80-46m-80 46-80 46m80-46 80 46m-80-46v-98m0 98v98"/><g class="rise"><circle class="shade" cx="100" cy="95" r="17"/><circle class="shade" cx="260" cy="95" r="17"/><circle class="shade" cx="100" cy="187" r="17"/><circle class="shade" cx="260" cy="187" r="17"/><circle class="shade" cx="180" cy="43" r="13"/><circle class="shade" cx="180" cy="239" r="13"/></g><circle class="plate" cx="180" cy="141" r="30"/><text x="180" y="147" text-anchor="middle" style="font-size:19px;font-weight:800;font-stretch:110%;fill:#ff6b2c">AI</text><text x="180" y="281" text-anchor="middle">TOP 5 / FINALIST TEAM</text></svg></div>
+        <img alt="Noé with his three teammates at the PolyFinances Datathon in Montréal, all four in suits in the hall of the venue" src="assets/team.jpg" width="1280" height="960" decoding="async">
+        <div class="ph-cyano" aria-hidden="true"><img alt="" src="assets/team.jpg" width="1280" height="960" decoding="async"></div>
+        <button class="shot" type="button" id="appCard" aria-label="See our datathon app, larger"><img src="assets/app.webp" alt="" width="1894" height="904" decoding="async"><span>Our app<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg></span></button>
         <div class="stamp" aria-hidden="true"><b>Top 5</b><span>Finalist team</span></div>
-        <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:Montreal_skyline_by_night.jpg" target="_blank" rel="noopener noreferrer">Richard Bartz</a>, CC BY-SA 2.5</figcaption>
+        <figcaption class="credit">Our team at the PolyFinances Datathon</figcaption>
       </figure>
       <div class="story">
         <span class="num" aria-hidden="true">06</span>
@@ -898,8 +932,13 @@ mark.hl{color:var(--paper);background:linear-gradient(transparent 58%,rgba(255,1
 
 <dialog class="sheet" id="contactDialog" aria-labelledby="contactTitle">
   <button class="icon-btn sheet-x" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-  <p class="label sheet-k"><i class="live" aria-hidden="true"></i>Montréal, Québec</p>
-  <h2 id="contactTitle">Let’s talk.</h2>
+  <div class="sheet-top">
+    <img class="avatar" src="assets/noe.jpg" alt="Noé Palego" width="78" height="78" decoding="async">
+    <div>
+      <p class="label sheet-k"><i class="live" aria-hidden="true"></i>Montréal, Québec</p>
+      <h2 id="contactTitle">Let’s talk.</h2>
+    </div>
+  </div>
   <p class="sheet-copy">Computer engineering student at Polytechnique Montréal, working on security and AI.</p>
   <div class="mail">
     <a class="mail-addr" href="mailto:noe.palego@etud.polymtl.ca">noe.palego@etud.polymtl.ca</a>
@@ -911,6 +950,17 @@ mark.hl{color:var(--paper);background:linear-gradient(transparent 58%,rgba(255,1
     <button class="act" type="button" data-open-cv><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7zM14 3v5h4M10 12h5M10 16h5"/></svg>Résumé</button>
   </div>
   <p class="sheet-foot">French, native · English, professional · Spanish, A2</p>
+</dialog>
+
+<dialog class="viewer" id="viewer" aria-labelledby="viewerTitle">
+  <div class="cv-bar">
+    <h2 id="viewerTitle">Preview</h2>
+    <div class="cv-tools">
+      <a class="pill" id="viewerLink" href="#" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg><span>Download PDF</span></a>
+      <button class="icon-btn" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+  </div>
+  <figure class="viewer-fig"><img id="viewerImg" alt="" decoding="async"><figcaption id="viewerCap"></figcaption></figure>
 </dialog>
 
 <dialog class="cv" id="cvDialog" aria-labelledby="cvTitle">
@@ -1109,7 +1159,7 @@ function runData(p, n, closed) {
 const MapBg = { step: 0, token: 0, key: '' };
 const pause = () => new Promise(r => setTimeout(r, 0));
 async function buildMap() {
-  const W = Lay.W, H = Lay.H, key = Math.round(W) + 'x' + Math.round(H);
+  const W = Lay.W, H = Lay.UH || Lay.H, key = Math.round(W) + 'x' + Math.round(H);
   if (key === MapBg.key) return;
   MapBg.key = key; const tok = ++MapBg.token;
   if (!MapBg.step) MapBg.step = calibrateStep();
@@ -1141,7 +1191,7 @@ const scenes = Array.from(document.querySelectorAll('.scene')).map((el, k) => {
   return { el, k, photo: el.querySelector('.photo'), split: !!el.querySelector('.photo.split'), num: !!el.querySelector('.num'), parts: Array.from(el.querySelectorAll('[data-part]')), vis: true, arrived: false, exA: ex[0], exL: ex[1] };
 });
 const LAST = scenes.length - 1;
-const Lay = { W: 1, H: 1, L: 1.3, LAST, P_END: LAST + 1.25, FIN: LAST + .15 };
+const Lay = { W: 1, H: 1, UH: 0, L: 1.3, LAST, P_END: LAST + 1.25, FIN: LAST + .15 };
 /* scroll length of each step between scenes (the flight gets a longer runway) */
 const SEG_W = scenes.map((sc, k) => (scenes[k + 1] && scenes[k + 1].el.id === 'flight') || sc.el.id === 'flight' ? 1.4 : 1).concat([1, 1]);
 const Hooks = {};
@@ -1794,7 +1844,7 @@ const Ink = (() => {
    Scroll: the page scroll only drives the stage
    ========================================================================== */
 const Scroll = { Pt: 0, Pr: 0, running: false };
-const unitPx = () => Lay.L * innerHeight;
+const unitPx = () => Lay.L * (Lay.UH || innerHeight);
 function pFromScroll(y) {
   let u = y / unitPx();
   for (let k = 0; k < SEG_W.length; k++) { const w = SEG_W[k]; if (u <= w) return k + u / w; u -= w; }
@@ -1887,7 +1937,9 @@ const Intro = (() => {
     lens.classList.add('writing');
     const w = W(), h = H(), mobile = w <= 760;
     Robot.show(); Robot.face(-1); Robot.place(w + 140, h * .3);
-    await Robot.flyTo(mobile ? w * .7 : w * .7, mobile ? h * .58 : h * .5, 1.1, easeOutBack, ctl);
+    // it lands above the team in the photo, never on their faces
+    const ph = $('stop6').querySelector('.photo').getBoundingClientRect();
+    await Robot.flyTo(mobile ? w * .7 : ph.left + ph.width * .78, mobile ? h * .58 : Math.max(120, ph.top + ph.height * .17), 1.1, easeOutBack, ctl);
     await Robot.say("Hey! You're going the wrong way.", ctl);
     await wait(.9);
     await Robot.say("This is the end of Noé's story.", ctl);
@@ -2695,7 +2747,9 @@ const Term = (() => {
   }
   const tab = url => { try { window.open(url, '_blank', 'noopener'); } catch (e) {} };
   const CMDS = {
-    help: () => ['whoami · skills · courses · ctf · languages · ls · goto 1-6', 'contact · cv · github · linkedin · date · intro · clear', { t: 'hiring? try: sudo hire noe', c: 'ok' }],
+    help: () => ['whoami · skills · courses · ctf · languages · ls · goto 1-6', 'datathon · honor · contact · cv · github · linkedin · date · clear', { t: 'hiring? try: sudo hire noe', c: 'ok' }],
+    datathon: () => { setTimeout(openApp, 700); return ['PolyFinances Datathon · top 5 finalist team', 'we built an AI portfolio advisor. opening it…']; },
+    honor: () => { setTimeout(openHonor, 700); return ['AIS Dual Diploma Program · Honor Roll 2024–2025', { t: 'opening the certificate…', c: 'ok' }]; },
     whoami: () => ['Noé Palego, computer engineering student at Polytechnique Montréal.', 'Working on security and AI.'],
     skills: () => ['python · applied cryptography · sql · power bi · excel', 'azure: entra id, rbac, microsoft sentinel', 'pentesting: pentagi, owasp zap, maltego, kali linux'],
     courses: () => ['applied cryptography · probability & statistics', 'circuit theory · digital image processing · python programming'],
@@ -2712,7 +2766,7 @@ const Term = (() => {
     clear: () => { out.textContent = ''; return []; },
     exit: () => { setTimeout(() => Stepper.step(1), 700); return ['there is no exit, only the next stop.']; }
   };
-  CMDS.resume = CMDS['résumé'] = CMDS.cv; CMDS.email = CMDS.mail = CMDS.contact; CMDS.lang = CMDS.languages;
+  CMDS.resume = CMDS['résumé'] = CMDS.cv; CMDS.email = CMDS.mail = CMDS.contact; CMDS.lang = CMDS.languages; CMDS.app = CMDS.datathon; CMDS.diploma = CMDS.honor;
   function answer(raw) {
     const cmd = raw.trim().replace(/\s+/g, ' '), low = cmd.toLowerCase(), parts = low.split(' '), head = parts[0];
     if (/^(sudo )?hire( no[eé])?$/.test(low)) { setTimeout(openCV, 1400); return ['[sudo] password for recruiter: ********', { t: 'access granted ✓ opening the résumé…', c: 'ok' }]; }
@@ -2818,7 +2872,7 @@ const Guide = (() => {
     stop3: { el: '#term', done: '#term.used', say: fine ? 'That terminal is real. Type help.' : 'That terminal works. Tap a command.' },
     stop4: { el: '#stop4 .photo', done: '.scan-chip', say: 'Heat scanner on. Can you find all four?' },
     stop5: { el: '#stop5 .photo', done: '#stop5 .photo.pulled', say: 'Two halves, one deal. Try pulling them apart.' },
-    stop6: { el: '#stampBtn', done: '#stampBtn.used', say: 'Top five! Go on, stamp it again.' }
+    stop6: { el: '#appCard', done: '#appCard.used', say: fine ? 'Top five! Click the card to see our app.' : 'Top five! Tap the card to see our app.' }
   };
   const QUIPS = ['I wrote his name with a laser. No pressure.', 'The arrow keys work too. Very fancy.', 'Every stop has something to play with.', 'Beep. I mean: hello!', 'In a hurry? The résumé is up top.', 'Want to reach him? The Contact button, top right.', 'Fun fact: the map behind me is drawn live, line by line.'];
   const seen = new Set(), api = { active: false };
@@ -2950,6 +3004,38 @@ const Contact = (() => {
 })();
 const dialogOpen = () => !!document.querySelector('dialog[open]');
 
+/* a picture, larger: the datathon app and the Honor Roll certificate */
+const Viewer = (() => {
+  const dlg = $('viewer'), title = $('viewerTitle'), img = $('viewerImg'), cap = $('viewerCap'), link = $('viewerLink');
+  function open(o) {
+    document.querySelectorAll('dialog[open]').forEach(d => d.close());
+    title.textContent = o.title; img.src = o.src; img.alt = o.alt; img.width = o.w; img.height = o.h; cap.textContent = o.caption || '';
+    link.hidden = !o.href;
+    if (o.href) { link.href = o.href; link.querySelector('span').textContent = o.label; link.setAttribute('download', o.download); }
+    dlg.querySelector('.viewer-fig').scrollTop = 0;
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+  }
+  const close = () => { if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); };
+  dlg.querySelector('[data-close]').addEventListener('click', close);
+  dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
+  return { open };
+})();
+function openApp() {
+  const card = $('appCard'); card.classList.add('used');
+  Viewer.open({ title: 'Our datathon app', src: card.querySelector('img').src, w: 1894, h: 904,
+    alt: 'Screenshot of the app: an advisor screen titled Adjust your portfolio with the advisor, a chat box asking for 20 percent Nvidia, a donut chart of the portfolio and its list of funds.',
+    caption: 'Built for the PolyFinances Datathon, where our team made the top five: an AI advisor that builds a fictional portfolio from your profile. Ask for something in words or out loud; if it fits your risk budget the portfolio adjusts, otherwise you see the closest option that does.' });
+}
+function openHonor() {
+  const btn = $('honorBtn'); btn.classList.add('used');
+  Viewer.open({ title: 'Honor Roll certificate', src: btn.dataset.src, w: 1600, h: 1236,
+    alt: 'Honor Roll certificate from Academica International Studies: Noé Palego has been placed on the Honor Roll for the 2024-2025 school year, for outstanding performance in the AIS Dual Diploma Program.',
+    caption: 'Academica International Studies, AIS Dual Diploma Program, 2024–2025.',
+    href: btn.dataset.pdf, label: 'Download PDF', download: 'Noe_Palego_Honor_Roll.pdf' });
+}
+$('appCard').addEventListener('click', openApp);
+$('honorBtn').addEventListener('click', openHonor);
+
 /* the numbers in the finale count up each time it opens; the top five climbs down from 30 */
 const counters = Array.from(lens.querySelectorAll('[data-count]'));
 function countUp() {
@@ -2983,7 +3069,7 @@ function countUp() {
 const Cursor = (() => {
   const el = $('cursor'), label = $('curLabel');
   if (!(window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches)) return {};
-  const LABELS = [['#diploma', 'drag'], ['#stop4 .photo', 'scan'], ['#stop5 .photo', 'pull'], ['.rs', 'go'], ['.term-body', 'type'], ['.robot .bot-wrap', 'hi'], ['[data-open-contact]', 'say hi'], ['[data-open-cv]', 'view'], ['a[target="_blank"]', 'open']];
+  const LABELS = [['#appCard', 'zoom'], ['#honorBtn', 'view'], ['#diploma', 'drag'], ['#stop4 .photo', 'scan'], ['#stop5 .photo', 'pull'], ['.rs', 'go'], ['.term-body', 'type'], ['.robot .bot-wrap', 'hi'], ['[data-open-contact]', 'say hi'], ['[data-open-cv]', 'view'], ['a[target="_blank"]', 'open']];
   const HOT = 'a,button,[role="button"],input,#diploma,#stop4 .photo,#stop5 .photo,.term-body,.robot .bot-wrap';
   let x = -99, y = -99, rx = -99, ry = -99, running = false, shown = false;
   function tick(dt) {
@@ -3068,8 +3154,12 @@ addEventListener('hashchange', () => { const P = HASHES[location.hash.slice(1)];
    ========================================================================== */
 function layout() {
   DPR = Math.min(2, window.devicePixelRatio || 1);
-  Lay.W = root.clientWidth || innerWidth; Lay.H = innerHeight;
-  sizeScroller();
+  const w = root.clientWidth || innerWidth, h = innerHeight;
+  /* a phone's address bar showing or hiding only nudges the height: keep the scroll mapping
+     as it is, so the story does not slide to another place under the visitor's finger */
+  const barOnly = Lay.UH > 1 && w === Lay.W && Math.abs(h - Lay.UH) < 140;
+  Lay.W = w; Lay.H = h;
+  if (!barOnly) { Lay.UH = h; sizeScroller(); }
   Portal.layout();
   FX.resize(); Sparks.resize(); Toys.resize(); Flight.layout(); Scanner.resize();
   Ambient.resize(); Home.resize();
@@ -3079,8 +3169,13 @@ let resizeT = 0;
 addEventListener('resize', () => {
   clearTimeout(resizeT);
   resizeT = setTimeout(() => {
+    const P = Scroll.Pt; // the place in the story survives the new size
     layout(); buildMap();
-    if (Intro.done) { Scroll.Pt = Scroll.Pr = pFromScroll(scrollY); renderAll(); Guide.relayout(); }
+    if (Intro.done && !reduced) {
+      const y = Math.round(scrollFromP(P));
+      if (Math.abs(scrollY - y) > 1) window.scrollTo(0, y);
+      Scroll.Pt = Scroll.Pr = P; renderAll(); Guide.relayout();
+    }
   }, 140);
 });
 const onReduce = () => { reduced = !!reduceMQ.matches; root.classList.toggle('reduced', reduced); if (reduced) Intro.finalize(); else Ambient.start(); layout(); renderAll(); };

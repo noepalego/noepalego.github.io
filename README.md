@@ -4,4 +4,4 @@ Personal site of Noé Palego, computer engineering student at Polytechnique Mont
 
 Live at https://noepalego.github.io
 
-Photos come from Wikimedia Commons under CC BY-SA licences; each photo credits its author on the page.
+The stop photos come from Wikimedia Commons under CC BY-SA licences; each one credits its author on the page. The portrait, the datathon team photo, the app screenshot and the Honor Roll certificate are Noé's own.
