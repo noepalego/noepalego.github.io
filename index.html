@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preload" href="assets/archivo-variable.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="theme-color" content="#081226">
+<meta name="color-scheme" content="dark">
+<title>Noé Palego, the journey so far</title>
+<meta name="description" content="Noé Palego studies computer engineering at Polytechnique Montréal. Six stops so far, from Luxembourg to Montréal, through security, AI and strategy.">
+<script>(function(){var d=document.documentElement;d.classList.remove('no-js');d.classList.add('js','locked');try{if(matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('reduced');d.classList.remove('locked')}}catch(e){}if('scrollRestoration' in history)history.scrollRestoration='manual';})();</script>
+<style>@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:block;src:url(assets/archivo-variable.woff2) format("woff2")}</style>
+<style>
+/* ==========================================================================
+   Noé Palego, the journey so far
+   Cyanotype map + fire. One family (Archivo, variable width) for all the type.
+   The page never scrolls visually: a fixed stage plays the story, the scroll
+   position only drives it (Apple-style).
+   ========================================================================== */
+:root{
+  --night:#081226;      /* sky before and after the story */
+  --cyan:#173e6e;       /* cyanotype ground */
+  --line:#8fb4df;       /* contour lines */
+  --paper:#edf0ea;      /* line work and text */
+  --paper-2:#c3d0e1;    /* body text */
+  --paper-3:#93a9c6;    /* annotations */
+  --fire:#ff6b2c;       /* what is lit: the portal, the main action */
+  --ember:#ffc15e;
+  --font:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --out:cubic-bezier(.16,1,.3,1);
+  --gutter:max(20px,4.5vw);
+  --name-size:clamp(58px,10.4vw,192px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--cyan);color:var(--paper);font-family:var(--font);scrollbar-gutter:stable;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html.locked{overflow:hidden;overscroll-behavior:none}
+html.locked body{overflow:hidden;height:100%}
+body{margin:0;font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-kerning:normal}
+a,button{-webkit-tap-highlight-color:transparent}
+a{color:inherit}
+button{font:inherit;color:inherit}
+::selection{background:var(--fire);color:var(--night)}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--ember);outline-offset:4px}
+.sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.label{font-size:14px;line-height:1.35;font-weight:560;font-stretch:80%;letter-spacing:.012em;font-variant-numeric:tabular-nums;color:var(--paper-3)}
+
+/* ---------- Top bar ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:16px var(--gutter);pointer-events:none;transition:opacity .45s,visibility .45s}
+.nav>*{pointer-events:auto}
+.locked .nav,.at-finale .nav{opacity:0;visibility:hidden}
+.wordmark{font-size:19px;font-weight:820;font-stretch:125%;letter-spacing:-.04em;line-height:1;text-decoration:none;color:var(--paper);white-space:nowrap}
+.wordmark .o{display:inline-block;width:.6em;height:.6em;border:.14em solid var(--fire);border-radius:50%;margin:0 .05em 0 .045em;vertical-align:-.012em}
+.nav-links{display:flex;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;border:1px solid rgba(237,240,234,.24);background:rgba(8,18,38,.4);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:14px;font-weight:600;font-stretch:92%;line-height:1.2;color:var(--paper);text-decoration:none;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.pill:hover{background:var(--paper);color:var(--night);border-color:var(--paper)}
+.pill svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- The stage ---------- */
+.stage{position:fixed;inset:0;z-index:1;overflow:hidden;background:var(--cyan)}
+.world{position:absolute;inset:0;transform-origin:0 0;will-change:transform}
+.map{position:absolute;left:-50%;top:-50%;width:200%;height:200%;overflow:visible;pointer-events:none;transform-origin:50% 50%;will-change:transform}
+.map path{fill:none;stroke:var(--line);stroke-linecap:round;stroke-linejoin:round}
+.map .minor{stroke-opacity:.24;stroke-width:1}
+.map .index{stroke-opacity:.46;stroke-width:1.3}
+.scene{position:absolute;inset:0;opacity:0;pointer-events:none;transform-origin:50% 50%;will-change:transform,opacity}
+.scene.on{pointer-events:auto}
+.scroller{position:relative;z-index:0;width:1px;pointer-events:none}
+
+/* title */
+.title-scene{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 var(--gutter)}
+.title-scene h2{margin:0;font-size:clamp(44px,7.2vw,124px);font-weight:820;font-stretch:118%;letter-spacing:-.045em;line-height:.92;text-wrap:balance}
+.title-scene .lede{margin:28px 0 0;max-width:32ch;font-size:clamp(17px,1.4vw,21px);line-height:1.5;color:var(--paper-2);text-wrap:balance}
+.hint{position:absolute;left:0;right:0;bottom:5vh;margin:0;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:14px;font-weight:600;font-stretch:88%;color:var(--paper-3)}
+.hint i{display:block;width:2px;height:46px;border-radius:2px;background:linear-gradient(var(--paper-3),rgba(147,169,198,0));transform-origin:top;animation:drip 1.9s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0)}55%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+
+/* a stop: one photo, one story */
+.stop{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:center;column-gap:clamp(28px,5vw,88px);padding:84px var(--gutter) 60px;max-width:1500px;margin:0 auto}
+.stop.flip{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.stop.flip .photo{grid-column:2}
+.stop.flip .story{grid-column:1;grid-row:1;justify-self:end}
+.photo{position:relative;margin:0;height:min(70vh,660px);border-radius:28px;overflow:hidden;background:#12396b;box-shadow:0 50px 120px -30px rgba(3,9,22,.7),0 0 0 1px rgba(237,240,234,.14);transform:translateZ(0)}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(var(--zoom,1.12))}
+.ph-cyano{position:absolute;inset:0;background:#12396b;isolation:isolate;opacity:var(--cy,1)}
+.ph-cyano img{filter:grayscale(1) contrast(1.3) brightness(1.06);mix-blend-mode:screen}
+.photo::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,18,38,0) 55%,rgba(8,18,38,.62))}
+.sketch{position:absolute;right:clamp(12px,1.6vw,22px);bottom:clamp(12px,1.6vw,22px);z-index:2;width:clamp(120px,14vw,210px);aspect-ratio:1.24;padding:8px;border-radius:16px;background:rgba(14,42,82,.84);border:1px solid rgba(237,240,234,.22)}
+.sketch svg{display:block;width:100%;height:100%;overflow:visible}
+.sketch .plate{fill:rgba(237,240,234,.045);stroke:rgba(237,240,234,.62);stroke-width:1.1}
+.sketch .fine{fill:none;stroke:rgba(174,202,236,.75);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.sketch .heavy{fill:none;stroke:var(--paper);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sketch .accent{fill:none;stroke:var(--fire);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sketch .accentfill{fill:var(--fire)}
+.sketch .shade{fill:rgba(143,180,223,.17);stroke:rgba(174,202,236,.6);stroke-width:1}
+.sketch text{font-family:var(--font);font-size:11px;font-weight:620;font-stretch:78%;letter-spacing:.07em;fill:rgba(195,208,225,.9)}
+.sketch .anim{stroke-dasharray:500;stroke-dashoffset:calc(500px * (1 - var(--draw,1)))}
+.sketch .rise{opacity:var(--draw,1)}
+.credit{position:absolute;left:16px;bottom:13px;z-index:2;margin:0;max-width:calc(100% - 260px);font-size:11px;line-height:1.3;font-weight:560;font-stretch:85%;color:rgba(237,240,234,.8)}
+.credit a{text-decoration:underline;text-decoration-color:rgba(237,240,234,.35);text-underline-offset:2px}
+.story{max-width:460px}
+.when{margin:0}
+.story h3{margin:.3em 0 .36em;font-size:clamp(36px,4.3vw,68px);font-weight:790;font-stretch:112%;letter-spacing:-.035em;line-height:.96;text-wrap:balance}
+.story .body{margin:0;max-width:36ch;font-size:18px;line-height:1.62;color:var(--paper-2)}
+.place{margin:26px 0 0;display:grid;gap:3px}
+.place b{font-size:15px;font-weight:640;font-stretch:96%;color:var(--paper)}
+
+/* ---------- Things to play with ---------- */
+.toy{position:relative;display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:10px 17px 10px 12px;border-radius:999px;border:1px solid rgba(255,107,44,.6);background:rgba(255,107,44,.1);color:var(--paper);font-size:14.5px;font-weight:650;font-stretch:94%;line-height:1.2;cursor:pointer;transition:background .25s,border-color .25s,color .25s,transform .35s var(--out)}
+.toy:hover{background:var(--fire);border-color:var(--fire);color:var(--night);transform:translateY(-2px)}
+.toy svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.toy .shackle{transform-box:view-box;transform-origin:15.5px 11px;transform:translateY(-2.5px) rotate(30deg);transition:transform .4s var(--out)}
+.toy[aria-pressed="true"] .shackle{transform:none}
+.toy:not(.used)::before{content:"";position:absolute;inset:-1px;border-radius:inherit;border:1px solid var(--fire);pointer-events:none;animation:invite 2.4s ease-out infinite}
+@keyframes invite{0%{opacity:.85;transform:scale(1)}70%,100%{opacity:0;transform:scale(1.12,1.55)}}
+.toy-hint{margin:20px 0 0;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;font-stretch:90%;color:var(--paper-2)}
+.toy-hint i{flex:none;width:11px;height:11px;border-radius:50%;background:var(--fire);box-shadow:0 0 0 4px rgba(255,107,44,.25)}
+.toy-hint b{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--paper)}
+
+/* the flight */
+.flight{overflow:hidden;background:radial-gradient(120% 90% at 50% 40%,#123a68 0%,#0d2c52 60%,#0a2343 100%)}
+.atlas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.at-grid line{stroke:rgba(143,180,223,.28);stroke-width:1;stroke-dasharray:2 6;vector-effect:non-scaling-stroke}
+.at-grid text{fill:rgba(147,169,198,.8);font-family:var(--font);font-weight:600;font-stretch:80%}
+.at-land path{fill:#1d4a7f;stroke:rgba(237,240,234,.7);stroke-width:1.1;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.at-river{fill:none;stroke:rgba(143,180,223,.9);stroke-width:1.6;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.at-sea{fill:rgba(195,208,225,.5);font-family:var(--font);font-weight:650;font-stretch:120%;letter-spacing:.5em}
+.at-route{fill:none;stroke:rgba(237,240,234,.55);stroke-width:1.6;stroke-dasharray:1.5 7;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.at-done{fill:none;stroke:var(--fire);stroke-linecap:round}
+.at-city circle{fill:var(--cyan);stroke:var(--fire);stroke-width:2.5;vector-effect:non-scaling-stroke}
+.at-city text{fill:var(--paper);font-family:var(--font);font-weight:720}
+.at-plane path{fill:var(--paper);stroke:var(--night);stroke-width:.6}
+.at-shadow path{fill:rgba(3,9,22,.5)}
+.pass{position:absolute;left:var(--gutter);bottom:max(30px,6vh);width:min(330px,calc(100% - 40px));padding:16px 18px 14px;border-radius:18px;background:rgba(8,18,38,.74);border:1px solid rgba(237,240,234,.2);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.pass-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pass-row b{font-size:30px;font-weight:820;font-stretch:115%;letter-spacing:-.02em;line-height:1}
+.pass-row svg{width:30px;height:24px;fill:var(--fire)}
+.pass-row.small{margin-top:4px;font-size:13px;font-weight:600;font-stretch:88%;color:var(--paper-3)}
+.pass-bar{height:4px;margin:14px 0 8px;border-radius:4px;background:rgba(237,240,234,.15);overflow:hidden}
+.pass-bar i{display:block;height:100%;background:var(--fire);transform-origin:left center;transform:scaleX(0)}
+#passKm{font-variant-numeric:tabular-nums;color:var(--paper)}
+.flight-hint{position:absolute;right:var(--gutter);bottom:max(34px,6.5vh);margin:0;font-size:14px;font-weight:600;font-stretch:88%;color:var(--paper-3)}
+
+/* stop 4: dots on the photo */
+.spots{position:absolute;inset:0;z-index:3}
+.spot{position:absolute;left:var(--x);top:var(--y);width:26px;height:26px;margin:-13px 0 0 -13px;padding:0;border-radius:50%;border:2px solid var(--paper);background:var(--fire);cursor:pointer;opacity:0;transform:scale(.3);transition:opacity .4s ease calc(1s + var(--i) * .15s),transform .6s var(--out) calc(1s + var(--i) * .15s),background .2s}
+.spot::before{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid rgba(255,107,44,.85);pointer-events:none;animation:ping2 1.9s ease-out infinite;animation-delay:calc(var(--i) * .35s)}
+@keyframes ping2{0%{opacity:.9;transform:scale(.6)}80%,100%{opacity:0;transform:scale(1.7)}}
+.scanned .spot{opacity:1;transform:none}
+.spot.seen{background:var(--paper);border-color:var(--fire)}
+.spot.seen::before{animation:none;opacity:0}
+.spot[aria-expanded="true"]{background:var(--ember);border-color:var(--paper)}
+.radar{position:absolute;left:50%;top:50%;z-index:2;width:170%;aspect-ratio:1;margin:-85% 0 0 -85%;border-radius:50%;pointer-events:none;opacity:0;background:conic-gradient(from 0deg,rgba(255,107,44,0) 0deg,rgba(255,107,44,0) 285deg,rgba(255,140,60,.38) 354deg,rgba(255,225,180,.75) 360deg)}
+.scanned .radar{animation:sweep 1.5s cubic-bezier(.45,0,.2,1) both}
+@keyframes sweep{0%{opacity:0;transform:rotate(0)}12%,85%{opacity:1}100%{opacity:0;transform:rotate(360deg)}}
+.spot-card{position:absolute;z-index:4;width:min(290px,82%);padding:14px 16px 15px;border-radius:14px;background:var(--paper);color:var(--night);box-shadow:0 20px 50px rgba(3,9,22,.5);font-size:14.5px;line-height:1.45}
+.spot-card b{display:block;margin-bottom:4px;font-size:15.5px;font-weight:760;font-stretch:104%}
+.spot-card p{margin:0}
+.spot-card[hidden]{display:none}
+
+/* stop 5: six hours on the clock */
+.clock{width:100%;max-width:380px;margin-top:24px;--v:0}
+.clock-top{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;font-weight:600;font-stretch:90%;color:var(--paper-2)}
+.clock-top b{font-size:22px;font-weight:780;font-stretch:110%;color:var(--paper);font-variant-numeric:tabular-nums}
+.clock-track{position:relative;height:38px;margin-top:4px;cursor:pointer;touch-action:none}
+.clock-track::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:4px;background:rgba(237,240,234,.18)}
+.clock-fill{position:absolute;left:0;top:50%;width:calc(var(--v) * 100%);height:4px;margin-top:-2px;border-radius:4px;background:var(--fire)}
+.clock-ticks{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.clock-ticks i{width:2px;height:12px;border-radius:2px;background:rgba(237,240,234,.35)}
+.clock-knob{position:absolute;top:50%;left:calc(var(--v) * 100%);width:26px;height:26px;margin:-13px 0 0 -13px;padding:0;border-radius:50%;border:3px solid var(--fire);background:var(--paper);cursor:grab;touch-action:none}
+.clock-knob::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid rgba(255,107,44,.75);pointer-events:none;animation:ping2 1.9s ease-out infinite}
+.clock.used .clock-knob::after{display:none}
+.clock-say{margin:6px 0 0;min-height:2.9em;font-size:15px;line-height:1.45;color:var(--paper-2)}
+#stop5.clocked .sketch .anim{stroke-dashoffset:calc(500px * (1 - var(--h,0)))}
+#stop5.clocked .sketch .rise rect{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(calc(.12 + .88 * var(--h,0)));transition:transform .2s}
+
+/* stop 6: the stamp */
+.stamp{position:absolute;left:clamp(16px,4%,40px);top:clamp(16px,6%,44px);z-index:3;display:grid;justify-items:center;padding:10px 18px 9px;border:3px solid var(--fire);border-radius:10px;background:rgba(8,18,38,.45);color:var(--fire);line-height:1;text-transform:uppercase;opacity:0;transform:rotate(-9deg);pointer-events:none}
+.stamp b{font-size:clamp(28px,3.2vw,46px);font-weight:860;font-stretch:118%;letter-spacing:.02em}
+.stamp span{margin-top:6px;font-size:11px;font-weight:700;font-stretch:90%;letter-spacing:.16em}
+.slammed .stamp{animation:slam .6s cubic-bezier(.2,1.5,.45,1) both}
+@keyframes slam{0%{opacity:0;transform:rotate(-22deg) scale(2.7)}55%{opacity:1}100%{opacity:1;transform:rotate(-9deg) scale(1)}}
+.photo.jolt{animation:jolt .38s ease-out}
+@keyframes jolt{20%{transform:translate(4px,5px)}45%{transform:translate(-4px,-2px)}70%{transform:translate(2px,1px)}}
+.slammed .sketch .anim{stroke-dasharray:6 9;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-30}}
+.toys{position:fixed;inset:0;width:100%;height:100%;z-index:36;pointer-events:none}
+
+/* ---------- The o: night plate with a window, and the name ---------- */
+.plate{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.plate[hidden]{display:none}
+.lens{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 var(--gutter);transform-origin:0 0;pointer-events:none}
+.lens.off{visibility:hidden}
+.name{margin:0;font-size:var(--name-size);font-weight:850;font-stretch:125%;letter-spacing:-.045em;line-height:.86;white-space:nowrap;color:var(--paper);user-select:none;-webkit-user-select:none}
+.name .line{display:inline-block}
+.name .ch{display:inline-block}
+.name .sp{display:inline-block;width:.22em}
+.name .o{display:inline-block;width:.6em;height:.6em;margin:0 .05em 0 .045em;vertical-align:-.012em}
+.writing .name .w{opacity:0}
+.writing .name .p{opacity:0;transform:scale(1.8);filter:blur(5px)}
+.name .p.in{opacity:1;transform:none;filter:none;transition:opacity .2s,transform .42s var(--out),filter .3s}
+.finale-copy{margin:clamp(22px,3.6vh,40px) 0 0;max-width:32ch;font-size:clamp(17px,1.4vw,21px);line-height:1.5;color:var(--paper-2)}
+.actions{margin-top:clamp(22px,3.8vh,42px);display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.act{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:56px;padding:0 26px 0 20px;border-radius:999px;border:1px solid rgba(237,240,234,.3);background:rgba(17,36,74,.55);font-size:16px;font-weight:650;font-stretch:96%;line-height:1.2;color:var(--paper);text-decoration:none;cursor:pointer;transition:background .3s,color .3s,border-color .3s,transform .45s var(--out)}
+.act svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.act.primary{background:var(--fire);border-color:var(--fire);color:var(--night)}
+.act:hover{transform:translateY(-3px);background:var(--paper);border-color:var(--paper);color:var(--night)}
+.act.quiet{background:none;border-color:transparent;color:var(--paper-2)}
+.act.quiet:hover{background:rgba(237,240,234,.08);border-color:rgba(237,240,234,.22);color:var(--paper)}
+.js .lens .finale-copy,.js .lens .act{opacity:0;translate:0 16px;pointer-events:none;transition:background .3s,color .3s,border-color .3s,transform .45s var(--out),opacity .35s,translate .5s var(--out)}
+.js .lens.revealed .finale-copy,.js .lens.revealed .act{opacity:1;translate:0 0;pointer-events:auto;transition:background .3s,color .3s,border-color .3s,transform .45s var(--out),opacity .8s ease var(--d,0s),translate 1s var(--out) var(--d,0s)}
+
+/* the robot's pen */
+.ink{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;display:none}
+.ink.on{display:block}
+.ink text{fill:var(--paper);font-family:var(--font);font-weight:850}
+.ink .mk{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round}
+.ink .laser{stroke:#ffd9a0;stroke-width:2;stroke-linecap:round}
+.ink .laser-glow{stroke:rgba(255,107,44,.45);stroke-width:9;stroke-linecap:round}
+
+/* ---------- The robot ---------- */
+.robot{position:fixed;left:0;top:0;z-index:125;width:92px;height:115px;pointer-events:none;will-change:transform}
+.robot[hidden]{display:none}
+.bot-wrap{width:100%;height:100%}
+.bot{display:block;width:100%;height:100%;overflow:visible}
+.bot-flame{transform-origin:0 50px;transform-box:view-box}
+.bot-eyes{transform-origin:0 -19px;transform-box:view-box;transition:transform .08s}
+.bot-arm-r{transform-origin:28px 24px;transform-box:view-box}
+.bot-bulb{animation:bulb 1.4s ease-in-out infinite}
+@keyframes bulb{50%{opacity:.35}}
+.bubble{position:fixed;left:0;top:0;z-index:126;width:max-content;max-width:min(330px,80vw);padding:13px 17px;border-radius:18px;background:var(--paper);color:var(--night);font-size:16px;font-weight:640;font-stretch:96%;line-height:1.38;box-shadow:0 18px 50px rgba(3,9,22,.45);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;pointer-events:none}
+.bubble.show{opacity:1;visibility:visible;pointer-events:auto}
+.bubble::after{content:"";position:absolute;bottom:-6px;left:var(--tail,50%);width:14px;height:14px;margin-left:-7px;background:var(--paper);transform:rotate(45deg);border-radius:3px}
+.bubble p{margin:0;min-height:1.38em}
+.bubble .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.bubble .btns:empty{display:none}
+.bubble button{padding:9px 15px;border-radius:999px;border:1px solid rgba(8,18,38,.25);background:transparent;color:var(--night);font-size:14px;font-weight:650;cursor:pointer;transition:background .2s,color .2s}
+.bubble button.primary{background:var(--fire);border-color:var(--fire);color:var(--night)}
+.bubble button:hover{background:var(--night);border-color:var(--night);color:var(--paper)}
+
+.intro-ui{position:fixed;left:0;right:0;bottom:0;z-index:140;display:flex;justify-content:space-between;padding:0 var(--gutter) max(16px,env(safe-area-inset-bottom));pointer-events:none;transition:opacity .4s,visibility .4s}
+.intro-ui>*{pointer-events:auto}
+.intro-ui.gone{opacity:0;visibility:hidden}
+.ghost{background:none;border:0;padding:10px 2px;font-size:14px;font-weight:580;font-stretch:88%;color:var(--paper-3);cursor:pointer;transition:color .2s}
+.ghost:hover{color:var(--paper)}
+.sound{display:inline-flex;align-items:center;gap:8px}
+.sound svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.sound[aria-pressed="false"] .is-on,.sound[aria-pressed="true"] .is-off{display:none}
+
+/* ---------- Explosion layers ---------- */
+.fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;display:block}
+.fx[hidden]{display:none}
+#fxSmoke{z-index:110}
+#fxFire{z-index:111;mix-blend-mode:screen}
+.flash{position:fixed;inset:0;z-index:130;pointer-events:none;opacity:0;mix-blend-mode:screen;background:#fff8ea}
+.sparks{position:fixed;inset:0;width:100%;height:100%;z-index:30;pointer-events:none;mix-blend-mode:screen}
+.grain{position:fixed;inset:0;z-index:150;pointer-events:none;opacity:.07;background-size:160px 160px}
+
+/* ---------- Stop index ---------- */
+.dots{position:fixed;right:max(14px,1.6vw);top:50%;z-index:35;display:flex;flex-direction:column;align-items:center;gap:13px;transform:translateY(-50%);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+.dots.show{opacity:1;visibility:visible}
+.dots a{position:relative;display:block;width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(237,240,234,.55);background:rgba(8,18,38,.3);transition:background .3s,border-color .3s,transform .3s}
+.dots a.done{background:var(--fire);border-color:var(--fire)}
+.dots a.on{transform:scale(1.55);background:var(--fire);border-color:var(--fire)}
+.dots a::after{content:attr(data-label);position:absolute;right:22px;top:50%;transform:translateY(-50%);padding:5px 10px;border-radius:6px;background:rgba(8,18,38,.85);color:var(--paper);font-size:13px;font-weight:600;font-stretch:88%;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.dots a:hover::after,.dots a:focus-visible::after{opacity:1}
+
+/* ---------- Résumé ---------- */
+.cv{width:min(920px,94vw);height:min(92vh,1240px);max-width:none;max-height:none;margin:auto;padding:0;border:1px solid rgba(237,240,234,.14);border-radius:18px;background:var(--night);color:var(--paper);overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.55)}
+.cv::backdrop{background:rgba(5,11,24,.74);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.cv[open]{animation:cvIn .55s var(--out)}
+@keyframes cvIn{from{opacity:0;transform:translateY(24px) scale(.98)}}
+.cv-bar{height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 12px 0 22px;border-bottom:1px solid rgba(237,240,234,.1)}
+.cv-bar h2{margin:0;font-size:16px;font-weight:700}
+.cv-tools{display:flex;align-items:center;gap:8px}
+.icon-btn{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(237,240,234,.22);background:none;color:var(--paper);cursor:pointer;transition:background .25s,color .25s}
+.icon-btn:hover{background:var(--paper);color:var(--night)}
+.icon-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.cv-scroll{height:calc(100% - 64px);overflow:auto;overscroll-behavior:contain;padding:clamp(12px,3vw,28px);background:#0d1c38}
+.cv-scroll img{display:block;width:100%;max-width:800px;height:auto;margin:0 auto;border-radius:6px;background:#fff;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+
+/* ---------- Small screens ---------- */
+@media (max-width:760px){
+  :root{--name-size:min(23vw,124px)}
+  body{font-size:17px}
+  .name{font-stretch:90%;letter-spacing:-.04em;line-height:.9}
+  .name .line{display:block}
+  .name .sp{display:none}
+  .nav{padding:12px 16px}
+  .wordmark{font-size:17px}
+  .pill{padding:8px 12px;font-size:13px}
+  .stop,.stop.flip{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;align-content:center;row-gap:24px;padding:72px 18px 28px}
+  .stop .photo,.stop.flip .photo{grid-column:1;grid-row:1;height:40vh;height:40svh;border-radius:22px}
+  .stop .story,.stop.flip .story{grid-column:1;grid-row:2;justify-self:start;max-width:none}
+  .story h3{font-size:clamp(32px,9.5vw,44px)}
+  .story .body{font-size:16.5px;line-height:1.55}
+  .place{margin-top:16px}
+  .sketch{width:112px;padding:6px;border-radius:12px}
+  .credit{max-width:calc(100% - 150px);font-size:10px}
+  .actions{flex-direction:column;align-items:stretch;width:min(100%,330px)}
+  .robot{width:72px;height:90px}
+  .bubble{font-size:15px}
+  .dots{display:none}
+  .stop.has-toy .photo{height:31vh;height:31svh}
+  .toy{margin-top:14px;padding:8px 14px 8px 10px;font-size:13.5px}
+  .toy-hint{margin-top:12px;font-size:13px}
+  .clock{margin-top:12px}
+  .clock-say{min-height:0;font-size:14px}
+  .pass{left:16px;right:16px;width:auto;bottom:max(22px,4vh)}
+  .flight-hint{display:none}
+  .stamp b{font-size:26px}
+  .spot-card{font-size:13.5px;padding:11px 13px}
+}
+@media (max-width:760px) and (max-height:700px){.stop .photo,.stop.flip .photo{height:34vh}.stop.has-toy .photo{height:26vh}.story .body{font-size:15.5px}}
+
+/* ---------- Reduced motion and no JavaScript: a plain page ---------- */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+.reduced .stage,.no-js .stage{position:relative;inset:auto;overflow:visible;background:none}
+.reduced .world,.no-js .world{position:relative;inset:auto;transform:none!important;will-change:auto}
+.reduced .map,.no-js .map{position:fixed;transform:none!important}
+.reduced .scene,.no-js .scene{position:relative;inset:auto;opacity:1!important;transform:none!important;pointer-events:auto;min-height:100vh;min-height:100svh}
+.reduced .photo,.no-js .photo{--cy:0!important;--zoom:1.04!important;clip-path:none!important}
+.reduced .scene,.no-js .scene{--draw:1!important}
+.reduced .story>*,.no-js .story>*,.reduced .title-scene>*,.no-js .title-scene>*{opacity:1!important;transform:none!important}
+.reduced .plate,.no-js .plate,.reduced .ink,.no-js .ink,.reduced .robot,.no-js .robot,.reduced .bubble,.no-js .bubble,.reduced .scroller,.no-js .scroller,.reduced .intro-ui,.no-js .intro-ui,.no-js .sparks,.no-js .fx,.no-js .dots,.reduced .hint,.no-js .hint{display:none}
+.reduced .lens,.no-js .lens{position:relative;inset:auto;min-height:100vh;min-height:100svh;visibility:visible!important;transform:none!important;background:var(--night);pointer-events:auto}
+.reduced .lens .finale-copy,.reduced .lens .act,.no-js .lens .finale-copy,.no-js .lens .act{opacity:1;translate:none;pointer-events:auto}
+.reduced .name .o,.no-js .name .o{border:.13em solid var(--fire);border-radius:50%}
+.reduced .spot,.no-js .spot{opacity:1;transform:none}
+.reduced .stamp,.no-js .stamp{opacity:1}
+.reduced .flight,.no-js .flight{min-height:80vh}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="wordmark" href="#top" id="wordmark" aria-label="Noé Palego, back to the start">N<span class="o" aria-hidden="true"></span>é Palego</a>
+  <nav class="nav-links" aria-label="Résumé and GitHub">
+    <button class="pill" type="button" data-open-cv>Résumé</button>
+    <a class="pill" href="https://github.com/noepalego" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+</header>
+
+<main class="stage" id="stage">
+  <h1 class="sr" id="top">Noé Palego, the journey so far</h1>
+  <div class="world" id="world">
+    <svg class="map" id="map" aria-hidden="true"><path class="minor" id="mapMinor"/><path class="index" id="mapIndex"/></svg>
+
+    <section class="scene title-scene" id="s0" aria-labelledby="journeyTitle">
+      <h2 id="journeyTitle" data-part>Six stops since 2022.</h2>
+      <p class="lede" data-part>Computer engineering student at Polytechnique Montréal, working on security and AI.</p>
+      <p class="hint" id="hint" aria-hidden="true"><span>Scroll to begin</span><i></i></p>
+    </section>
+
+    <article class="scene stop has-toy" id="stop1" aria-labelledby="t1">
+      <figure class="photo">
+        <img alt="Luxembourg City at night, the old town of the Grund lit along the river" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Luxembourg_City_Night_Wikimedia_Commons.jpg/1280px-Luxembourg_City_Night_Wikimedia_Commons.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Luxembourg_City_Night_Wikimedia_Commons.jpg/960px-Luxembourg_City_Night_Wikimedia_Commons.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Luxembourg_City_Night_Wikimedia_Commons.jpg/1280px-Luxembourg_City_Night_Wikimedia_Commons.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Luxembourg_City_Night_Wikimedia_Commons.jpg/1920px-Luxembourg_City_Night_Wikimedia_Commons.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
+        <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Luxembourg_City_Night_Wikimedia_Commons.jpg/1280px-Luxembourg_City_Night_Wikimedia_Commons.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Luxembourg_City_Night_Wikimedia_Commons.jpg/960px-Luxembourg_City_Night_Wikimedia_Commons.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Luxembourg_City_Night_Wikimedia_Commons.jpg/1280px-Luxembourg_City_Night_Wikimedia_Commons.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Luxembourg_City_Night_Wikimedia_Commons.jpg/1920px-Luxembourg_City_Night_Wikimedia_Commons.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
+        <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><path class="plate" d="M62 68h235v145H62z"/><path class="fine" d="M62 94h235M75 82h4m7 0h4m7 0h4"/><rect class="shade" x="88" y="118" width="80" height="70" rx="7"/><rect class="plate" x="199" y="118" width="71" height="70" rx="7"/><path class="heavy" d="M113 148v-10a15 15 0 0 1 30 0v10m-34 0h38v23h-38zM128 157v7"/><path class="accent anim" d="M168 153h31m-8-6 8 6-8 6"/><path class="fine" d="M212 135h44m-44 12h35m-35 12h44m-44 12h25"/><circle class="accentfill" cx="184" cy="153" r="4"/><text x="62" y="52">ENCRYPTION</text><text x="62" y="240">PUBLIC KEY / PRIVATE KEY</text></svg></div>
+        <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:Luxembourg_City_Night_Wikimedia_Commons.jpg" target="_blank" rel="noopener noreferrer">Benh Lieu Song</a>, CC BY-SA 3.0</figcaption>
+      </figure>
+      <div class="story">
+        <p class="label when" data-part>April–May 2022</p>
+        <h3 id="t1" data-part>First contact.</h3>
+        <p class="body" id="cryptoText" data-part>At POST Luxembourg, I discovered the world of technology and presented the fundamentals of cryptography to professionals.</p>
+        <p class="place" data-part><b>Luxembourg City, Luxembourg</b><span class="label">49.61° N, 6.13° E</span></p>
+        <button class="toy" type="button" id="cryptoBtn" data-part aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path class="shackle" d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg><span>Encrypt this paragraph</span></button>
+      </div>
+    </article>
+
+    <article class="scene stop flip has-toy" id="stop2" aria-labelledby="t2">
+      <figure class="photo">
+        <img alt="The Tour aux Puces, a medieval tower in the centre of Thionville" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/960px-Thionville_-_Tour_aux_Puces_%285%29.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1920px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
+        <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/960px-Thionville_-_Tour_aux_Puces_%285%29.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1280px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Thionville_-_Tour_aux_Puces_%285%29.JPG/1920px-Thionville_-_Tour_aux_Puces_%285%29.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
+        <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><g transform="rotate(-12 139 140)"><rect class="shade" x="72" y="54" width="130" height="169" rx="4"/><path class="fine" d="M88 73h98v133H88zM105 99h62m-65 16h66m-48 16h35"/><circle class="accent" cx="137" cy="168" r="16"/><path class="accent" d="m126 180-4 24 15-9 14 9-3-24"/><text x="105" y="87">FRANCE</text></g><g class="rise"><g transform="rotate(12 221 140)"><rect class="plate" x="157" y="56" width="130" height="169" rx="4"/><path class="fine" d="M173 73h98v135h-98zM190 99h62m-65 16h66m-48 16h35"/><circle class="accent" cx="222" cy="168" r="16"/><path class="accent" d="m211 180-4 24 15-9 14 9-3-24"/><text x="193" y="87">U.S.A.</text></g></g></svg></div>
+        <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:Thionville_-_Tour_aux_Puces_(5).JPG" target="_blank" rel="noopener noreferrer">Fab5669</a>, CC BY-SA 3.0</figcaption>
+      </figure>
+      <div class="story">
+        <p class="label when" data-part>2025</p>
+        <h3 id="t2" data-part>Two diplomas. New horizons.</h3>
+        <p class="body" data-part>I completed the French Baccalauréat and a U.S. High School Diploma, graduating on the Honor Roll in the dual-diploma program.</p>
+        <p class="place" data-part><b>Thionville, France</b><span class="label">49.36° N, 6.17° E</span></p>
+        <button class="toy" type="button" id="capsBtn" data-part><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5 12 5l10 4.5L12 14z"/><path d="M6.5 11.6V15c0 1.4 2.5 2.8 5.5 2.8s5.5-1.4 5.5-2.8v-3.4M21 10v5.5"/></svg><span>Throw the caps</span></button>
+      </div>
+    </article>
+
+    <section class="scene flight" id="flight" aria-label="The flight from Luxembourg to Montréal" data-exit=".58,.3">
+      <svg class="atlas" id="atlas" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <g class="at-grid" id="atGrid"></g>
+        <g class="at-land" id="atLand"></g>
+        <path class="at-river" id="atRiver"/>
+        <text class="at-sea" id="atSea" text-anchor="middle">NORTH ATLANTIC</text>
+        <path class="at-route" id="atRoute"/>
+        <path class="at-done" id="atDone"/>
+        <g class="at-city" id="atLUX"><circle r="1"/><text text-anchor="start">Luxembourg</text></g>
+        <g class="at-city" id="atYUL"><circle r="1"/><text text-anchor="end">Montréal</text></g>
+        <g class="at-shadow" id="atShadow"></g>
+        <g class="at-plane" id="atPlane"></g>
+      </svg>
+      <div class="pass" data-part>
+        <div class="pass-row"><b>LUX</b><svg viewBox="-17 -14 34 28" aria-hidden="true"><path d="M16 0 L4 -2 L-2 -12 L-6 -12 L-2 -2 L-10 -2 L-13 -6 L-15 -6 L-13 0 L-15 6 L-13 6 L-10 2 L-2 2 L-6 12 L-2 12 L4 2 Z"/></svg><b>YUL</b></div>
+        <div class="pass-row small"><span>Luxembourg</span><span>Montréal</span></div>
+        <div class="pass-bar"><i id="passFill"></i></div>
+        <div class="pass-row small"><span id="passStatus">Boarding</span><span id="passKm">0 km</span></div>
+      </div>
+      <p class="flight-hint" id="flightHint">Keep scrolling to fly</p>
+    </section>
+
+    <article class="scene stop" id="stop3" aria-labelledby="t3">
+      <figure class="photo">
+        <img alt="Polytechnique Montréal on the slope of Mount Royal, surrounded by trees" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG/1280px-%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG/960px-%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG/1280px-%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG 1280w, https://upload.wikimedia.org/wikipedia/commons/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG 1893w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
+        <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG/1280px-%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG/960px-%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG/1280px-%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG 1280w, https://upload.wikimedia.org/wikipedia/commons/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG 1893w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
+        <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><circle class="plate" cx="180" cy="141" r="112"/><ellipse class="fine" cx="180" cy="141" rx="63" ry="112"/><ellipse class="fine" cx="180" cy="141" rx="112" ry="48"/><path class="fine" d="M68 141h224M180 29v224M94 76q86 40 172 0M94 206q86-40 172 0"/><path class="shade" d="m92 87 20-20 30 4 14 17-18 15-9 20-20-6-14-18zM232 67l20 14 14 20-9 20-20-4-6-17-23-4 8-21z"/><path class="accent anim" d="M239 101Q180 19 117 107"/><circle class="accentfill" cx="239" cy="101" r="4"/><circle class="accentfill" cx="117" cy="107" r="5"/><text x="48" y="124">YUL</text><text x="250" y="94">EUROPE</text><text x="180" y="276" text-anchor="middle">A NEW CONTINENT</text></svg></div>
+        <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG" target="_blank" rel="noopener noreferrer">Laurent Bélanger</a>, CC BY-SA 4.0</figcaption>
+      </figure>
+      <div class="story">
+        <p class="label when" data-part>2025 to 2030</p>
+        <h3 id="t3" data-part>Across the Atlantic.</h3>
+        <p class="body" data-part>I joined Polytechnique Montréal to study computer engineering, exploring code, mathematics and the systems behind modern technology.</p>
+        <p class="place" data-part><b>Montréal, Canada</b><span class="label">45.50° N, 73.61° W</span></p>
+      </div>
+    </article>
+
+    <article class="scene stop flip has-toy" id="stop4" aria-labelledby="t4">
+      <figure class="photo">
+        <img alt="The blast furnaces of Belval in Esch-sur-Alzette, lit in blue at night" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1280px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/960px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1280px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1920px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
+        <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1280px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/960px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1280px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG/1920px-Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
+        <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><path class="plate" d="M180 32 300 95 180 158 60 95z"/><path class="shade" d="m60 95 120 63v31L60 126z"/><path class="plate" d="m300 95-120 63v31l120-63z"/><path class="fine" d="m80 105 100 52 100-52M180 189v26M80 137v30l100 53 100-53v-30"/><path class="accent anim" d="m100 94 80-42 80 42-80 42z"/><g class="rise"><path class="shade" d="M180 74 207 85v24q-3 22-27 32-24-10-27-32V85z"/><path class="heavy" d="m168 106 9 9 16-19"/></g><text x="180" y="270" text-anchor="middle">CLOUD / SECURITY / AI</text></svg></div>
+        <div class="radar" aria-hidden="true"></div>
+        <div class="spots" id="spots">
+          <button class="spot" type="button" style="--x:18%;--y:28%;--i:0" aria-expanded="false" data-t="Cloud audit" data-d="A full Microsoft Azure and Entra ID security audit. I found gaps in multi-factor authentication and over-privileged roles, and recommended fixes to raise the Secure Score."><span class="sr">Cloud audit</span></button>
+          <button class="spot" type="button" style="--x:55%;--y:20%;--i:1" aria-expanded="false" data-t="Web pentest" data-d="An end-to-end penetration test of a production Odoo 19 app: 15 confirmed vulnerabilities, including a broken object level authorization (BOLA) flaw and an exposed database interface."><span class="sr">Web pentest</span></button>
+          <button class="spot" type="button" style="--x:36%;--y:58%;--i:2" aria-expanded="false" data-t="AI agents" data-d="I deployed PentAGI, an autonomous AI pentesting framework, on Kali Linux with Azure AI Foundry, fixed what blocked it, and it found a Cloudflare origin-server bypass."><span class="sr">AI agents</span></button>
+          <button class="spot" type="button" style="--x:73%;--y:42%;--i:3" aria-expanded="false" data-t="Executive report" data-d="I brought three parallel security workstreams together in a 14-slide presentation for internal stakeholders."><span class="sr">Executive report</span></button>
+          <div class="spot-card" id="spotCard" hidden><b id="spotTitle"></b><p id="spotText"></p></div>
+        </div>
+        <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:Belval_illuminated_blast_furnaces_2014-07-04_--2.JPG" target="_blank" rel="noopener noreferrer">Zinneke</a>, CC BY-SA 3.0 LU</figcaption>
+      </figure>
+      <div class="story">
+        <p class="label when" data-part>May–July 2026</p>
+        <h3 id="t4" data-part>Security in the real world.</h3>
+        <p class="body" data-part>As a Security Analyst at Digital Learning Hub, I audited cloud infrastructure, assessed web application security and worked with autonomous AI security agents.</p>
+        <p class="place" data-part><b>Esch-sur-Alzette, Luxembourg</b><span class="label">49.50° N, 5.98° E</span></p>
+        <p class="toy-hint" id="spotHint" data-part><i aria-hidden="true"></i><span>Tap the dots on the photo to see the work</span><b id="spotCount">0 of 4</b></p>
+      </div>
+    </article>
+
+    <article class="scene stop has-toy" id="stop5" aria-labelledby="t5">
+      <figure class="photo">
+        <img alt="The glass Tour Deloitte in downtown Montréal against a blue sky" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/960px-Tour_Deloitte_22.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1920px-Tour_Deloitte_22.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
+        <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/960px-Tour_Deloitte_22.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1280px-Tour_Deloitte_22.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tour_Deloitte_22.jpg/1920px-Tour_Deloitte_22.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
+        <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><rect class="plate" x="58" y="47" width="244" height="175" rx="8"/><path class="fine" d="M80 75h200M80 195h200M92 90v105M92 165h176M92 135h176M92 105h176" stroke-dasharray="3 5"/><g class="rise"><rect class="shade" x="110" y="157" width="29" height="38"/><rect class="shade" x="151" y="137" width="29" height="58"/><rect class="shade" x="192" y="115" width="29" height="80"/><rect class="shade" x="233" y="89" width="29" height="106"/></g><path class="accent anim" d="m110 143 53-21 46-18 48-36m-13 1 13-1-2 13"/><text x="74" y="66">CASE STUDY / M&amp;A</text><text x="180" y="262" text-anchor="middle">STRUCTURE / HYPOTHESIS / STRATEGY</text></svg></div>
+        <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:Tour_Deloitte_22.jpg" target="_blank" rel="noopener noreferrer">Jeangagnon</a>, CC BY-SA 4.0</figcaption>
+      </figure>
+      <div class="story">
+        <p class="label when" data-part>September 2026</p>
+        <h3 id="t5" data-part>Beyond the code.</h3>
+        <p class="body" data-part>At Deloitte’s Crack the Case, I explored mergers and acquisitions through a six-hour case study, combining structured thinking with business strategy.</p>
+        <p class="place" data-part><b>Montréal, Canada</b><span class="label">45.50° N, 73.57° W</span></p>
+        <div class="clock" data-part>
+          <div class="clock-top"><span>Six hours on the clock</span><b id="clockTime">0h00</b></div>
+          <div class="clock-track" id="clockTrack"><span class="clock-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="clock-fill" id="clockFill"></span><button class="clock-knob" id="clockKnob" type="button" role="slider" aria-label="Hours into the case" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" aria-valuetext="0 hours"></button></div>
+          <p class="clock-say" id="clockSay">Drag the clock to replay the case.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="scene stop flip" id="stop6" aria-labelledby="t6">
+      <figure class="photo">
+        <img alt="The Montréal skyline at night, towers lit in warm light" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1280px-Montreal_skyline_by_night.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/960px-Montreal_skyline_by_night.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1280px-Montreal_skyline_by_night.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1920px-Montreal_skyline_by_night.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer">
+        <div class="ph-cyano" aria-hidden="true"><img alt="" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1280px-Montreal_skyline_by_night.jpg" srcset="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/960px-Montreal_skyline_by_night.jpg 960w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1280px-Montreal_skyline_by_night.jpg 1280w, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Montreal_skyline_by_night.jpg/1920px-Montreal_skyline_by_night.jpg 1920w" sizes="(max-width:760px) 92vw, 56vw" decoding="async" referrerpolicy="no-referrer"></div>
+        <div class="sketch" aria-hidden="true"><svg viewBox="0 0 360 290"><circle class="plate" cx="180" cy="141" r="111"/><circle class="fine" cx="180" cy="141" r="84" stroke-dasharray="3 5"/><path class="accent anim" d="M180 141 100 95m80 46 80-46m-80 46-80 46m80-46 80 46m-80-46v-98m0 98v98"/><g class="rise"><circle class="shade" cx="100" cy="95" r="17"/><circle class="shade" cx="260" cy="95" r="17"/><circle class="shade" cx="100" cy="187" r="17"/><circle class="shade" cx="260" cy="187" r="17"/><circle class="shade" cx="180" cy="43" r="13"/><circle class="shade" cx="180" cy="239" r="13"/></g><circle class="plate" cx="180" cy="141" r="30"/><text x="180" y="147" text-anchor="middle" style="font-size:19px;font-weight:800;font-stretch:110%;fill:#ff6b2c">AI</text><text x="180" y="281" text-anchor="middle">TOP 5 / FINALIST TEAM</text></svg></div>
+        <div class="stamp" aria-hidden="true"><b>Top 5</b><span>Finalist team</span></div>
+        <figcaption class="credit">Photo <a href="https://commons.wikimedia.org/wiki/File:Montreal_skyline_by_night.jpg" target="_blank" rel="noopener noreferrer">Richard Bartz</a>, CC BY-SA 2.5</figcaption>
+      </figure>
+      <div class="story">
+        <p class="label when" data-part>November 2026</p>
+        <h3 id="t6" data-part>Building with AI.</h3>
+        <p class="body" data-part>Our team reached the top five at the PolyFinances Datathon, developing an AI-powered solution to economic challenges and presenting it to a jury.</p>
+        <p class="place" data-part><b>Montréal, Canada</b><span class="label">45.50° N, 73.61° W</span></p>
+      </div>
+    </article>
+  </div>
+
+  <canvas class="plate" id="plate" hidden aria-hidden="true"></canvas>
+
+  <div class="lens off" id="lens">
+    <h2 class="name" id="name"><span class="sr">Noé Palego</span><span aria-hidden="true"><span class="line"><span class="ch w" data-l="N">N</span><span class="o" id="ring"></span><span class="ch w" data-l="é">é</span></span><span class="sp"></span><span class="line"><span class="ch p">P</span><span class="ch p">a</span><span class="ch p">l</span><span class="ch p">e</span><span class="ch p">g</span><span class="ch p">o</span><span class="ch p">.</span></span></span></h2>
+    <p class="finale-copy">Six stops so far. Where to next?</p>
+    <div class="actions">
+      <button class="act primary" type="button" data-open-cv style="--d:.05s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7zM14 3v5h4M10 12h5M10 16h5"/></svg>View my résumé</button>
+      <a class="act" href="https://github.com/noepalego" target="_blank" rel="noopener noreferrer" style="--d:.13s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1-4-2-6-2.5M15 22v-3.3a3 3 0 0 0-.8-2.3c2.7-.3 5.5-1.3 5.5-6A4.7 4.7 0 0 0 18.5 7c.1-.4.5-1.7-.2-3.3 0 0-1-.3-3.4 1.3a11.5 11.5 0 0 0-5.8 0C6.7 3.4 5.7 3.7 5.7 3.7 5 5.3 5.4 6.6 5.5 7a4.7 4.7 0 0 0-1.2 3.4c0 4.7 2.8 5.7 5.5 6A3 3 0 0 0 9 18.7V22"/></svg>View my GitHub</a>
+      <button class="act quiet" type="button" id="backToStart" style="--d:.21s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>Back to the journey</button>
+    </div>
+  </div>
+
+  <svg class="ink" id="ink" aria-hidden="true">
+    <defs>
+      <mask id="mkN"><path class="mk" id="mpN"/></mask>
+      <mask id="mkE"><path class="mk" id="mpE"/><path class="mk" id="mpA"/></mask>
+    </defs>
+    <text id="inkN" mask="url(#mkN)">N</text>
+    <text id="inkE" mask="url(#mkE)">é</text>
+    <line class="laser-glow" id="laserG"/>
+    <line class="laser" id="laser"/>
+  </svg>
+</main>
+
+<div class="scroller" id="scroller" aria-hidden="true"></div>
+
+<nav class="dots" id="dots" aria-label="Stops">
+  <a href="#stop1" data-k="1" data-label="First contact" aria-label="Stop 1, First contact"></a>
+  <a href="#stop2" data-k="2" data-label="Two diplomas" aria-label="Stop 2, Two diplomas"></a>
+  <a href="#flight" data-k="3" data-label="Across the Atlantic" aria-label="Stop 3, Across the Atlantic"></a>
+  <a href="#stop4" data-k="5" data-label="Security" aria-label="Stop 4, Security in the real world"></a>
+  <a href="#stop5" data-k="6" data-label="Beyond the code" aria-label="Stop 5, Beyond the code"></a>
+  <a href="#stop6" data-k="7" data-label="Building with AI" aria-label="Stop 6, Building with AI"></a>
+</nav>
+
+<div class="robot" id="robot" hidden aria-hidden="true">
+  <div class="bot-wrap" id="botWrap">
+    <svg class="bot" viewBox="-60 -70 120 150">
+      <defs><radialGradient id="flameG" cx="50%" cy="15%" r="85%"><stop offset="0" stop-color="#fff4d6"/><stop offset=".35" stop-color="#ffc15e"/><stop offset=".75" stop-color="#ff6b2c"/><stop offset="1" stop-color="#ff6b2c" stop-opacity="0"/></radialGradient></defs>
+      <path class="bot-flame" id="botFlame" d="M-11 50 Q0 96 11 50 Z" fill="url(#flameG)"/>
+      <path d="M0 -44V-58" stroke="#edf0ea" stroke-width="3" stroke-linecap="round"/>
+      <circle class="bot-bulb" cx="0" cy="-61" r="5" fill="#ff6b2c"/>
+      <rect x="-38" y="-46" width="76" height="56" rx="22" fill="#132a55" stroke="#edf0ea" stroke-width="3"/>
+      <rect x="-28" y="-35" width="56" height="34" rx="15" fill="#06101f"/>
+      <g class="bot-eyes" id="botEyes"><rect x="-17" y="-27" width="9" height="16" rx="4.5" fill="#ffc15e"/><rect x="8" y="-27" width="9" height="16" rx="4.5" fill="#ffc15e"/></g>
+      <rect x="-46" y="-26" width="8" height="16" rx="3" fill="#ff6b2c"/><rect x="38" y="-26" width="8" height="16" rx="3" fill="#ff6b2c"/>
+      <rect x="-8" y="9" width="16" height="7" fill="#edf0ea"/>
+      <rect x="-28" y="15" width="56" height="37" rx="14" fill="#132a55" stroke="#edf0ea" stroke-width="3"/>
+      <circle cx="0" cy="33.5" r="8" fill="none" stroke="#ff6b2c" stroke-width="4"/>
+      <path d="M-28 24q-14 6-16 20" stroke="#edf0ea" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path class="bot-arm-r" id="botArm" d="M28 24q14-8 18-24" stroke="#edf0ea" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+<div class="bubble" id="bubble" aria-hidden="true"><p id="bubbleText"></p><div class="btns" id="bubbleBtns"></div></div>
+<p class="sr" id="robotSays" aria-live="polite"></p>
+
+<div class="intro-ui" id="introUI">
+  <button class="ghost" id="skipIntro" type="button">Skip intro</button>
+  <button class="ghost sound" id="sound" type="button" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="is-on" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/><path class="is-off" d="m16 9.5 5 5m0-5-5 5"/></svg><span class="is-on">Sound on</span><span class="is-off">Sound off</span></button>
+</div>
+
+<canvas class="fx" id="fxSmoke" hidden aria-hidden="true"></canvas>
+<canvas class="fx" id="fxFire" hidden aria-hidden="true"></canvas>
+<div class="flash" id="flash" aria-hidden="true"></div>
+<canvas class="sparks" id="sparks" aria-hidden="true"></canvas>
+<canvas class="toys" id="toys" aria-hidden="true"></canvas>
+<div class="grain" id="grain" aria-hidden="true"></div>
+
+<dialog class="cv" id="cvDialog" aria-labelledby="cvTitle">
+  <div class="cv-bar">
+    <h2 id="cvTitle">Résumé</h2>
+    <div class="cv-tools">
+      <a class="pill" href="assets/Noe_Palego_CV.pdf" download="Noe_Palego_CV.pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>Download PDF</a>
+      <button class="icon-btn" id="closeCV" type="button" aria-label="Close résumé"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+  </div>
+  <div class="cv-scroll"><img src="assets/Noe_Palego_CV.png" loading="lazy" width="1102" height="1426" decoding="async" alt="Résumé of Noé Palego. The PDF can be downloaded above."></div>
+</dialog>
+
+<script>
+(() => {
+'use strict';
+
+/* ==========================================================================
+   Helpers
+   ========================================================================== */
+const $ = id => document.getElementById(id);
+const root = document.documentElement, body = document.body;
+const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = t => t * t * (3 - 2 * t);
+const smoother = t => t * t * t * (t * (t * 6 - 15) + 10);
+const easeIn3 = t => t * t * t;
+const easeOut3 = t => 1 - (1 - t) * (1 - t) * (1 - t);
+const easeInOut3 = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const easeOutBack = t => { const c1 = 1.4, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+const rnd = (a, b) => a + Math.random() * (b - a);
+const TAU = Math.PI * 2;
+const fmt = n => String(Math.round(n * 10) / 10);
+const reduceMQ = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+let reduced = !!reduceMQ.matches;
+let DPR = Math.min(2, window.devicePixelRatio || 1);
+const C_FIRE = '#ff6b2c';
+const SHAKE = { x: 0, y: 0 };
+
+/* One requestAnimationFrame loop for everything that moves. */
+const Ticker = (() => {
+  const subs = new Set(); let raf = 0, last = 0;
+  const run = (dt, now) => {
+    for (const fn of Array.from(subs)) {
+      try { if (fn(dt, now) === false) subs.delete(fn); }
+      catch (e) { subs.delete(fn); if (window.console) console.error(e); }
+    }
+  };
+  const tick = now => {
+    
+    const dt = Math.min(.05, Math.max(.001, (now - last) / 1000)); last = now;
+    run(dt, now);
+    raf = subs.size ? requestAnimationFrame(tick) : 0;
+  };
+  return {
+    
+    add(fn) { subs.add(fn); if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } },
+    remove(fn) { subs.delete(fn); }
+  };
+})();
+class Abort extends Error {}
+/* tween(duration, fn(k)) resolves when done; a control object can cancel it. */
+function tween(dur, fn, ease = t => t, ctl = null) {
+  return new Promise((res, rej) => {
+    let t = 0; fn(ease(0), 0);
+    Ticker.add(dt => {
+      if (ctl && ctl.aborted) { rej(new Abort()); return false; }
+      t += dt; const k = dur > 0 ? clamp(t / dur) : 1; fn(ease(k), dt);
+      if (k >= 1) { res(); return false; }
+    });
+  });
+}
+
+/* Seeded random + 2D simplex noise (public-domain algorithm by S. Gustavson). */
+function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function makeNoise(seed) {
+  const r = mulberry32(seed), p = new Uint8Array(256), perm = new Uint8Array(512);
+  for (let i = 0; i < 256; i++) p[i] = i;
+  for (let i = 255; i > 0; i--) { const j = (r() * (i + 1)) | 0, t = p[i]; p[i] = p[j]; p[j] = t; }
+  for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
+  const GX = [1, -1, 1, -1, 1, -1, 0, 0], GY = [1, 1, -1, -1, 0, 0, 1, -1];
+  const F2 = .5 * (Math.sqrt(3) - 1), G2 = (3 - Math.sqrt(3)) / 6;
+  return (x, y) => {
+    const s = (x + y) * F2, i = Math.floor(x + s), j = Math.floor(y + s), t = (i + j) * G2;
+    const x0 = x - i + t, y0 = y - j + t, i1 = x0 > y0 ? 1 : 0, j1 = 1 - i1;
+    const x1 = x0 - i1 + G2, y1 = y0 - j1 + G2, x2 = x0 - 1 + 2 * G2, y2 = y0 - 1 + 2 * G2;
+    const ii = i & 255, jj = j & 255; let n = 0;
+    let t0 = .5 - x0 * x0 - y0 * y0; if (t0 > 0) { const g = perm[ii + perm[jj]] & 7; t0 *= t0; n += t0 * t0 * (GX[g] * x0 + GY[g] * y0); }
+    let t1 = .5 - x1 * x1 - y1 * y1; if (t1 > 0) { const g = perm[ii + i1 + perm[jj + j1]] & 7; t1 *= t1; n += t1 * t1 * (GX[g] * x1 + GY[g] * y1); }
+    let t2 = .5 - x2 * x2 - y2 * y2; if (t2 > 0) { const g = perm[ii + 1 + perm[jj + 1]] & 7; t2 *= t2; n += t2 * t2 * (GX[g] * x2 + GY[g] * y2); }
+    return 70 * n;
+  };
+}
+
+/* ==========================================================================
+   The map: a height field traced into contour lines (marching squares)
+   ========================================================================== */
+const nA = makeNoise(7), nB = makeNoise(23), nC = makeNoise(41);
+function height(x, y) {
+  const u = x / 1150, v = y / 1150;
+  const wx = .7 * nB(u * .55 + 3.7, v * .55 - 1.3), wy = .7 * nB(u * .55 - 8.1, v * .55 + 5.9);
+  let h = 0, a = 1, f = 1;
+  for (let o = 0; o < 4; o++) { h += a * nA((u + wx) * f + o * 17.3, (v + wy) * f - o * 9.1); a *= .5; f *= 2.03; }
+  return h + 1.3 * nC(x / 5600 + 9.1, y / 5600 - 2.4);
+}
+function calibrateStep() {
+  const r = mulberry32(99), gs = [], e = 1.5;
+  for (let i = 0; i < 700; i++) {
+    const x = -800 + r() * 4000, y = -600 + r() * 9000;
+    const gx = (height(x + e, y) - height(x - e, y)) / (2 * e), gy = (height(x, y + e) - height(x, y - e)) / (2 * e);
+    gs.push(Math.hypot(gx, gy));
+  }
+  gs.sort((a, b) => a - b);
+  return gs[gs.length >> 1] * 26;
+}
+function traceIso(F, nx, ny, x0, y0, cell, step) {
+  const HE = nx * ny, KM = 4096, KO = 2048, links = new Map();
+  const link = (a, b) => { const la = links.get(a); la ? la.push(b) : links.set(a, [b]); const lb = links.get(b); lb ? lb.push(a) : links.set(b, [a]); };
+  for (let j = 0; j < ny - 1; j++) {
+    for (let i = 0; i < nx - 1; i++) {
+      const o = j * nx + i, a = F[o], b = F[o + 1], c = F[o + nx + 1], d = F[o + nx];
+      const k0 = Math.ceil(Math.min(a, b, c, d) / step), k1 = Math.floor(Math.max(a, b, c, d) / step);
+      if (k1 < k0) continue;
+      const eT = o, eB = o + nx, eL = HE + o, eR = HE + o + 1;
+      for (let k = k0; k <= k1; k++) {
+        const L = k * step, idx = (a >= L ? 8 : 0) | (b >= L ? 4 : 0) | (c >= L ? 2 : 0) | (d >= L ? 1 : 0);
+        if (idx === 0 || idx === 15) continue;
+        const kk = k + KO, T = eT * KM + kk, R = eR * KM + kk, B = eB * KM + kk, Lf = eL * KM + kk;
+        switch (idx) {
+          case 1: case 14: link(Lf, B); break;
+          case 2: case 13: link(B, R); break;
+          case 3: case 12: link(Lf, R); break;
+          case 4: case 11: link(T, R); break;
+          case 6: case 9: link(T, B); break;
+          case 7: case 8: link(T, Lf); break;
+          case 5: if ((a + b + c + d) * .25 >= L) { link(T, Lf); link(B, R); } else { link(T, R); link(Lf, B); } break;
+          case 10: if ((a + b + c + d) * .25 >= L) { link(T, R); link(Lf, B); } else { link(T, Lf); link(B, R); } break;
+        }
+      }
+    }
+  }
+  const point = (key, out) => {
+    const e = Math.floor(key / KM), L = (key - e * KM - KO) * step;
+    if (e < HE) { const j = Math.floor(e / nx), i = e - j * nx, p = F[e], q = F[e + 1]; out.push(x0 + (i + (L - p) / (q - p)) * cell, y0 + j * cell); }
+    else { const ev = e - HE, j = Math.floor(ev / nx), i = ev - j * nx, p = F[ev], q = F[ev + nx]; out.push(x0 + i * cell, y0 + (j + (L - p) / (q - p)) * cell); }
+  };
+  const seen = new Set(), lines = [];
+  const walk = start => {
+    const pts = []; let prev = -1, cur = start;
+    for (;;) {
+      seen.add(cur); point(cur, pts);
+      const ns = links.get(cur); let nxt = -1;
+      for (let q = 0; q < ns.length; q++) { const n = ns[q]; if (n !== prev && !seen.has(n)) { nxt = n; break; } }
+      if (nxt < 0) {
+        const closed = ns.length === 2 && pts.length > 4 && cur !== start && (ns[0] === start || ns[1] === start);
+        if (closed) pts.push(pts[0], pts[1]);
+        return { k: (start % KM) - KO, pts, closed };
+      }
+      prev = cur; cur = nxt;
+    }
+  };
+  for (const [key, ns] of links) if (ns.length === 1 && !seen.has(key)) lines.push(walk(key));
+  for (const key of links.keys()) if (!seen.has(key)) lines.push(walk(key));
+  return lines;
+}
+function simplify(p, eps) {
+  const n = p.length / 2; if (n <= 3) return p;
+  const keep = new Uint8Array(n), stack = [0, n - 1], e2 = eps * eps; keep[0] = keep[n - 1] = 1;
+  while (stack.length) {
+    const b = stack.pop(), a = stack.pop(), ax = p[a * 2], ay = p[a * 2 + 1], dx = p[b * 2] - ax, dy = p[b * 2 + 1] - ay, L2 = dx * dx + dy * dy;
+    let md = 0, mi = -1;
+    for (let i = a + 1; i < b; i++) {
+      const px = p[i * 2] - ax, py = p[i * 2 + 1] - ay; let d2;
+      if (L2 === 0) d2 = px * px + py * py; else { const t = clamp((px * dx + py * dy) / L2), qx = px - t * dx, qy = py - t * dy; d2 = qx * qx + qy * qy; }
+      if (d2 > md) { md = d2; mi = i; }
+    }
+    if (mi > 0 && md > e2) { keep[mi] = 1; stack.push(a, mi, mi, b); }
+  }
+  const out = []; for (let i = 0; i < n; i++) if (keep[i]) out.push(p[i * 2], p[i * 2 + 1]);
+  return out;
+}
+function runData(p, n, closed) {
+  if (n < 2) return '';
+  if (n === 2) return 'M' + fmt(p[0]) + ' ' + fmt(p[1]) + 'L' + fmt(p[2]) + ' ' + fmt(p[3]);
+  let s;
+  if (closed) {
+    const m = n - 1;
+    s = 'M' + fmt((p[0] + p[2]) / 2) + ' ' + fmt((p[1] + p[3]) / 2);
+    for (let i = 1; i <= m; i++) { const a = i % m, b = (i + 1) % m, ax = p[a * 2], ay = p[a * 2 + 1]; s += 'Q' + fmt(ax) + ' ' + fmt(ay) + ' ' + fmt((ax + p[b * 2]) / 2) + ' ' + fmt((ay + p[b * 2 + 1]) / 2); }
+    return s + 'Z';
+  }
+  s = 'M' + fmt(p[0]) + ' ' + fmt(p[1]) + 'L' + fmt((p[0] + p[2]) / 2) + ' ' + fmt((p[1] + p[3]) / 2);
+  for (let i = 1; i < n - 1; i++) { const ax = p[i * 2], ay = p[i * 2 + 1]; s += 'Q' + fmt(ax) + ' ' + fmt(ay) + ' ' + fmt((ax + p[i * 2 + 2]) / 2) + ' ' + fmt((ay + p[i * 2 + 3]) / 2); }
+  return s + 'L' + fmt(p[(n - 1) * 2]) + ' ' + fmt(p[(n - 1) * 2 + 1]);
+}
+const MapBg = { step: 0, token: 0, key: '' };
+const pause = () => new Promise(r => setTimeout(r, 0));
+async function buildMap() {
+  const W = Lay.W, H = Lay.H, key = Math.round(W) + 'x' + Math.round(H);
+  if (key === MapBg.key) return;
+  MapBg.key = key; const tok = ++MapBg.token;
+  if (!MapBg.step) MapBg.step = calibrateStep();
+  const c = W <= 760 ? 9 : 12;
+  const x0 = Math.floor(-.55 * W / c) * c, x1 = Math.ceil(1.55 * W / c) * c, y0 = Math.floor(-.55 * H / c) * c, y1 = Math.ceil(1.55 * H / c) * c;
+  const nx = (x1 - x0) / c + 1, ny = (y1 - y0) / c + 1, F = new Float32Array(nx * ny);
+  let t = performance.now();
+  for (let j = 0; j < ny; j++) {
+    for (let i = 0; i < nx; i++) F[j * nx + i] = height(x0 + i * c, y0 + j * c);
+    if (performance.now() - t > 10) { await pause(); if (tok !== MapBg.token) return; t = performance.now(); }
+  }
+  const lines = traceIso(F, nx, ny, x0, y0, c, MapBg.step);
+  let dm = '', di = '';
+  for (const l of lines) { const p = simplify(l.pts, .6); const s = runData(p, p.length / 2, l.closed); if (l.k % 4) dm += s; else di += s; }
+  $('mapMinor').setAttribute('d', dm); $('mapIndex').setAttribute('d', di);
+  $('map').setAttribute('viewBox', fmt(-.5 * W) + ' ' + fmt(-.5 * H) + ' ' + fmt(2 * W) + ' ' + fmt(2 * H));
+}
+
+/* ==========================================================================
+   Layout + the scenes (scroll position P: 0 = title, 1..6 = stops)
+   ========================================================================== */
+const stage = $('stage'), world = $('world'), lens = $('lens'), nameEl = $('name'), ringEl = $('ring'), plate = $('plate');
+const mapEl = $('map'), scroller = $('scroller'), dotsEl = $('dots'), dots = Array.from(dotsEl.querySelectorAll('a'));
+const scenes = Array.from(document.querySelectorAll('.scene')).map((el, k) => {
+  const ex = (el.dataset.exit || '.3,.45').split(',').map(Number);
+  return { el, k, photo: el.querySelector('.photo'), parts: Array.from(el.querySelectorAll('[data-part]')), vis: true, arrived: false, exA: ex[0], exL: ex[1] };
+});
+const LAST = scenes.length - 1;
+const Lay = { W: 1, H: 1, L: 1.6, LAST, P_END: LAST + 1.25, FIN: LAST + .15 };
+/* scroll length of each step between scenes (the flight gets a longer runway) */
+const SEG_W = scenes.map((sc, k) => (scenes[k + 1] && scenes[k + 1].el.id === 'flight') || sc.el.id === 'flight' ? 1.4 : 1).concat([1, 1]);
+const Hooks = {};
+
+function renderScenes(P) {
+  mapEl.style.transform = 'translate3d(' + (-P * 38).toFixed(1) + 'px,' + (-P * 24).toFixed(1) + 'px,0) scale(' + (1 + P * .02).toFixed(4) + ') rotate(' + (P * .55).toFixed(2) + 'deg)';
+  for (const sc of scenes) {
+    const d = P - sc.k, h = Hooks[sc.el.id];
+    if (d < -.62 || d > sc.exA + sc.exL + .05) {
+      if (sc.vis) { sc.el.style.opacity = '0'; sc.el.classList.remove('on'); sc.vis = false; }
+      if (sc.arrived) { sc.arrived = false; if (h && h.leave) h.leave(sc); }
+      continue;
+    }
+    sc.vis = true;
+    const e = smoother(clamp((d + .62) / .55));
+    const xs = smooth(clamp((d - sc.exA) / sc.exL));
+    if (h && h.frame) h.frame(sc, d, e, xs);
+    const here = e > .82 && xs < .15;
+    if (here && !sc.arrived && Intro.done) { sc.arrived = true; if (h && h.arrive) h.arrive(sc); }
+    else if (sc.arrived && (e < .45 || xs > .65)) { sc.arrived = false; if (h && h.leave) h.leave(sc); }
+    sc.el.style.opacity = (Math.min(1, e * 2) * (1 - xs)).toFixed(3);
+    sc.el.style.transform = 'scale(' + (lerp(.84, 1, e) * (1 + xs * .55)).toFixed(4) + ')';
+    sc.el.classList.toggle('on', e > .6 && xs < .4);
+    if (sc.photo) {
+      const R = lerp(0, 78, smooth(clamp(e * 1.12)));
+      sc.photo.style.clipPath = R >= 77.5 ? 'none' : 'circle(' + R.toFixed(2) + '% at 50% 50%)';
+      sc.photo.style.setProperty('--zoom', (1.3 - .2 * e + .06 * xs).toFixed(4));
+      sc.photo.style.setProperty('--cy', (1 - smooth(clamp((d + .32) / .3))).toFixed(3));
+      sc.el.style.setProperty('--draw', clamp((e - .25) / .75).toFixed(3));
+    }
+    sc.parts.forEach((el, i) => {
+      const t = easeOut3(clamp((e - .32 - i * .085) / .38));
+      el.style.opacity = t.toFixed(3);
+      el.style.transform = 'translate3d(0,' + ((1 - t) * 34 - xs * 46).toFixed(1) + 'px,0)';
+    });
+  }
+}
+
+/* ==========================================================================
+   Portal: the night plate with the o-shaped window. p = 1: the whole site
+   sits inside the o. p = 0: the site fills the screen.
+   ========================================================================== */
+const Portal = {
+  ctx: plate.getContext('2d'), m1: .04, C: { x: 0, y: 0 }, R: 30, t: 12, r: 18, W: 1, H: 1, last: null, lastO: null,
+  layout() {
+    const prev = lens.style.transform; lens.style.transform = 'none';
+    const sr = stage.getBoundingClientRect(), rr = ringEl.getBoundingClientRect();
+    lens.style.transform = prev;
+    if (sr.width < 2 || rr.height < 2) return;
+    const fs = parseFloat(getComputedStyle(ringEl).fontSize) || 100;
+    this.W = sr.width; this.H = sr.height;
+    this.C = { x: rr.left - sr.left + rr.width / 2, y: rr.top - sr.top + rr.height / 2 };
+    this.R = rr.height / 2; this.t = Math.min(this.R * .48, fs * .13); this.r = this.R - this.t;
+    this.m1 = 2 * this.r / Math.hypot(this.W, this.H) * .985;
+    plate.width = Math.round(this.W * DPR); plate.height = Math.round(this.H * DPR);
+    if (this.last) this.apply(this.camera(this.last.p), this.lastO);
+  },
+  camera(p) {
+    const s = Math.exp(Math.log(this.m1) * p), S = s / this.m1;
+    const cx = lerp(this.W / 2, this.C.x, p), cy = lerp(this.H / 2, this.C.y, p);
+    return { p, s, S, cx, cy, ax: cx - s * this.W / 2, ay: cy - s * this.H / 2, tx: cx - S * this.C.x, ty: cy - S * this.C.y };
+  },
+  apply(cam, o = {}) {
+    this.last = cam; this.lastO = o;
+    if (cam.p <= .0005) { this.off(); return; }
+    world.style.transform = 'translate3d(' + cam.ax.toFixed(2) + 'px,' + cam.ay.toFixed(2) + 'px,0) scale(' + cam.s.toFixed(5) + ')';
+    lens.style.transform = 'translate3d(' + cam.tx.toFixed(2) + 'px,' + cam.ty.toFixed(2) + 'px,0) scale(' + cam.S.toFixed(5) + ')';
+    lens.classList.toggle('off', cam.S > 40);
+    const g = this.ctx, W = this.W, H = this.H, rr = cam.S * this.r;
+    plate.hidden = false;
+    g.setTransform(DPR, 0, 0, DPR, 0, 0); g.clearRect(0, 0, W, H);
+    if (rr >= Math.hypot(Math.max(cam.cx, W - cam.cx), Math.max(cam.cy, H - cam.cy))) return;
+    const gr = g.createRadialGradient(cam.cx, cam.cy, 0, cam.cx, cam.cy, Math.max(W, H) * 1.05 * Math.max(1, cam.S));
+    gr.addColorStop(0, '#16305e'); gr.addColorStop(.38, '#0c1b39'); gr.addColorStop(1, '#050c1c');
+    g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    g.globalCompositeOperation = 'destination-out'; g.beginPath(); g.arc(cam.cx, cam.cy, Math.max(0, rr), 0, TAU); g.fill(); g.globalCompositeOperation = 'source-over';
+    const ring = o.ring === undefined ? 1 : o.ring;
+    if (ring < 1) { g.beginPath(); g.arc(cam.cx, cam.cy, rr + .5, 0, TAU); g.strokeStyle = 'rgba(237,240,234,.4)'; g.lineWidth = 1.2; g.stroke(); }
+    if (ring > 0) {
+      g.beginPath(); g.arc(cam.cx, cam.cy, cam.S * (this.R - this.t / 2), -Math.PI / 2, -Math.PI / 2 + TAU * ring);
+      g.lineWidth = cam.S * this.t; g.strokeStyle = C_FIRE; g.lineCap = ring < 1 ? 'round' : 'butt';
+      if (o.glow > 0) { g.save(); g.shadowColor = 'rgba(255,107,44,' + clamp(.75 * o.glow).toFixed(3) + ')'; g.shadowBlur = 34 * o.glow * DPR * Math.min(cam.S, 3); g.stroke(); g.restore(); } else g.stroke();
+    }
+  },
+  off() {
+    this.last = this.camera(0);
+    world.style.transform = 'none'; lens.style.transform = 'none'; lens.classList.add('off'); plate.hidden = true;
+  },
+  ringPoint(k, cam) { const a = -Math.PI / 2 + TAU * k, rad = cam.S * (this.R - this.t / 2); return { x: cam.cx + Math.cos(a) * rad, y: cam.cy + Math.sin(a) * rad }; }
+};
+
+/* ==========================================================================
+   Explosions: textured fire and smoke sprites, sparks, debris, shockwaves
+   ========================================================================== */
+const FX = (() => {
+  const cs = $('fxSmoke'), cf = $('fxFire'), gs = cs.getContext('2d'), gf = cf.getContext('2d');
+  let Wd = 1, Ht = 1, RES = .6, active = false, ready = false, P = [], rings = [], lights = [];
+  let fireTex, smokeTex, glowW, glowO, glowE, density = 1, trauma = 0, punch = 0;
+  const FIRE = ['#ffffff', '#fff5d6', '#ffe6a0', '#ffd068', '#ffb443', '#ff942b', '#ff751b', '#f25813', '#d43e0f', '#a92a0c', '#76190a', '#4a1007'];
+  const SMOKE = [['#7a4e36', '#5f4b45', '#4f4c57', '#41475c', '#343f58', '#2a3550'], ['#6a3f28', '#40302b', '#2f2d33', '#323846', '#3b475d', '#475673']];
+  function resize() {
+    Wd = innerWidth; Ht = innerHeight; RES = clamp(.62 * DPR, .55, 1);
+    for (const c of [cs, cf]) { c.width = Math.ceil(Wd * RES); c.height = Math.ceil(Ht * RES); }
+    density = clamp(Wd * Ht / (1440 * 900), .45, 1.25);
+  }
+  function puff(seed) {
+    const S = 128, c = document.createElement('canvas'); c.width = c.height = S;
+    const g = c.getContext('2d'), img = g.createImageData(S, S), d = img.data, n1 = makeNoise(101 + seed * 13), n2 = makeNoise(202 + seed * 7);
+    for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
+      const u = (x + .5) / S * 2 - 1, w = (y + .5) / S * 2 - 1, r = Math.hypot(u, w);
+      let f = 0, a = .5, fr = 2.1; for (let o = 0; o < 4; o++) { f += a * n1(u * fr + seed * 3.1, w * fr - seed * 1.7); a *= .5; fr *= 2; }
+      let l = 0; a = .5; fr = 3.3; for (let o = 0; o < 3; o++) { l += a * n2(u * fr, w * fr); a *= .5; fr *= 2; }
+      const alpha = (1 - smooth(clamp((r + f * .62 - .12) / .8))) * clamp(.62 + f * .85);
+      const lum = clamp(.66 + l * .8 - r * .26, .14, 1), i = (y * S + x) * 4;
+      d[i] = d[i + 1] = d[i + 2] = Math.round(lum * 255); d[i + 3] = Math.round(clamp(alpha) * 255);
+    }
+    g.putImageData(img, 0, 0); return c;
+  }
+  function tint(src, col) {
+    const c = document.createElement('canvas'); c.width = c.height = src.width; const g = c.getContext('2d');
+    g.drawImage(src, 0, 0); g.globalCompositeOperation = 'multiply'; g.fillStyle = col; g.fillRect(0, 0, c.width, c.height);
+    g.globalCompositeOperation = 'destination-in'; g.drawImage(src, 0, 0); return c;
+  }
+  function glow(col) {
+    const S = 128, c = document.createElement('canvas'); c.width = c.height = S; const g = c.getContext('2d');
+    const gr = g.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
+    gr.addColorStop(0, col(1)); gr.addColorStop(.18, col(.72)); gr.addColorStop(.45, col(.24)); gr.addColorStop(1, col(0));
+    g.fillStyle = gr; g.fillRect(0, 0, S, S); return c;
+  }
+  function textures() {
+    if (ready) return;
+    const base = []; for (let v = 0; v < 6; v++) base.push(puff(v));
+    fireTex = base.map(b => FIRE.map(col => tint(b, col)));
+    smokeTex = SMOKE.map(pal => base.map(b => pal.map(col => tint(b, col))));
+    glowW = glow(a => 'rgba(255,246,226,' + a + ')'); glowO = glow(a => 'rgba(255,118,40,' + a + ')'); glowE = glow(a => 'rgba(255,196,100,' + a + ')');
+    ready = true;
+  }
+  function sprite(g, img, x, y, size, rot, alpha) {
+    if (alpha <= .004 || size < .5) return;
+    const k = size / img.width * RES, c = Math.cos(rot) * k, s = Math.sin(rot) * k;
+    g.globalAlpha = alpha > 1 ? 1 : alpha; g.setTransform(c, s, -s, c, x * RES, y * RES); g.drawImage(img, -img.width / 2, -img.height / 2);
+  }
+  function smokeP(x, y, vx, vy, pw, sc, pal, delay, fixed) {
+    return { k: 1, x, y, vx, vy, age: -delay, life: rnd(1.6, 3.1), size: rnd(46, 96) * pw * sc, grow: rnd(2.2, 4.2), rot: rnd(0, TAU), spin: rnd(-.45, .45), v: (Math.random() * 6) | 0, drag: rnd(1.5, 2.5), buoy: rnd(30, 80) * sc * (pal ? 1.6 : 1), a: rnd(.42, .72) * (pal ? .7 : 1), pal, fixed };
+  }
+  function fireP(x, y, pw, sc, core, pal, fixed, lm, smokeOdds) {
+    const a = rnd(0, TAU), sp = core ? rnd(20, 120) * sc : Math.pow(Math.random(), .55) * rnd(260, 980) * sc * Math.sqrt(pw);
+    return { k: 0, x: x + Math.cos(a) * rnd(0, 6) * sc, y: y + Math.sin(a) * rnd(0, 6) * sc, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * .85, age: -rnd(0, .05),
+      life: (core ? rnd(.2, .38) : rnd(.55, 1.25)) * lm, size: (core ? rnd(64, 110) : rnd(34, 82)) * pw * sc, grow: core ? rnd(1.3, 2) : rnd(1.8, 3.6), rot: rnd(0, TAU), spin: rnd(-1.2, 1.2),
+      v: (Math.random() * 6) | 0, drag: rnd(3.2, 5.2) / Math.sqrt(lm), buoy: rnd(90, 190) * sc, t0: core ? -.18 : rnd(-.06, .14), a: core ? .8 : rnd(.42, .82), smk: !core && Math.random() < smokeOdds, sp: false, pw, sc, pal, fixed };
+  }
+  function start() { if (active) return; textures(); active = true; cs.hidden = cf.hidden = false; }
+  /* opt.part: 'shock' = flash, shockwave, sparks, debris; 'body' = fireball and smoke; default both */
+  function blast(x, y, pw, opt = {}) {
+    start();
+    const sc = Math.min(Wd, Ht) / 900, dn = density, pal = opt.day ? 1 : 0, fixed = !!opt.fixed, lm = opt.life || 1;
+    if (opt.part !== 'shock') {
+      lights.push({ x, y, r: 940 * pw * sc, a: .55, life: 1.6 * lm, age: 0, flash: false, tex: glowO, ph: rnd(0, 9), fixed });
+      for (let i = 0; i < 6; i++) P.push(fireP(x, y, pw, sc, true, pal, fixed, lm, 0));
+      for (let i = 0, n = Math.round(38 * pw * dn); i < n; i++) P.push(fireP(x, y, pw, sc, false, pal, fixed, lm, pal ? .45 : .8));
+      for (let i = 0, n = Math.round((pal ? 10 : 16) * pw * dn); i < n; i++) {
+        const a = rnd(0, TAU), d = rnd(30, 95) * sc * pw, sp = rnd(140, 420) * sc * Math.sqrt(pw);
+        P.push(smokeP(x + Math.cos(a) * d, y + Math.sin(a) * d * .8, Math.cos(a) * sp, Math.sin(a) * sp * .7 - 50 * sc, pw * .8, sc, pal, rnd(.02, .16) * lm, fixed));
+      }
+    }
+    if (opt.part === 'body') return;
+    lights.push({ x, y, r: 330 * pw * sc, a: 1, life: .26, age: 0, flash: true, tex: glowW, ph: 0, fixed });
+    rings.push({ x, y, age: 0, life: .55, speed: 2300 * sc * Math.sqrt(pw), w: 18 * sc * pw, fixed });
+    for (let i = 0, n = Math.round(72 * pw * dn); i < n; i++) {
+      const a = rnd(0, TAU), sp = rnd(450, 1700) * sc * Math.sqrt(pw);
+      P.push({ k: 2, x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - rnd(0, 300) * sc, age: 0, life: rnd(.3, 1.05), drag: rnd(.7, 2), g: 900 * sc, w: rnd(.9, 2.3), fixed });
+    }
+    for (let i = 0, n = Math.round(13 * pw * dn); i < n; i++) {
+      const a = rnd(-Math.PI * .97, -Math.PI * .03), sp = rnd(350, 1150) * sc * Math.sqrt(pw), verts = [], m = 4 + ((Math.random() * 3) | 0);
+      for (let j = 0; j < m; j++) { const t = j / m * TAU + rnd(-.3, .3), r = rnd(.55, 1); verts.push(Math.cos(t) * r, Math.sin(t) * r); }
+      P.push({ k: 3, x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, age: 0, life: rnd(1, 2), g: 1500 * sc, drag: .5, rot: rnd(0, TAU), spin: rnd(-12, 12), size: rnd(2.5, 7) * sc * Math.sqrt(pw), verts, fixed });
+    }
+    for (let i = 0, n = Math.round(26 * pw * dn); i < n; i++) {
+      const a = rnd(0, TAU), sp = rnd(40, 300) * sc;
+      P.push({ k: 4, x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, age: 0, life: rnd(1.2, 2.7), drag: 1.6, buoy: rnd(20, 60) * sc, size: rnd(1, 2.6), ph: rnd(0, 9), fixed });
+    }
+    trauma = Math.min(1, trauma + .52 * pw); punch = Math.min(.12, punch + .035 * pw);
+  }
+  function tracer(x0, y0, x1, y1, dur) { start(); P.push({ k: 5, x0, y0, x1, y1, age: 0, life: dur, x: x1, y: y1 }); }
+  /* the camera moved: x' = bx + r * x for everything that lives in the scene */
+  function zoom(r, bx, by) {
+    for (const p of P) {
+      if (p.fixed) continue;
+      if (p.k === 5) { p.x0 = bx + r * p.x0; p.y0 = by + r * p.y0; p.x1 = bx + r * p.x1; p.y1 = by + r * p.y1; continue; }
+      p.x = bx + r * p.x; p.y = by + r * p.y; p.vx *= r; p.vy *= r;
+      if (p.k < 2) p.size *= r; if (p.g) p.g *= r; if (p.buoy) p.buoy *= r;
+      if (p.k >= 3 && (p.x < -200 || p.y < -200 || p.x > Wd + 200 || p.y > Ht + 200)) p.dead = true;
+    }
+    for (const q of rings) if (!q.fixed) { q.x = bx + r * q.x; q.y = by + r * q.y; q.speed *= r; q.w *= r; }
+    for (const q of lights) if (!q.fixed) { q.x = bx + r * q.x; q.y = by + r * q.y; q.r *= r; }
+  }
+  function clearNight(t) { for (const p of P) { if (p.fixed || p.k > 1) continue; if (p.age < 0) p.dead = true; else p.life = Math.min(p.life, p.age + t * (.6 + Math.random() * .8)); } }
+  function step(dt) {
+    if (!active) return false;
+    gs.setTransform(1, 0, 0, 1, 0, 0); gs.clearRect(0, 0, cs.width, cs.height);
+    gf.setTransform(1, 0, 0, 1, 0, 0); gf.clearRect(0, 0, cf.width, cf.height);
+    gf.globalCompositeOperation = 'lighter'; gf.lineCap = 'round';
+    for (let i = lights.length - 1; i >= 0; i--) {
+      const L = lights[i]; L.age += dt; const k = L.age / L.life;
+      if (k >= 1) { lights.splice(i, 1); continue; }
+      const a = L.flash ? L.a * Math.pow(1 - k, 3) : L.a * Math.pow(1 - k, 1.6) * (.8 + .2 * Math.sin(L.age * 37 + L.ph));
+      sprite(gf, L.tex, L.x, L.y, L.r * 2 * (L.flash ? .7 + .5 * k : 1), 0, a);
+    }
+    for (let i = rings.length - 1; i >= 0; i--) {
+      const q = rings[i]; q.age += dt; const k = q.age / q.life;
+      if (k >= 1) { rings.splice(i, 1); continue; }
+      const R = q.speed * q.age * (1 - .3 * k), th = q.w * (1 + 2 * k), a = .16 * (1 - k) * (1 - k), out = R + th * .35;
+      gf.setTransform(RES, 0, 0, RES, 0, 0); gf.globalAlpha = 1;
+      const g = gf.createRadialGradient(q.x, q.y, Math.max(0, R - th), q.x, q.y, out);
+      g.addColorStop(0, 'rgba(255,236,205,0)'); g.addColorStop(.72, 'rgba(255,236,205,' + a.toFixed(3) + ')'); g.addColorStop(1, 'rgba(255,236,205,0)');
+      gf.fillStyle = g; gf.beginPath(); gf.arc(q.x, q.y, out, 0, TAU); gf.fill();
+    }
+    let dead = false;
+    for (let i = 0; i < P.length; i++) {
+      const p = P[i]; if (p.dead) { dead = true; continue; }
+      p.age += dt; if (p.age < 0) continue;
+      const k = p.age / p.life; if (k >= 1) { p.dead = dead = true; continue; }
+      switch (p.k) {
+        case 0: {
+          const dr = Math.exp(-p.drag * dt); p.vx *= dr; p.vy *= dr; p.vy -= p.buoy * (.3 + k) * dt;
+          p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.spin * dt;
+          if (p.smk && !p.sp && k > .45) { p.sp = true; P.push(smokeP(p.x, p.y, p.vx * .6, p.vy * .6 - 20 * p.sc, p.pw * .9, p.sc, p.pal, 0, p.fixed)); }
+          const size = p.size * (1 + (p.grow - 1) * (1 - Math.exp(-4 * k)));
+          const ti = Math.min(11, Math.max(0, Math.floor(Math.pow(clamp(k * 1.3 + p.t0), .8) * 12)));
+          sprite(gf, fireTex[p.v][ti], p.x, p.y, size, p.rot, p.a * smooth(clamp(k / .06)) * Math.pow(1 - k, 1.5));
+          break;
+        }
+        case 1: {
+          const dr = Math.exp(-p.drag * dt); p.vx *= dr; p.vy *= dr; p.vy -= p.buoy * (.4 + k) * dt;
+          p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.spin * dt;
+          const size = p.size * (1 + (p.grow - 1) * (1 - Math.exp(-2.4 * k)));
+          const si = Math.min(5, Math.floor(clamp(k * 1.2) * 6));
+          sprite(gs, smokeTex[p.pal][p.v][si], p.x, p.y, size, p.rot, p.a * smooth(clamp(k / .14)) * Math.pow(1 - k, 1.35));
+          break;
+        }
+        case 2: {
+          const dr = Math.exp(-p.drag * dt); p.vx *= dr; p.vy = p.vy * dr + p.g * dt; p.x += p.vx * dt; p.y += p.vy * dt;
+          gf.setTransform(RES, 0, 0, RES, 0, 0); gf.globalAlpha = Math.pow(1 - k, .8);
+          gf.strokeStyle = k < .25 ? '#fff4cf' : k < .55 ? '#ffbd5c' : '#ff7026'; gf.lineWidth = p.w;
+          gf.beginPath(); gf.moveTo(p.x - p.vx * .024, p.y - p.vy * .024); gf.lineTo(p.x, p.y); gf.stroke();
+          break;
+        }
+        case 3: {
+          const dr = Math.exp(-p.drag * dt); p.vx *= dr; p.vy = p.vy * dr + p.g * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.spin * dt;
+          const c = Math.cos(p.rot) * p.size * RES, s = Math.sin(p.rot) * p.size * RES;
+          gs.globalAlpha = 1 - k * k; gs.fillStyle = '#0a1120'; gs.setTransform(c, s, -s, c, p.x * RES, p.y * RES);
+          gs.beginPath(); for (let j = 0; j < p.verts.length; j += 2) gs.lineTo(p.verts[j], p.verts[j + 1]); gs.closePath(); gs.fill();
+          if (k < .5) sprite(gf, glowE, p.x, p.y, p.size * 5, 0, (.5 - k) * 1.5);
+          break;
+        }
+        case 4: {
+          const dr = Math.exp(-p.drag * dt); p.vx *= dr; p.vy = p.vy * dr - p.buoy * dt; p.x += p.vx * dt + Math.sin(p.age * 6 + p.ph) * 12 * dt; p.y += p.vy * dt;
+          gf.setTransform(RES, 0, 0, RES, 0, 0); gf.globalAlpha = (1 - k) * (.55 + .45 * Math.sin(p.age * 24 + p.ph)); gf.fillStyle = '#ffc46a';
+          gf.beginPath(); gf.arc(p.x, p.y, p.size, 0, TAU); gf.fill();
+          break;
+        }
+        case 5: {
+          const t = easeIn3(k), hx = lerp(p.x0, p.x1, t), hy = lerp(p.y0, p.y1, t), tt = Math.max(0, t - .28), tx = lerp(p.x0, p.x1, tt), ty = lerp(p.y0, p.y1, tt);
+          gf.setTransform(RES, 0, 0, RES, 0, 0); gf.globalAlpha = .9; gf.strokeStyle = '#fff1c8'; gf.lineWidth = 2.6;
+          gf.beginPath(); gf.moveTo(tx, ty); gf.lineTo(hx, hy); gf.stroke();
+          sprite(gf, glowE, hx, hy, 70, 0, .9);
+          break;
+        }
+      }
+    }
+    if (dead) P = P.filter(p => !p.dead);
+    gf.globalCompositeOperation = 'source-over'; gf.globalAlpha = 1; gs.globalAlpha = 1;
+    trauma = Math.max(0, trauma - dt * 1.3); punch *= Math.exp(-dt * 6);
+    return P.length + lights.length + rings.length > 0;
+  }
+  function stop() { active = false; P = []; rings = []; lights = []; trauma = 0; punch = 0; cs.hidden = cf.hidden = true; cs.style.transform = cf.style.transform = ''; }
+  function shake(tf) { cs.style.transform = cf.style.transform = tf; }
+  return { resize, textures, blast, tracer, zoom, clearNight, step, stop, shake, get trauma() { return trauma; }, get punch() { return punch; } };
+})();
+
+/* ==========================================================================
+   Sound: synthesised with Web Audio, only after the visitor clicks
+   ========================================================================== */
+const Sound = (() => {
+  let ac = null, out = null, verb = null, noise = null, on = true;
+  const CURVE = (() => { const n = 2048, c = new Float32Array(n), k = 6; for (let i = 0; i < n; i++) { const x = i * 2 / n - 1; c[i] = (1 + k) * x / (1 + k * Math.abs(x)); } return c; })();
+  function init() {
+    if (!on) return false;
+    try {
+      if (!ac) {
+        const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return false;
+        ac = new AC();
+        const comp = ac.createDynamicsCompressor(); comp.threshold.value = -18; comp.knee.value = 14; comp.ratio.value = 5; comp.attack.value = .003; comp.release.value = .3;
+        out = ac.createGain(); out.gain.value = .85; out.connect(comp); comp.connect(ac.destination);
+        const len = (ac.sampleRate * 2.5) | 0; noise = ac.createBuffer(1, len, ac.sampleRate);
+        const d = noise.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+        verb = ac.createConvolver(); const il = (ac.sampleRate * 2.6) | 0, ir = ac.createBuffer(2, il, ac.sampleRate);
+        for (let ch = 0; ch < 2; ch++) { const b = ir.getChannelData(ch); for (let i = 0; i < il; i++) b[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / il, 3.4); }
+        verb.buffer = ir; const wet = ac.createGain(); wet.gain.value = .32; verb.connect(wet); wet.connect(out);
+      }
+      if (ac.state === 'suspended') ac.resume();
+      return true;
+    } catch (e) { return false; }
+  }
+  const live = () => ac && on && ac.state !== 'closed';
+  const src = (t, dur) => { const s = ac.createBufferSource(); s.buffer = noise; s.start(t, Math.random() * 1.2, dur); return s; };
+  const env = (g, t, peak, a, d) => { g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + d); };
+  function boom(delay, P) {
+    if (!live()) return; const t = ac.currentTime + delay;
+    const b = src(t, 3.2), lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = .7;
+    lp.frequency.setValueAtTime(3800, t); lp.frequency.exponentialRampToValueAtTime(70, t + 1.1 + .5 * P);
+    const sh = ac.createWaveShaper(); sh.curve = CURVE; sh.oversample = '2x';
+    const bg = ac.createGain(); env(bg, t, .95 * Math.min(1.4, P), .006, 1.2 + .9 * P);
+    b.connect(lp); lp.connect(sh); sh.connect(bg); bg.connect(out); bg.connect(verb);
+    const o = ac.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(92 + 20 / P, t); o.frequency.exponentialRampToValueAtTime(28, t + .55);
+    const og = ac.createGain(); env(og, t, 1.1 * Math.min(1.3, P), .005, .9 + .5 * P); o.connect(og); og.connect(out); o.start(t); o.stop(t + 2.2);
+    const c = src(t, .2), hp = ac.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 1400;
+    const cg = ac.createGain(); env(cg, t, .7, .002, .11); c.connect(hp); hp.connect(cg); cg.connect(out); cg.connect(verb);
+    for (let i = 0, n = (10 + 8 * P) | 0; i < n; i++) {
+      const tt = t + .12 + Math.pow(Math.random(), 1.6) * (1.4 + P * .6), dd = src(tt, .06), bp = ac.createBiquadFilter();
+      bp.type = 'bandpass'; bp.frequency.value = 1800 + Math.random() * 3500; bp.Q.value = 1.2;
+      const dg = ac.createGain(); env(dg, tt, .05 + Math.random() * .11, .002, .03 + Math.random() * .05); dd.connect(bp); bp.connect(dg); dg.connect(out);
+    }
+  }
+  function whoosh(delay, dur, from, to, peak) {
+    if (!live()) return; const t = ac.currentTime + delay, s = src(t, dur + .15), bp = ac.createBiquadFilter();
+    bp.type = 'bandpass'; bp.Q.value = 1.3; bp.frequency.setValueAtTime(from, t); bp.frequency.exponentialRampToValueAtTime(to, t + dur);
+    const g = ac.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + dur * .85); g.gain.exponentialRampToValueAtTime(.0001, t + dur + .1);
+    s.connect(bp); bp.connect(g); g.connect(out);
+  }
+  function blip() {
+    if (!live()) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'square'; o.frequency.setValueAtTime(rnd(520, 980), t); o.frequency.exponentialRampToValueAtTime(rnd(700, 1300), t + .05);
+    env(g, t, .035, .004, .06); o.connect(g); g.connect(out); o.start(t); o.stop(t + .09);
+  }
+  function rewind(dur) {
+    if (!live()) return; const t = ac.currentTime;
+    const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.setValueAtTime(180, t); o.frequency.exponentialRampToValueAtTime(1400, t + dur * .55); o.frequency.exponentialRampToValueAtTime(240, t + dur);
+    const lfo = ac.createOscillator(), lg = ac.createGain(); lfo.frequency.value = 23; lg.gain.value = 90; lfo.connect(lg); lg.connect(o.frequency);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2200;
+    const g = ac.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.06, t + .15); g.gain.setValueAtTime(.06, t + dur - .2); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(lp); lp.connect(g); g.connect(out); o.start(t); lfo.start(t); o.stop(t + dur + .05); lfo.stop(t + dur + .05);
+    whoosh(0, dur, 300, 2600, .12);
+  }
+  function laser(dur) {
+    if (!live()) return; const t = ac.currentTime;
+    const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = 118;
+    const o2 = ac.createOscillator(); o2.type = 'sine'; o2.frequency.value = 1760;
+    const trem = ac.createOscillator(), tg = ac.createGain(); trem.frequency.value = 31; tg.gain.value = .5;
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1500;
+    const g = ac.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.05, t + .08); g.gain.setValueAtTime(.05, t + dur - .1); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    const g2 = ac.createGain(); g2.gain.value = .12;
+    trem.connect(tg); tg.connect(g.gain);
+    o.connect(lp); lp.connect(g); o2.connect(g2); g2.connect(g); g.connect(out);
+    [o, o2, trem].forEach(n => { n.start(t); n.stop(t + dur + .05); });
+  }
+  function stamp() {
+    if (!live()) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(55, t + .09);
+    env(g, t, .22, .003, .1); o.connect(g); g.connect(out); o.start(t); o.stop(t + .14);
+  }
+  return { init, boom, whoosh, blip, rewind, laser, stamp, get on() { return on; }, set on(v) { on = v; if (out) out.gain.value = v ? .85 : 0; } };
+})();
+
+/* ==========================================================================
+   Sparks at the robot's pen point
+   ========================================================================== */
+const Sparks = (() => {
+  const c = $('sparks'), g = c.getContext('2d');
+  let Wd = 1, Ht = 1, hx = -999, hy = -999, visible = false, running = false, acc = 0, parts = [];
+  function resize() { Wd = innerWidth; Ht = innerHeight; c.width = Math.round(Wd * DPR); c.height = Math.round(Ht * DPR); }
+  function tick(dt, now) {
+    if (visible) { acc += dt * 90; while (acc >= 1) { acc--; const a = rnd(0, TAU), sp = rnd(40, 240); parts.push({ x: hx, y: hy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 60, life: rnd(.2, .6), age: 0 }); } }
+    g.setTransform(DPR, 0, 0, DPR, 0, 0); g.clearRect(0, 0, Wd, Ht);
+    if (visible) {
+      const r = 20, gr = g.createRadialGradient(hx, hy, 0, hx, hy, r), f = .85 + .15 * Math.sin(now / 31);
+      gr.addColorStop(0, 'rgba(255,248,226,' + f + ')'); gr.addColorStop(.3, 'rgba(255,193,94,' + (.8 * f) + ')'); gr.addColorStop(1, 'rgba(255,107,44,0)');
+      g.fillStyle = gr; g.fillRect(hx - r, hy - r, r * 2, r * 2);
+    }
+    g.globalCompositeOperation = 'lighter'; g.lineCap = 'round';
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i]; p.age += dt; const k = p.age / p.life;
+      if (k >= 1) { parts.splice(i, 1); continue; }
+      p.vx *= Math.exp(-2 * dt); p.vy = p.vy * Math.exp(-2 * dt) + 420 * dt; p.x += p.vx * dt; p.y += p.vy * dt;
+      g.globalAlpha = 1 - k; g.strokeStyle = k < .3 ? '#fff1c4' : '#ff9a3c'; g.lineWidth = 1.5;
+      g.beginPath(); g.moveTo(p.x - p.vx * .03, p.y - p.vy * .03); g.lineTo(p.x, p.y); g.stroke();
+    }
+    g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1;
+    if (!parts.length && !visible) { running = false; g.clearRect(0, 0, Wd, Ht); return false; }
+  }
+  return {
+    resize,
+    at(x, y) { hx = x; hy = y; visible = true; if (!running) { running = true; Ticker.add(tick); } },
+    hide() { visible = false; }
+  };
+})();
+
+/* ==========================================================================
+   The robot and its speech bubble
+   ========================================================================== */
+const Robot = (() => {
+  const el = $('robot'), wrap = $('botWrap'), eyes = $('botEyes'), flame = $('botFlame'), arm = $('botArm');
+  const bub = $('bubble'), bubText = $('bubbleText'), bubBtns = $('bubbleBtns'), says = $('robotSays');
+  const st = { x: -300, y: -300, face: -1, tilt: 0, sc: 1, ox: 0, oy: 0, ovx: 0, ovy: 0, vx: 0, px: null, t: 0, blink: 2, wave: false, follow: null, visible: false, running: false };
+  let bw = 0, bh = 0;
+  function tick(dt) {
+    if (!st.visible) { st.running = false; return false; }
+    st.t += dt;
+    if (st.follow) { const tg = st.follow(); const k = 1 - Math.exp(-dt * 10); st.x += (tg.x - st.x) * k; st.y += (tg.y - st.y) * k; }
+    if (st.px !== null) st.vx = lerp(st.vx, (st.x - st.px) / Math.max(dt, 1e-3), 1 - Math.exp(-dt * 10));
+    st.px = st.x;
+    st.ovx += (-60 * st.ox - 7 * st.ovx) * dt; st.ovy += (-60 * st.oy - 7 * st.ovy) * dt; st.ox += st.ovx * dt; st.oy += st.ovy * dt;
+    const w = el.offsetWidth, h = el.offsetHeight, bob = Math.sin(st.t * 2.6) * 6;
+    const tilt = clamp(st.vx * .016, -16, 16) + st.tilt;
+    const X = st.x + st.ox + SHAKE.x, Y = st.y + st.oy + bob + SHAKE.y;
+    el.style.transform = 'translate3d(' + (X - w / 2).toFixed(1) + 'px,' + (Y - h / 2).toFixed(1) + 'px,0) rotate(' + tilt.toFixed(2) + 'deg) scale(' + st.sc.toFixed(3) + ')';
+    wrap.style.transform = 'scaleX(' + st.face + ')';
+    flame.style.transform = 'scaleY(' + (.75 + Math.min(1, Math.abs(st.vx) / 800) * .9 + Math.random() * .25).toFixed(3) + ')';
+    st.blink -= dt;
+    if (st.blink < 0) { eyes.style.transform = 'scaleY(.12)'; if (st.blink < -.12) { eyes.style.transform = ''; st.blink = rnd(1.8, 4.2); } }
+    if (st.wave) arm.style.transform = 'rotate(' + (Math.sin(st.t * 13) * 24).toFixed(1) + 'deg)';
+    if (bub.classList.contains('show')) {
+      if (!bw) { bw = bub.offsetWidth; bh = bub.offsetHeight; }
+      const Wd = innerWidth, left = clamp(X - bw / 2, 12, Wd - 12 - bw), top = Math.max(12, Y - h * .5 * st.sc - bh - 16);
+      bub.style.transform = 'translate3d(' + left.toFixed(1) + 'px,' + top.toFixed(1) + 'px,0)';
+      bub.style.setProperty('--tail', clamp(X - left, 22, bw - 22).toFixed(1) + 'px');
+    }
+  }
+  const api = {
+    show() { st.visible = true; el.hidden = false; if (!st.running) { st.running = true; Ticker.add(tick); } },
+    hide() { st.visible = false; el.hidden = true; api.quiet(); },
+    place(x, y) { st.x = x; st.y = y; st.px = null; st.vx = 0; },
+    flyTo(x, y, dur, ease = easeInOut3, ctl = null) { st.follow = null; const x0 = st.x, y0 = st.y; return tween(dur, k => { st.x = lerp(x0, x, k); st.y = lerp(y0, y, k); }, ease, ctl); },
+    follow(fn) { st.follow = fn; },
+    face(f) { st.face = f; },
+    tilt(d) { st.tilt = d; },
+    scale(s) { st.sc = s; },
+    wave(on) { st.wave = on; if (!on) arm.style.transform = ''; },
+    kick(jx, jy) { st.ovx += jx; st.ovy += jy; },
+    get x() { return st.x; }, get y() { return st.y; }, get visible() { return st.visible; },
+    eye() { const w = el.offsetWidth, h = el.offsetHeight; return { x: st.x + st.ox + SHAKE.x + st.face * .1 * w * st.sc, y: st.y + st.oy + SHAKE.y + Math.sin(st.t * 2.6) * 6 - .16 * h * st.sc }; },
+    /* type a line in the bubble */
+    say(text, ctl) {
+      bubBtns.innerHTML = ''; bubText.textContent = ''; says.textContent = text;
+      bubText.textContent = text; bw = bub.offsetWidth; bh = bub.offsetHeight; bubText.textContent = '';
+      bub.style.width = bw + 'px'; bub.classList.add('show');
+      let i = 0, acc = 0;
+      return tween(text.length * .03 + .05, (k, dt) => {
+        acc += dt;
+        while (acc >= .03 && i < text.length) { acc -= .03; i++; if (i % 2) Sound.blip(); }
+        if (k >= 1) i = text.length;
+        bubText.textContent = text.slice(0, i);
+      }, t => t, ctl);
+    },
+    ask(text, options, auto, ctl) {
+      return api.say(text, ctl).then(() => new Promise((res, rej) => {
+        bub.style.width = '';
+        let done = false; const finish = i => { if (done) return; done = true; res(i); };
+        options.forEach((label, i) => {
+          const b = document.createElement('button'); b.type = 'button'; b.textContent = label; if (i === 0) b.className = 'primary';
+          b.addEventListener('click', () => { if (i === 0) Sound.init(); finish(i); });
+          bubBtns.appendChild(b);
+        });
+        bw = bub.offsetWidth; bh = bub.offsetHeight;
+        const first = bubBtns.querySelector('button'); if (first) first.focus({ preventScroll: true });
+        let t = 0;
+        Ticker.add(dt => { if (done) return false; if (ctl && ctl.aborted) { done = true; rej(new Abort()); return false; } t += dt; if (t >= auto) { finish(0); return false; } });
+      }));
+    },
+    quiet() { bub.classList.remove('show'); bub.style.width = ''; bubBtns.innerHTML = ''; bw = 0; }
+  };
+  return api;
+})();
+
+/* ==========================================================================
+   Writing the name with the robot's laser
+   ========================================================================== */
+const Ink = (() => {
+  const svg = $('ink'), tN = $('inkN'), tE = $('inkE'), mN = $('mpN'), mE = $('mpE'), mA = $('mpA'), laser = $('laser'), laserG = $('laserG');
+  let geo = null;
+  function measure() {
+    const sr = stage.getBoundingClientRect(), cs = getComputedStyle(nameEl), fs = parseFloat(cs.fontSize);
+    const n = nameEl.querySelector('[data-l="N"]').getBoundingClientRect(), e = nameEl.querySelector('[data-l="é"]').getBoundingClientRect(), o = ringEl.getBoundingClientRect();
+    const base = o.bottom - sr.top - .012 * fs;
+    geo = { fs, base, nx: n.left - sr.left, nw: n.width, ex: e.left - sr.left, ew: e.width };
+    for (const t of [tN, tE]) { t.setAttribute('font-size', fs); t.style.fontStretch = cs.fontStretch; t.style.fontWeight = cs.fontWeight; t.setAttribute('y', base); }
+    tN.setAttribute('x', geo.nx); tE.setAttribute('x', geo.ex);
+    const em = fs, b = base, l = geo.nx + .17 * em, r = geo.nx + geo.nw - .2 * em, top = b - .72 * em;
+    mN.setAttribute('d', 'M' + fmt(l) + ' ' + fmt(b + .03 * em) + 'L' + fmt(l) + ' ' + fmt(top) + 'L' + fmt(r) + ' ' + fmt(b) + 'L' + fmt(r) + ' ' + fmt(top - .03 * em));
+    mN.style.strokeWidth = .36 * em;
+    const cx = geo.ex + geo.ew * .5 - .02 * em, cy = b - .27 * em, R = .245 * em, a1 = .62;
+    mE.setAttribute('d', 'M' + fmt(cx - R) + ' ' + fmt(cy) + 'L' + fmt(cx + R) + ' ' + fmt(cy) + 'A' + fmt(R) + ' ' + fmt(R) + ' 0 1 0 ' + fmt(cx + R * Math.cos(a1)) + ' ' + fmt(cy + R * Math.sin(a1)));
+    mE.style.strokeWidth = .27 * em;
+    mA.setAttribute('d', 'M' + fmt(cx - .03 * em) + ' ' + fmt(b - .6 * em) + 'L' + fmt(cx + .12 * em) + ' ' + fmt(b - .78 * em));
+    mA.style.strokeWidth = .22 * em;
+    for (const p of [mN, mE, mA]) { const L = p.getTotalLength(); p.style.strokeDasharray = L + ' ' + L; p.style.strokeDashoffset = L; p._len = L; }
+  }
+  function beam(pt) {
+    const e = Robot.eye();
+    for (const l of [laser, laserG]) { l.setAttribute('x1', e.x.toFixed(1)); l.setAttribute('y1', e.y.toFixed(1)); l.setAttribute('x2', pt.x.toFixed(1)); l.setAttribute('y2', pt.y.toFixed(1)); }
+    Sparks.at(pt.x, pt.y);
+  }
+  function stroke(path, dur, ctl) {
+    const L = path._len;
+    return tween(dur, k => { path.style.strokeDashoffset = (L * (1 - k)).toFixed(1); pen.pt = path.getPointAtLength(L * k); beam(pen.pt); }, easeInOut3, ctl);
+  }
+  const pen = { pt: { x: 0, y: 0 } };
+  return {
+    measure, pen,
+    on() { svg.classList.add('on'); laser.style.display = laserG.style.display = ''; },
+    stroke,
+    beam,
+    laserOff() { laser.style.display = laserG.style.display = 'none'; Sparks.hide(); },
+    done() { svg.classList.remove('on'); Sparks.hide(); for (const p of [mN, mE, mA]) p.style.strokeDashoffset = 0; },
+    paths: { N: mN, E: mE, A: mA },
+    get geo() { return geo; }
+  };
+})();
+
+/* ==========================================================================
+   Scroll: the page scroll only drives the stage
+   ========================================================================== */
+const Scroll = { Pt: 0, Pr: 0, running: false };
+const unitPx = () => Lay.L * innerHeight;
+function pFromScroll(y) {
+  let u = y / unitPx();
+  for (let k = 0; k < SEG_W.length; k++) { const w = SEG_W[k]; if (u <= w) return k + u / w; u -= w; }
+  return SEG_W.length;
+}
+function scrollFromP(P) {
+  let u = 0;
+  for (let k = 0; k < SEG_W.length; k++) { const w = SEG_W[k]; if (P <= k + 1) return (u + (P - k) * w) * unitPx(); u += w; }
+  return u * unitPx();
+}
+function sizeScroller() { scroller.style.height = Math.round(scrollFromP(Lay.P_END) + innerHeight) + 'px'; }
+function onScroll() {
+  if (!Intro.done || reduced) return;
+  Scroll.Pt = pFromScroll(scrollY);
+  if (!Scroll.running) { Scroll.running = true; Ticker.add(scrollTick); }
+}
+function scrollTick(dt) {
+  Scroll.Pr += (Scroll.Pt - Scroll.Pr) * (1 - Math.exp(-dt * 8.5));
+  if (Math.abs(Scroll.Pt - Scroll.Pr) < 2e-4) Scroll.Pr = Scroll.Pt;
+  renderAll();
+  if (Scroll.Pr === Scroll.Pt) { Scroll.running = false; return false; }
+}
+const Finale = { on: false, revealed: false, cameo: false };
+function renderAll() {
+  if (reduced || !Intro.done) return;
+  const P = Scroll.Pr;
+  renderScenes(Math.min(P, LAST));
+  const q = clamp((P - Lay.FIN) / (Lay.P_END - Lay.FIN - .1));
+  if (q > 0) {
+    Finale.on = true;
+    Portal.apply(Portal.camera(smoother(q)), { ring: 1 });
+  } else if (Finale.on) { Finale.on = false; Portal.off(); }
+  body.classList.toggle('at-finale', q > .02);
+  const show = q > .9;
+  if (show !== Finale.revealed && (show || q < .84)) { Finale.revealed = show; lens.classList.toggle('revealed', show); }
+  cameo(q > .93);
+  let cur = -1;
+  if (P >= .5 && q <= 0) dots.forEach((d, i) => { if (P >= +d.dataset.k - .5) cur = i; });
+  dots.forEach((d, i) => { d.classList.toggle('on', i === cur); d.classList.toggle('done', i < cur); });
+  dotsEl.classList.toggle('show', P > .55 && q < .02);
+  $('hint').style.opacity = String(1 - clamp(P / .18));
+}
+function cameo(on) {
+  if (on === Finale.cameo) return;
+  Finale.cameo = on;
+  if (Finale.ctl) Finale.ctl.aborted = true;
+  const ctl = Finale.ctl = { aborted: false };
+  if (on) {
+    const last = nameEl.querySelector('.ch.p:last-child').getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    const mobile = innerWidth <= 760;
+    const x = mobile ? innerWidth - 60 : Math.min(innerWidth - 70, last.right - sr.left + 80), y = mobile ? Math.max(80, last.top - sr.top - 150) : last.top - sr.top + 10;
+    Robot.show(); Robot.scale(1); Robot.tilt(0); Robot.face(-1); Robot.place(innerWidth + 80, y - 40);
+    Robot.flyTo(x, y, .8, easeOutBack, ctl).then(() => Robot.wave(true)).catch(() => {});
+  } else if (Robot.visible) {
+    Robot.wave(false); Robot.face(1);
+    Robot.flyTo(innerWidth + 120, Robot.y - 30, .5, easeIn3, ctl).then(() => { if (!Finale.cameo) Robot.hide(); }).catch(() => {});
+  }
+}
+
+/* ==========================================================================
+   Intro: wrong way, rewind, the name, BAW BAW, and in through the o
+   ========================================================================== */
+const Intro = (() => {
+  const flash = $('flash'), ui = $('introUI'), ctl = { aborted: false };
+  const api = { done: false };
+  let finished = false, letters = [], blasts = [], sc = 1;
+  const shakeN = makeNoise(5);
+  const W = () => stage.clientWidth, H = () => stage.clientHeight;
+  const wait = s => tween(s, () => {}, t => t, ctl);
+  const setP = P => renderScenes(P);
+
+  function lockInput(e) { if (!api.done && e.cancelable) e.preventDefault(); }
+  function onKey(e) {
+    if (api.done) return;
+    if (e.key === 'Escape') { skip(); return; }
+    if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key) && !(e.target instanceof HTMLButtonElement)) e.preventDefault();
+  }
+  function setFlash(x, y, full) {
+    const at = 'circle at ' + (x / innerWidth * 100).toFixed(1) + '% ' + (y / innerHeight * 100).toFixed(1) + '%';
+    flash.style.background = full ? 'radial-gradient(' + at + ',#fffef8 0%,#fff2d8 42%,#ffdcae 100%)' : 'radial-gradient(' + at + ',rgba(255,251,238,.95) 0,rgba(255,226,178,.5) 11vmax,rgba(255,200,140,0) 42vmax)';
+  }
+  async function script() {
+    // 1. The visitor lands on the last stop.
+    setP(LAST); Portal.off();
+    lens.classList.add('writing');
+    const w = W(), h = H(), mobile = w <= 760;
+    Robot.show(); Robot.face(-1); Robot.place(w + 140, h * .3);
+    await Robot.flyTo(mobile ? w * .7 : w * .7, mobile ? h * .58 : h * .5, 1.1, easeOutBack, ctl);
+    await Robot.say("Hey! You're going the wrong way.", ctl);
+    await wait(.9);
+    await Robot.say("This is the end of Noé's story.", ctl);
+    await wait(.8);
+    const choice = await Robot.ask('Let me introduce him properly. Follow me!', ['Follow me', 'Skip intro'], 9, ctl);
+    if (choice === 1) { skip(); return; }
+    // 2. Rewind through the site, fast.
+    Robot.say('Rewinding…', ctl).catch(() => {});
+    Sound.rewind(2.5);
+    Robot.flyTo(mobile ? w * .3 : w * .24, mobile ? h * .62 : h * .5, .7, easeInOut3, ctl).catch(() => {});
+    Robot.tilt(-8);
+    await tween(2.6, k => {
+      setP(LAST * (1 - k));
+      const speed = Math.sin(k * Math.PI);
+      world.style.filter = speed > .05 ? 'blur(' + (speed * 2.4).toFixed(2) + 'px)' : '';
+    }, easeInOut3, ctl);
+    world.style.filter = ''; Robot.tilt(0); Robot.quiet();
+    // 3. Pull back out of the site: it now sits inside the o.
+    Portal.layout(); Ink.measure();
+    const g = Ink.geo, startN = Ink.paths.N.getPointAtLength(0);
+    Robot.face(1);
+    Robot.flyTo(startN.x - (mobile ? 50 : 70), startN.y - (mobile ? 75 : 105), 1.05, easeInOut3, ctl).catch(() => {});
+    Sound.whoosh(0, 1, 2200, 400, .12);
+    await tween(1.05, k => Portal.apply(Portal.camera(k), { ring: 0 }), smoother, ctl);
+    const rest = Portal.camera(1);
+    // 4. Write the name: N, o, é, then Palego.
+    Ink.on(); Sound.laser(2.15);
+    Robot.follow(() => ({ x: Ink.pen.pt.x - (mobile ? 50 : 70), y: Ink.pen.pt.y - (mobile ? 75 : 105) }));
+    await Ink.stroke(Ink.paths.N, .8, ctl);
+    await tween(.55, k => { Portal.apply(rest, { ring: k }); Ink.pen.pt = Portal.ringPoint(k, rest); Ink.beam(Ink.pen.pt); }, easeInOut3, ctl);
+    await Ink.stroke(Ink.paths.E, .55, ctl);
+    await Ink.stroke(Ink.paths.A, .2, ctl);
+    nameEl.querySelectorAll('.w').forEach(el => el.style.opacity = '1');
+    Ink.laserOff(); Ink.done();
+    const ps = Array.from(nameEl.querySelectorAll('.ch.p'));
+    const lastR = ps[ps.length - 1].getBoundingClientRect(), firstR = ps[0].getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    Robot.follow(null);
+    Robot.flyTo(lastR.right - sr.left + (mobile ? -10 : 70), (mobile ? firstR.top - sr.top - 60 : lastR.top - sr.top - 30), .62, easeInOut3, ctl).catch(() => {});
+    for (const el of ps) { el.classList.add('in'); Sound.stamp(); await wait(.075); }
+    lens.classList.remove('writing');
+    await wait(.35);
+    ps.forEach(el => { el.classList.remove('in'); el.style.transition = 'none'; });
+    nameEl.querySelectorAll('.w').forEach(el => el.style.opacity = '');
+    await Robot.say('Hold on tight.', ctl);
+    await wait(.45);
+    Robot.quiet();
+    // 5. BAW, BAW, and in through the o.
+    await explode();
+  }
+
+  function explode() {
+    return new Promise((resolve, reject) => {
+      const w = W(), h = H(), sr = stage.getBoundingClientRect();
+      sc = Math.min(w, h) / 900;
+      FX.resize(); FX.textures();
+      letters = Array.from(nameEl.querySelectorAll('.ch'), el => { const r = el.getBoundingClientRect(); return { el, cx: r.left - sr.left + r.width / 2, cy: r.top - sr.top + r.height / 2, w: r.width, h: r.height, x: 0, y: 0, r: 0, vx: 0, vy: 0, vr: 0, hit: new Set() }; });
+      const first = letters[0], last = letters[letters.length - 1];
+      const b1 = { x: clamp(first.cx + first.w * .2, w * .1, w * .9), y: clamp(first.cy + first.h * .62, h * .12, h * .86) };
+      const b2 = { x: clamp(last.cx - last.w * 1.3, w * .1, w * .9), y: clamp(last.cy - last.h * .42, h * .1, h * .86) };
+      const O = { x: w / 2, y: h / 2 };
+      const T_B1 = .18, T_B2 = .62, T_DIVE = .95, D_DIVE = .9, T_MAIN = 1.78, T_HAND = 1.89, T_FREE = 2.35;
+      let tp = 0, ev = 0, handed = false, lastCam = Portal.camera(1);
+      const bomb = (x, y, pw) => { FX.blast(x, y, pw); blasts.push({ x, y, pw, t: tp, speed: 1900 * sc }); setFlash(x, y, false); };
+      const events = [
+        [T_B1 - .18, () => FX.tracer(b1.x - w * .22, -60, b1.x, b1.y, .18)],
+        [T_B1, () => bomb(b1.x, b1.y, 1.35)],
+        [T_B2 - .18, () => FX.tracer(b2.x + w * .18, -60, b2.x, b2.y, .18)],
+        [T_B2, () => bomb(b2.x, b2.y, 1.6)],
+        [T_DIVE - .1, () => { const c = Portal.camera(1); Robot.flyTo(c.cx, c.cy, .5, easeIn3).catch(() => {}); tween(.5, k => Robot.scale(1 - .92 * k), easeIn3).then(() => Robot.hide()); }],
+        [T_MAIN, () => { FX.blast(O.x, O.y, 2.4, { day: true, fixed: true, part: 'shock' }); setFlash(O.x, O.y, true); }],
+        [T_MAIN + .12, () => FX.blast(O.x, O.y + 30 * sc, 2.5, { day: true, fixed: true, part: 'body', life: 1.7 })],
+        [T_HAND, () => { handed = true; handoff(); }],
+        [T_FREE, release]
+      ];
+      Sound.whoosh(T_B1 - .24, .24, 2600, 700, .14); Sound.boom(T_B1, .95);
+      Sound.whoosh(T_B2 - .24, .24, 2600, 700, .14); Sound.boom(T_B2, 1.1);
+      Sound.whoosh(T_DIVE, D_DIVE * .9, 260, 3200, .22); Sound.boom(T_MAIN, 2.4);
+      const flashAt = t => {
+        let a = 0;
+        for (const [ti, peak, dur] of [[T_B1, .85, .34], [T_B2, .9, .36]]) { const u = (t - ti) / dur; if (u >= 0 && u < 1) a = Math.max(a, peak * (u < .08 ? u / .08 : Math.pow(1 - (u - .08) / .92, 2.2))); }
+        if (t >= T_MAIN) { const u = t - T_MAIN; a = Math.max(a, u < .08 ? easeOut3(u / .08) : u < .18 ? 1 : 1 - smooth(clamp((u - .18) / .62))); }
+        return a;
+      };
+      Ticker.add(dt => {
+        if (ctl.aborted) { reject(new Abort()); return false; }
+        tp += dt; const t = tp;
+        while (ev < events.length && t >= events[ev][0]) events[ev++][1]();
+        const tr = FX.trauma, sh = tr * tr, amp = 26 * sc * sh;
+        SHAKE.x = amp * shakeN(t * 23, 1.7); SHAKE.y = amp * shakeN(4.1, t * 23);
+        const tf = sh > .002 ? 'translate3d(' + SHAKE.x.toFixed(2) + 'px,' + SHAKE.y.toFixed(2) + 'px,0) rotate(' + (1.4 * sh * shakeN(t * 17, 8.3)).toFixed(3) + 'deg) scale(' + (1.02 + FX.punch).toFixed(4) + ')' : '';
+        stage.style.transform = tf; FX.shake(tf);
+        if (!handed) {
+          const p = t < T_DIVE ? 1 : 1 - easeIn3(clamp((t - T_DIVE) / D_DIVE));
+          const cam = Portal.camera(p);
+          if (cam.s !== lastCam.s) { const r = cam.s / lastCam.s; FX.zoom(r, cam.ax - r * lastCam.ax, cam.ay - r * lastCam.ay); }
+          lastCam = cam;
+          stepLetters(dt, t);
+          Portal.apply(cam, { ring: 1, glow: .9 });
+          const ca = 5 * sh;
+          nameEl.style.textShadow = ca > .3 ? (-ca).toFixed(1) + 'px 0 rgba(255,70,40,.55),' + ca.toFixed(1) + 'px 0 rgba(80,170,255,.55)' : '';
+        }
+        flash.style.opacity = flashAt(t).toFixed(3);
+        const alive = FX.step(dt);
+        if (t > 3.2 && !alive) {
+          FX.stop(); flash.style.opacity = '0'; stage.style.transform = ''; SHAKE.x = SHAKE.y = 0;
+          resolve(); return false;
+        }
+      });
+    });
+  }
+  function stepLetters(dt, t) {
+    const robotHit = { cx: Robot.x, cy: Robot.y };
+    for (const b of blasts) {
+      const R = b.speed * (t - b.t);
+      for (const L of letters) {
+        if (L.hit.has(b)) continue;
+        const dx = L.cx - b.x, dy = L.cy - b.y, d = Math.hypot(dx, dy) || 1;
+        if (R < d) continue;
+        L.hit.add(b);
+        const J = b.pw * 1250 * sc / (1 + Math.pow(d / (280 * sc), 2));
+        L.vx += J * dx / d; L.vy += J * dy / d - J * .25; L.vr += (dx > 0 ? 1 : -1) * J * .045 * rnd(.5, 1.2);
+      }
+      if (!b.robot && Robot.visible) {
+        const dx = robotHit.cx - b.x, dy = robotHit.cy - b.y, d = Math.hypot(dx, dy) || 1;
+        if (R >= d) { b.robot = true; const J = b.pw * 1400 * sc / (1 + Math.pow(d / (300 * sc), 2)); Robot.kick(J * dx / d, J * dy / d - J * .3); }
+      }
+    }
+    const K = 70, Cd = 7;
+    for (const L of letters) {
+      L.vx += (-K * L.x - Cd * L.vx) * dt; L.vy += (-K * L.y - Cd * L.vy) * dt; L.vr += (-K * L.r - Cd * L.vr) * dt;
+      L.x += L.vx * dt; L.y += L.vy * dt; L.r += L.vr * dt;
+      L.el.style.transform = 'translate(' + L.x.toFixed(2) + 'px,' + L.y.toFixed(2) + 'px) rotate(' + L.r.toFixed(2) + 'deg)';
+    }
+  }
+  function handoff() {
+    // the site is back at full size: hand it to the scroll
+    Portal.off();
+    letters.forEach(L => L.el.style.transform = '');
+    nameEl.style.textShadow = '';
+    FX.clearNight(.35);
+    api.done = true;
+    Scroll.Pt = Scroll.Pr = 0;
+    renderScenes(0);
+  }
+  function release() {
+    root.classList.remove('locked');
+    ui.classList.add('gone');
+    window.scrollTo(0, 0);
+    removeEventListener('wheel', lockInput); removeEventListener('touchmove', lockInput); removeEventListener('keydown', onKey);
+    renderAll();
+  }
+  /* skipped: jump straight to the start of the site. Otherwise the intro ended on its own. */
+  function finalize(skipped = true) {
+    if (finished) return; finished = true;
+    Robot.follow(null); if (!Finale.cameo) Robot.hide(); Ink.laserOff(); Ink.done();
+    lens.classList.remove('writing');
+    nameEl.querySelectorAll('.ch').forEach(el => { el.style.transform = ''; el.style.opacity = ''; el.classList.remove('in'); el.style.transition = 'none'; });
+    nameEl.style.textShadow = '';
+    if (!skipped) return;
+    api.done = true;
+    world.style.filter = ''; stage.style.transform = ''; SHAKE.x = SHAKE.y = 0;
+    FX.stop(); flash.style.opacity = '0';
+    Portal.off();
+    Scroll.Pt = Scroll.Pr = 0; if (!reduced) renderScenes(0);
+    release();
+  }
+  function skip() { ctl.aborted = true; finalize(true); }
+  api.start = () => {
+    addEventListener('wheel', lockInput, { passive: false }); addEventListener('touchmove', lockInput, { passive: false }); addEventListener('keydown', onKey);
+    $('skipIntro').addEventListener('click', skip);
+    const snd = $('sound');
+    snd.addEventListener('click', () => { Sound.on = !Sound.on; snd.setAttribute('aria-pressed', String(Sound.on)); if (Sound.on) Sound.init(); });
+    document.addEventListener('pointerdown', () => { if (!api.done && Sound.on) Sound.init(); });
+    window.scrollTo(0, 0);
+    script().then(() => finalize(false)).catch(e => { if (!(e instanceof Abort)) { if (window.console) console.error(e); } finalize(true); });
+  };
+  api.finalize = finalize;
+  return api;
+})();
+
+/* ==========================================================================
+   The flight: Luxembourg to Montréal on a navigation chart
+   ========================================================================== */
+const Flight = (() => {
+  const K = 10, CL = Math.cos(50 * Math.PI / 180), KM = 5720;
+  const proj = (lon, lat) => [lon * CL * K, -lat * K];
+  const LUXg = [6.13, 49.61], YULg = [-73.57, 45.5], LUX = proj(LUXg[0], LUXg[1]), YUL = proj(YULg[0], YULg[1]);
+  const PLANE = 'M16 0 L4 -2 L-2 -12 L-6 -12 L-2 -2 L-10 -2 L-13 -6 L-15 -6 L-13 0 L-15 6 L-13 6 L-10 2 L-2 2 L-6 12 L-2 12 L4 2 Z';
+  /* simplified coastlines, [longitude, latitude] */
+  const COAST = [
+    [[-5.6,36.0],[-6.3,36.8],[-7.4,37.2],[-8.9,37.0],[-8.8,38.5],[-9.5,38.8],[-8.9,40.2],[-8.7,41.6],[-9.3,42.9],[-8.3,43.6],[-5.8,43.6],[-3.8,43.5],[-1.8,43.4],[-1.3,44.6],[-1.2,46.2],[-2.2,47.2],[-4.4,47.8],[-4.8,48.4],[-3.0,48.8],[-1.6,48.7],[-1.6,49.7],[0.1,49.5],[1.6,50.2],[1.9,51.0],[3.3,51.4],[4.1,52.0],[4.7,53.0],[6.9,53.4],[8.6,53.9],[8.6,55.4],[8.1,56.6],[10.6,57.7],[10.4,56.5],[9.8,55.1],[10.0,54.5],[11.0,54.0],[12.5,54.4],[14.2,53.9],[18.5,54.6],[24,54.5],[24,40],[19.4,41.8],[18.1,42.6],[16.4,43.5],[15.2,44.2],[13.7,45.6],[12.3,45.2],[13.6,43.6],[16.0,41.4],[18.5,40.1],[16.6,38.4],[15.6,38.2],[14.2,40.8],[12.4,41.7],[10.2,43.9],[8.9,44.4],[7.3,43.7],[4.8,43.4],[3.1,43.0],[3.2,41.9],[0.9,41.0],[-0.3,39.5],[0.2,38.8],[-0.5,38.3],[-2.1,36.7],[-4.4,36.7]],
+    [[5.5,58.0],[5.0,58.9],[5.0,60.4],[5.0,62.0],[7.0,62.7],[10.0,64.0],[12.3,65.9],[14.5,68.0],[16.0,69.0],[19.0,70.0],[24,70.5],[24,60.5],[18.5,59.3],[16.4,56.6],[14.3,55.5],[12.9,55.6],[11.9,57.7],[11.1,59.0],[10.5,59.0],[8.0,58.1]],
+    [[-5.7,50.0],[-4.2,50.4],[-1.3,50.7],[1.4,51.1],[1.6,51.4],[0.9,51.8],[1.7,52.6],[1.4,53.0],[0.3,53.5],[-0.4,54.3],[-1.2,54.7],[-1.6,55.6],[-2.1,56.0],[-2.5,56.6],[-1.8,57.5],[-3.2,57.7],[-3.0,58.6],[-5.0,58.6],[-5.8,57.8],[-5.7,56.5],[-5.7,55.3],[-4.9,54.8],[-3.4,54.9],[-3.0,53.9],[-3.1,53.3],[-4.6,53.3],[-4.1,52.6],[-5.3,51.9],[-4.2,51.6],[-3.0,51.5],[-4.5,51.1],[-5.0,50.6]],
+    [[-6.2,53.3],[-6.3,52.2],[-8.5,51.6],[-10.3,51.8],[-9.9,52.6],[-9.4,53.1],[-10.1,53.9],[-8.6,54.3],[-8.4,55.2],[-7.0,55.2],[-5.7,54.6],[-6.0,54.0]],
+    [[-22.7,63.8],[-18.5,63.4],[-15.0,64.2],[-13.5,65.2],[-14.6,66.4],[-18.0,66.2],[-22.4,66.4],[-24.3,65.5],[-22.0,64.6]],
+    [[-43.5,59.8],[-46.0,60.6],[-48.5,61.5],[-50.2,63.0],[-51.5,64.2],[-52.8,66.0],[-53.7,67.5],[-54.0,69.0],[-54.5,72],[-24,72],[-27.0,68.5],[-32.0,67.5],[-36.5,65.6],[-39.5,65.0],[-41.0,63.0],[-42.0,61.0]],
+    [[-64.5,60.3],[-61.5,56.5],[-60.0,55.3],[-57.3,54.0],[-55.8,52.3],[-57.1,51.5],[-59.5,50.3],[-64.0,50.2],[-66.5,50.0],[-68.5,49.2],[-70.5,47.6],[-69.5,47.9],[-67.5,49.1],[-64.4,49.0],[-65.0,48.0],[-64.7,46.6],[-61.4,45.7],[-60.6,47.0],[-59.8,46.2],[-61.0,45.4],[-63.6,44.6],[-65.8,43.5],[-66.0,44.6],[-64.4,45.3],[-67.0,45.0],[-68.0,44.4],[-70.2,43.6],[-70.6,42.6],[-70.0,41.7],[-71.4,41.5],[-72.9,41.2],[-74.0,40.6],[-74.0,39.7],[-74.9,38.9],[-75.1,38.3],[-76.0,37.0],[-75.6,35.3],[-77.0,34.6],[-78.0,33.9],[-95,33],[-95,72],[-68.0,72],[-66.0,67.5],[-61.8,66.6],[-64.5,64.5],[-65.0,62.5]],
+    [[-59.3,47.6],[-56.0,47.6],[-55.4,46.9],[-53.6,46.6],[-52.6,47.5],[-53.5,48.5],[-53.6,49.5],[-55.5,49.6],[-55.4,51.6],[-57.0,51.4],[-57.8,50.5],[-58.5,49.0]],
+    [[-6.8,32],[-6.8,34.0],[-6.0,35.8],[-2.2,35.1],[1.0,36.5],[3.0,36.8],[8.7,36.9],[10.2,37.3],[11.0,36.9],[10.5,35.4],[10.6,32]],
+    [[12.4,37.8],[15.1,38.3],[15.2,37.0],[14.0,37.0]],
+    [[8.4,41.0],[9.7,41.0],[9.6,39.1],[8.4,39.0]],
+    [[8.6,43.0],[9.5,42.8],[9.4,41.4],[8.7,41.7]]
+  ];
+  const svg = $('atlas'), route = $('atRoute'), done = $('atDone'), plane = $('atPlane'), shadow = $('atShadow');
+  const lux = $('atLUX'), yul = $('atYUL'), sea = $('atSea'), fill = $('passFill'), km = $('passKm'), status = $('passStatus'), hint = $('flightHint');
+  let built = false, L = 1, labels = [], target = { x: 0, y: 0 }, lastF = -1;
+  const pt = (lon, lat) => proj(lon, lat).map(v => v.toFixed(1)).join(' ');
+  function greatCircle(a, b, n) {
+    const v = ([lon, lat]) => { const p = lat * Math.PI / 180, l = lon * Math.PI / 180; return [Math.cos(p) * Math.cos(l), Math.cos(p) * Math.sin(l), Math.sin(p)]; };
+    const A = v(a), B = v(b), om = Math.acos(A[0] * B[0] + A[1] * B[1] + A[2] * B[2]), so = Math.sin(om), out = [];
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, s1 = Math.sin((1 - t) * om) / so, s2 = Math.sin(t * om) / so, x = A[0] * s1 + B[0] * s2, y = A[1] * s1 + B[1] * s2, z = A[2] * s1 + B[2] * s2;
+      out.push(pt(Math.atan2(y, x) * 180 / Math.PI, Math.asin(z) * 180 / Math.PI));
+    }
+    return out;
+  }
+  function build() {
+    if (built) return; built = true;
+    $('atLand').innerHTML = COAST.map(poly => '<path d="M' + poly.map(c => pt(c[0], c[1])).join('L') + 'Z"/>').join('');
+    $('atRiver').setAttribute('d', 'M' + [[-70.5, 47.6], [-71.2, 46.8], [-72.5, 46.3], [-73.57, 45.5]].map(c => pt(c[0], c[1])).join('L'));
+    let g = '';
+    for (let lon = -90; lon <= 20; lon += 10) { const x = proj(lon, 0)[0].toFixed(1); g += '<line x1="' + x + '" y1="-740" x2="' + x + '" y2="-300"/>'; }
+    for (let lat = 30; lat <= 70; lat += 10) g += '<line x1="-650" y1="' + (-lat * K) + '" x2="220" y2="' + (-lat * K) + '"/>';
+    for (let lat = 40; lat <= 60; lat += 10) { const p = proj(-29.4, lat + .7); g += '<text x="' + p[0].toFixed(1) + '" y="' + p[1].toFixed(1) + '">' + lat + '°N</text>'; }
+    for (let lon = -70; lon <= 0; lon += 10) { const p = proj(lon + .6, 36.7); g += '<text x="' + p[0].toFixed(1) + '" y="' + p[1].toFixed(1) + '">' + Math.abs(lon) + (lon ? '°W' : '°') + '</text>'; }
+    $('atGrid').innerHTML = g;
+    labels = Array.from($('atGrid').querySelectorAll('text'));
+    const s = proj(-36, 42); sea.setAttribute('x', s[0].toFixed(1)); sea.setAttribute('y', s[1].toFixed(1));
+    const d = 'M' + greatCircle(LUXg, YULg, 72).join('L');
+    route.setAttribute('d', d); done.setAttribute('d', d);
+    L = done.getTotalLength(); done.style.strokeDasharray = L + ' ' + (L + 10);
+    plane.innerHTML = shadow.innerHTML = '<path d="' + PLANE + '"/>';
+    for (const [grp, p] of [[lux, LUX], [yul, YUL]]) { const c = grp.querySelector('circle'); c.setAttribute('cx', p[0]); c.setAttribute('cy', p[1]); }
+  }
+  /* the plane lands where the Polytechnique photo opens */
+  function layout() {
+    const ph = $('stop3').querySelector('.photo');
+    target = { x: ph.offsetLeft + ph.offsetWidth / 2, y: ph.offsetTop + ph.offsetHeight / 2 };
+    lastF = -1;
+  }
+  const ZOOM = [[0, 150], [.18, 200], [.5, 600], [.84, 230], [1, 105]];
+  function zoomAt(f) {
+    for (let i = 1; i < ZOOM.length; i++) if (f <= ZOOM[i][0]) { const [f0, v0] = ZOOM[i - 1], [f1, v1] = ZOOM[i]; return Math.exp(lerp(Math.log(v0), Math.log(v1), smooth((f - f0) / (f1 - f0)))); }
+    return ZOOM[ZOOM.length - 1][1];
+  }
+  function render(f, e = 1) {
+    build();
+    hint.style.opacity = (e * (1 - clamp(f / .12))).toFixed(3);
+    if (Math.abs(f - lastF) < 1e-4) return; lastF = f;
+    const W = Lay.W, H = Lay.H, fa = smooth(clamp((f - .08) / .84)), at = L * fa;
+    const p = done.getPointAtLength(at), a1 = done.getPointAtLength(Math.max(0, at - 1.5)), a2 = done.getPointAtLength(Math.min(L, at + 1.5));
+    const ang = (Math.atan2(a2.y - a1.y, a2.x - a1.x) * 180 / Math.PI).toFixed(1);
+    const vw = zoomAt(f) * clamp(W / 1100, .55, 1.25), u = vw / W, vh = vw * H / W;
+    const end = { x: YUL[0] - (target.x - W / 2) * u, y: YUL[1] - (target.y - H / 2) * u };
+    const a = smooth(clamp(f / .22)), b = smooth(clamp((f - .78) / .22));
+    const cx = lerp(lerp(LUX[0], p.x, a), end.x, b), cy = lerp(lerp(LUX[1], p.y, a), end.y, b);
+    svg.setAttribute('viewBox', (cx - vw / 2).toFixed(2) + ' ' + (cy - vh / 2).toFixed(2) + ' ' + vw.toFixed(2) + ' ' + vh.toFixed(2));
+    done.style.strokeDashoffset = (L * (1 - fa)).toFixed(2);
+    done.style.strokeWidth = (3 * u).toFixed(3);
+    const alt = Math.pow(Math.sin(Math.PI * fa), .7), ps = 48 / 31 * u * (1 + .35 * alt), so = 20 * u * alt;
+    plane.setAttribute('transform', 'translate(' + p.x.toFixed(2) + ' ' + p.y.toFixed(2) + ') rotate(' + ang + ') scale(' + ps.toFixed(4) + ')');
+    shadow.setAttribute('transform', 'translate(' + (p.x + so).toFixed(2) + ' ' + (p.y + so * 1.3).toFixed(2) + ') rotate(' + ang + ') scale(' + (ps * .9).toFixed(4) + ')');
+    shadow.style.opacity = (.6 - .32 * alt).toFixed(2);
+    for (const t of labels) t.setAttribute('font-size', (11 * u).toFixed(2));
+    sea.setAttribute('font-size', (12 * u).toFixed(2));
+    for (const [grp, q, dx, dy] of [[lux, LUX, 14, 26], [yul, YUL, -14, 22]]) {
+      grp.querySelector('circle').setAttribute('r', (5.5 * u).toFixed(2));
+      const t = grp.querySelector('text');
+      t.setAttribute('font-size', (15 * u).toFixed(2)); t.setAttribute('x', (q[0] + dx * u).toFixed(2)); t.setAttribute('y', (q[1] + dy * u).toFixed(2));
+    }
+    fill.style.transform = 'scaleX(' + fa.toFixed(4) + ')';
+    km.textContent = Math.round(KM * fa).toLocaleString('en-US') + ' km';
+    status.textContent = f < .08 ? 'Boarding in Luxembourg' : f < .22 ? 'Taking off' : f < .78 ? 'Over the Atlantic' : fa < .999 ? 'Landing in Montréal' : 'Welcome to Montréal';
+  }
+  return { layout, render };
+})();
+
+/* ==========================================================================
+   Little things to play with: caps, dust, scrambled text, dots, a clock
+   ========================================================================== */
+const Toys = (() => {
+  const c = $('toys'), g = c.getContext('2d');
+  let W = 1, H = 1, parts = [], running = false;
+  function resize() { W = innerWidth; H = innerHeight; c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); }
+  const run = () => { if (!running) { running = true; Ticker.add(tick); } };
+  function caps(x, y) {
+    for (let i = 0; i < 16; i++) parts.push({ k: 'cap', x, y, vx: rnd(-520, 520), vy: rnd(-1250, -700), r: rnd(0, TAU), vr: rnd(-9, 9), s: rnd(.75, 1.25), ph: rnd(0, TAU), fl: rnd(5, 11), age: 0, life: 3.6 });
+    for (let i = 0; i < 70; i++) parts.push({ k: 'bit', x, y, vx: rnd(-650, 650), vy: rnd(-1300, -500), r: rnd(0, TAU), vr: rnd(-14, 14), s: rnd(4, 9), ph: rnd(0, TAU), c: ['#ff6b2c', '#ffc15e', '#edf0ea', '#8fb4df'][i % 4], age: 0, life: rnd(2.2, 3.6) });
+    run();
+  }
+  function dust(x, y) {
+    for (let i = 0; i < 28; i++) { const a = rnd(0, TAU), sp = rnd(60, 340); parts.push({ k: 'dust', x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * .6, s: rnd(6, 16), age: 0, life: rnd(.5, 1.1) }); }
+    run();
+  }
+  function tick(dt) {
+    g.setTransform(DPR, 0, 0, DPR, 0, 0); g.clearRect(0, 0, W, H);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i]; p.age += dt;
+      if (p.age > p.life || p.y > H + 120) { parts.splice(i, 1); continue; }
+      if (p.k === 'dust') {
+        p.vx *= Math.exp(-3 * dt); p.vy *= Math.exp(-3 * dt); p.x += p.vx * dt; p.y += p.vy * dt;
+        const k = p.age / p.life; g.globalAlpha = .35 * (1 - k); g.fillStyle = '#c3d0e1';
+        g.beginPath(); g.arc(p.x, p.y, p.s * (1 + k * 1.5), 0, TAU); g.fill(); continue;
+      }
+      const bit = p.k === 'bit', drag = bit ? 1.6 : .55;
+      p.vx *= Math.exp(-drag * dt); p.vy = p.vy * Math.exp(-drag * dt) + (bit ? 900 : 1500) * dt;
+      p.x += p.vx * dt + (bit ? Math.sin(p.age * 7 + p.ph) * 40 * dt : 0); p.y += p.vy * dt; p.r += p.vr * dt;
+      g.globalAlpha = Math.min(1, (p.life - p.age) * 2);
+      g.save(); g.translate(p.x, p.y); g.rotate(p.r);
+      if (bit) { g.scale(1, Math.cos(p.age * 9 + p.ph)); g.fillStyle = p.c; g.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); }
+      else {
+        g.scale(p.s, p.s * (.3 + .7 * Math.abs(Math.cos(p.age * p.fl + p.ph))));
+        g.fillStyle = '#0d1c38'; g.strokeStyle = '#edf0ea'; g.lineWidth = 1.6 / p.s;
+        g.beginPath(); g.moveTo(0, -12); g.lineTo(21, 0); g.lineTo(0, 12); g.lineTo(-21, 0); g.closePath(); g.fill(); g.stroke();
+        g.fillStyle = '#ff6b2c'; g.beginPath(); g.arc(0, 0, 2.6, 0, TAU); g.fill();
+        g.strokeStyle = '#ffc15e'; g.lineWidth = 2 / p.s; g.beginPath(); g.moveTo(0, 0); g.quadraticCurveTo(10, 4, 15, 10); g.lineTo(15, 19); g.stroke();
+      }
+      g.restore();
+    }
+    g.globalAlpha = 1;
+    if (!parts.length) { running = false; g.clearRect(0, 0, W, H); return false; }
+  }
+  return { resize, caps, dust };
+})();
+
+const GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0123456789+/#%&';
+const glyph = () => GLYPHS[(Math.random() * GLYPHS.length) | 0];
+const noise = text => Array.from(text, ch => ch === ' ' ? ' ' : glyph()).join('');
+/* letters resolve left to right, like a message being decrypted */
+function scramble(el, to, dur, from) {
+  const src = from === undefined ? el.textContent : from, n = Math.max(src.length, to.length);
+  return tween(dur, k => {
+    let s = '';
+    for (let i = 0; i < n; i++) { const th = i / n * .75, ch = to[i] || ''; s += k >= th + .25 ? ch : k >= th ? (ch === ' ' ? ' ' : glyph()) : (src[i] || ''); }
+    el.textContent = s;
+  });
+}
+
+/* stop 1: encrypt the paragraph */
+(() => {
+  const btn = $('cryptoBtn'), txt = $('cryptoText'), label = btn.querySelector('span'), plain = txt.textContent;
+  let cipher = '', busy = false, enc = false;
+  btn.addEventListener('click', async () => {
+    if (busy) return; busy = true; btn.classList.add('used');
+    if (Sound.on) Sound.init();
+    if (!enc) { cipher = noise(plain); Sound.whoosh(0, .6, 2600, 500, .07); await scramble(txt, cipher, .95); label.textContent = 'Decrypt it with the private key'; }
+    else { Sound.whoosh(0, .6, 500, 2600, .07); await scramble(txt, plain, .95, cipher); label.textContent = 'Encrypt this paragraph'; }
+    enc = !enc; btn.setAttribute('aria-pressed', String(enc)); busy = false;
+  });
+})();
+
+/* stop 2: throw the caps */
+$('capsBtn').addEventListener('click', e => {
+  const b = e.currentTarget, r = b.getBoundingClientRect();
+  b.classList.add('used');
+  if (Sound.on) Sound.init();
+  Toys.caps(r.left + r.width / 2, r.top + 6);
+  Sound.whoosh(0, .4, 500, 2600, .12);
+  for (let i = 0; i < 6; i++) setTimeout(() => Sound.blip(), 120 + i * 70);
+});
+
+/* stop 4: dots on the photo */
+const Spots = (() => {
+  const wrap = $('spots'), card = $('spotCard'), title = $('spotTitle'), text = $('spotText'), count = $('spotCount');
+  const all = Array.from(wrap.querySelectorAll('.spot')), seen = new Set();
+  let open = null;
+  function close() { if (!open) return; open.setAttribute('aria-expanded', 'false'); open = null; card.hidden = true; }
+  function show(sp) {
+    if (open === sp) { close(); return; }
+    close(); open = sp; sp.setAttribute('aria-expanded', 'true'); sp.classList.add('seen'); seen.add(sp);
+    title.textContent = sp.dataset.t; text.textContent = sp.dataset.d; card.hidden = false;
+    const fw = wrap.clientWidth, fh = wrap.clientHeight, cw = card.offsetWidth, ch = card.offsetHeight, x = sp.offsetLeft + 13, y = sp.offsetTop + 13;
+    let left = x + 24; if (left + cw > fw - 12) left = x - 24 - cw;
+    card.style.left = clamp(left, 12, Math.max(12, fw - cw - 12)) + 'px';
+    card.style.top = clamp(y - ch / 2, 12, Math.max(12, fh - ch - 12)) + 'px';
+    count.textContent = seen.size + ' of ' + all.length;
+    if (Sound.on) { Sound.init(); Sound.blip(); }
+  }
+  all.forEach(sp => sp.addEventListener('click', e => { e.stopPropagation(); show(sp); }));
+  card.addEventListener('click', e => e.stopPropagation());
+  document.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  return { close };
+})();
+
+/* stop 5: six hours on the clock */
+const Clock = (() => {
+  const box = document.querySelector('.clock'), track = $('clockTrack'), knob = $('clockKnob'), time = $('clockTime'), say = $('clockSay'), stop = $('stop5');
+  const LINES = [[.75, 'The brief: an M&A question and six hours to answer it.'], [2, 'Structure the case into the few questions that decide it.'], [4, 'Form hypotheses, then test each one against the numbers.'], [5.6, 'Pull the findings together into one recommendation.'], [7, 'Time is up. The recommendation is in.']];
+  let v = 0, drag = false, hinted = false;
+  function set(nv, user) {
+    v = clamp(nv, 0, 6);
+    box.style.setProperty('--v', (v / 6).toFixed(4)); stop.style.setProperty('--h', (v / 6).toFixed(4));
+    let h = Math.floor(v), m = Math.round((v - h) * 12) * 5; if (m === 60) { h++; m = 0; }
+    time.textContent = h + 'h' + String(m).padStart(2, '0');
+    knob.setAttribute('aria-valuenow', v.toFixed(1)); knob.setAttribute('aria-valuetext', time.textContent);
+    say.textContent = LINES.find(l => v < l[0])[1];
+    if (user) { box.classList.add('used'); stop.classList.add('clocked'); }
+  }
+  const at = x => { const r = track.getBoundingClientRect(); return (x - r.left) / r.width * 6; };
+  track.addEventListener('pointerdown', e => { drag = true; track.setPointerCapture(e.pointerId); set(at(e.clientX), true); e.preventDefault(); if (Sound.on) { Sound.init(); Sound.blip(); } });
+  track.addEventListener('pointermove', e => { if (drag) set(at(e.clientX), true); });
+  track.addEventListener('pointerup', () => { drag = false; });
+  track.addEventListener('pointercancel', () => { drag = false; });
+  knob.addEventListener('keydown', e => {
+    const step = { ArrowRight: .5, ArrowUp: .5, ArrowLeft: -.5, ArrowDown: -.5 }[e.key];
+    if (step !== undefined) { e.preventDefault(); set(v + step, true); }
+    else if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); set(e.key === 'Home' ? 0 : 6, true); }
+  });
+  set(0);
+  return { hint() { if (hinted || box.classList.contains('used')) return; hinted = true; stop.classList.add('clocked'); tween(1.1, k => set(1.2 * k), easeInOut3); } };
+})();
+
+Hooks.flight = { frame(sc, d, e) { Flight.render(clamp((d + .2) / .78), e); } };
+Hooks.stop1 = {
+  frame(sc, d, e) {
+    if (!Intro.done) return;
+    if (e < .08) { sc.scr = false; return; }
+    if (!sc.scr && e > .3) { sc.scr = true; const h3 = sc.el.querySelector('h3'), t = h3.dataset.text || (h3.dataset.text = h3.textContent); scramble(h3, t, 1.05, noise(t)); }
+  }
+};
+Hooks.stop4 = {
+  arrive(sc) { sc.el.classList.add('scanned'); Sound.whoosh(0, 1.2, 300, 1800, .05); },
+  leave(sc) { sc.el.classList.remove('scanned'); Spots.close(); }
+};
+Hooks.stop5 = { arrive() { Clock.hint(); } };
+Hooks.stop6 = {
+  arrive(sc) {
+    sc.el.classList.add('slammed');
+    setTimeout(() => {
+      if (!sc.el.classList.contains('slammed')) return;
+      const ph = sc.photo, st = sc.el.querySelector('.stamp').getBoundingClientRect();
+      ph.classList.remove('jolt'); void ph.offsetWidth; ph.classList.add('jolt');
+      Toys.dust(st.left + st.width / 2, st.top + st.height / 2); Sound.stamp();
+    }, 330);
+  },
+  leave(sc) { sc.el.classList.remove('slammed'); }
+};
+
+/* ==========================================================================
+   Wiring
+   ========================================================================== */
+function layout() {
+  DPR = Math.min(2, window.devicePixelRatio || 1);
+  Lay.W = root.clientWidth || innerWidth; Lay.H = innerHeight;
+  sizeScroller();
+  Portal.layout();
+  FX.resize(); Sparks.resize(); Toys.resize(); Flight.layout();
+}
+addEventListener('scroll', onScroll, { passive: true });
+let resizeT = 0;
+addEventListener('resize', () => {
+  clearTimeout(resizeT);
+  resizeT = setTimeout(() => {
+    layout(); buildMap();
+    if (Intro.done) { Scroll.Pt = Scroll.Pr = pFromScroll(scrollY); renderAll(); }
+  }, 140);
+});
+const onReduce = () => { reduced = !!reduceMQ.matches; root.classList.toggle('reduced', reduced); if (reduced) Intro.finalize(); layout(); renderAll(); };
+if (reduceMQ.addEventListener) reduceMQ.addEventListener('change', onReduce); else if (reduceMQ.addListener) reduceMQ.addListener(onReduce);
+
+const goTo = P => window.scrollTo({ top: scrollFromP(P), behavior: reduced ? 'auto' : 'smooth' });
+$('backToStart').addEventListener('click', () => goTo(0));
+$('wordmark').addEventListener('click', e => { e.preventDefault(); goTo(0); });
+dots.forEach(d => d.addEventListener('click', e => { if (reduced) return; e.preventDefault(); goTo(+d.dataset.k); }));
+
+const cv = $('cvDialog');
+document.querySelectorAll('[data-open-cv]').forEach(b => b.addEventListener('click', () => { if (typeof cv.showModal === 'function') cv.showModal(); else cv.setAttribute('open', ''); }));
+$('closeCV').addEventListener('click', () => cv.close ? cv.close() : cv.removeAttribute('open'));
+cv.addEventListener('click', e => { if (e.target === cv) cv.close(); });
+
+function makeGrain() {
+  const S = 160, c = document.createElement('canvas'); c.width = c.height = S;
+  const g = c.getContext('2d'), img = g.createImageData(S, S), d = img.data, r = mulberry32(3);
+  for (let i = 0; i < d.length; i += 4) { const v = (r() * 255) | 0; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; }
+  g.putImageData(img, 0, 0);
+  $('grain').style.backgroundImage = 'url(' + c.toDataURL('image/png') + ')';
+}
+
+
+async function boot() {
+  try { if (document.fonts && document.fonts.ready) await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1800))]); } catch (e) {}
+  makeGrain();
+  layout();
+  buildMap();
+  if (reduced) { Flight.render(.5); Intro.finalize(true); return; }
+  (window.requestIdleCallback || (f => setTimeout(f, 600)))(() => FX.textures());
+  Intro.start();
+}
+boot();
+})();
+</script>
+</body>
+</html>
